@@ -8,8 +8,8 @@ module.exports = merge(baseWebpackConfig, {
   mode: 'development',
   devtool: 'source-map',
   devServer: {
+    historyApiFallback: true,
     contentBase: path.resolve(__dirname, '../dist'),
-    open: true,
     port: 9000,
     compress: true,
     hot: true
