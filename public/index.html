@@ -11,14 +11,7 @@
     (function () {
       var winWidth = document.documentElement.clientWidth || window.screen.width || window.outerWidth || document
         .documentElement.scrollWidth;
-      var winHeight = document.documentElement.clientHeight || window.screen.height || window.outerHeight || document
-        .documentElement.scrollHeight;
-      var ratio = 750 / 1334
-      if ((winWidth / winHeight) < ratio) {
-        var fontSizeRoot = winWidth / 375 * (100 / (750 / 375)) + 'px';
-      } else {
-        var fontSizeRoot = winHeight / 667 * (100 / (1334 / 667)) + 'px';
-      }
+        var fontSizeRoot = winWidth / 375 * 50 + 'px';
       document.documentElement.style.fontSize = fontSizeRoot;
     })();
   </script>

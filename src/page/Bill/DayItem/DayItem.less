@@ -1,0 +1,59 @@
+.day-item {
+  background-color: #fff;
+  margin: .3rem;
+  border-radius: .1rem;
+  .title {
+    background-color: antiquewhite;
+    height: .5rem;
+    line-height: .5rem;
+    display: flex;
+    justify-content: space-around;
+  }
+  ul {
+    li {
+      height: .5rem;
+      line-height: .5rem;
+      margin-top: .15rem;
+      display: flex;
+      justify-content: space-between;
+      .flag {
+        flex-grow: 1;
+        position: relative;
+        &::after {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          content: "";
+          display: block;
+          width: .2rem;
+          height: .2rem;
+          border-radius: 50%;
+          background-color: red;
+        }
+      }
+      .desc {
+        flex-grow: 9;
+        font-size: .22rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        .name {
+          color: #d48000;
+          height: .24rem;
+          line-height: .24rem;
+        }
+        .remark {
+          color: #a7a7a7;
+          height: .24rem;
+          line-height: .24rem;
+        }
+      }
+      .num {
+        flex-grow: 2;
+        font-size: .3rem;
+        color: red;
+      }
+    }
+  }
+}
