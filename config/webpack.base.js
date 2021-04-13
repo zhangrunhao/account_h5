@@ -21,6 +21,10 @@ module.exports = {
           'css-loader', // 加载解析文件, 遇到@import, 就把相应样式文件引入
           'less-loader'
         ]
+      },
+      {
+        test: /\.(png|jpe?g|gif)$/i,
+        use: 'file-loader'
       }
     ]
   },
