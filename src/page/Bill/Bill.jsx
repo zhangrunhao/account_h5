@@ -7,14 +7,27 @@ export default class Bill extends React.Component {
   render () {
     return (
       <div className="bill">
-        <TopNav></TopNav>
+        <TopNav back middleSlot={Test}></TopNav>
         <Summary></Summary>
         <ul className="bill-ul">
+          <DayItem></DayItem>
+          <DayItem></DayItem>
+          <DayItem></DayItem>
+          <DayItem></DayItem>
+          <DayItem></DayItem>
+          <DayItem></DayItem>
           <DayItem></DayItem>
           <DayItem></DayItem>
           <DayItem></DayItem>
         </ul>
       </div>
     )
+  }
+}
+
+
+class Test extends React.Component {
+  render () {
+    return <h1>Test Component</h1>
   }
 }
