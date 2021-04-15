@@ -34,7 +34,7 @@ const Flag = styled.div`
     width: .2rem;
     height: .2rem;
     border-radius: 50%;
-    background-color: red;
+    background-color: #cc6060;
   }
 `
 
@@ -47,7 +47,6 @@ const Desc = styled.div`
 `
 
 const Name = styled.div`
-  color: #e49c00dc;
   height: .24rem;
   line-height: .24rem;
 `
@@ -61,7 +60,7 @@ const Remark = styled.div`
 const Num = styled.div`
   flex-grow: 2;
   font-size: .3rem;
-  color: red;
+  color: #cc6060;
 `
 
 export default class DayItem extends React.Component {
