@@ -7,10 +7,10 @@ import DayItem from './DayItem/DayItem.jsx'
 export default class Bill extends React.Component {
   render () {
     return (
-      <div className="bill">
+      <div>
         <TopNav back middleSlot={Test}></TopNav>
         <Summary></Summary>
-        <ul className="bill-ul">
+        <ul>
           <DayItem></DayItem>
           <DayItem></DayItem>
           <DayItem></DayItem>

@@ -1,5 +1,19 @@
 import React from 'react'
-import './BottomNav.less'
+import styled from 'styled-components'
+
+const Wrapper = styled.div`
+  width: 100%;
+  height: .8rem;
+  background-color: antiquewhite;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+`
+
 import {
   Home,
   AddOne,
@@ -23,11 +37,11 @@ class BottomNav extends React.Component {
   }
   render () {
     return (
-      <div className="bottom-nav">
+      <Wrapper>
         <Home onClick={this.handleHomeButtonClick.bind(this)} theme="outline" size="30" fill="#333"/>
         <AddOne onClick={this.handleAddOneButtonClick.bind(this)} theme="outline" size="30" fill="#333"/>
         <BankCard onClick={this.handleBankCardButtonClick.bind(this)} theme="outline" size="30" fill="#333"/>
-      </div>
+      </Wrapper>
     )
   }
 }

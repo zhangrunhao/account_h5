@@ -5,21 +5,44 @@ import {
   AddOne,
   ChartLine
 } from '@icon-park/react';
-import './TopNav.less'
+import {
+  withRouter
+} from 'react-router-dom'
 
-export default class TopNav extends React.Component {
+import styled from 'styled-components'
+
+const Wrapper = styled.div`
+  width: 100%;
+  height: .8rem;
+  background-color: #fff;
+  padding: 0 .2rem;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+`
+
+const Sub = styled.div`
+  height: .8rem;
+  display: flex;
+  align-items: center;
+`
+
+class TopNav extends React.Component {
   constructor(props) {
     super(props)
   }
   handleBackClick() {
-    console.log('back click happened')
+    this.props.history.goBack()
   }
   render() {
     const MiddleSlot = this.props.middleSlot
-    console.log(this.props)
     return (
-      <div className="top-nav">
-        <div className="left">
+      <Wrapper>
+        <Sub>
           <Left
             style={{display: this.props.back ? 'block' : 'none'}}
             onClick={this.handleBackClick.bind(this)}
@@ -31,11 +54,14 @@ export default class TopNav extends React.Component {
             theme="outline"
             size="24"
             fill="#333"/>
-        </div>
-        <div className="middle">
-          <MiddleSlot></MiddleSlot>
-        </div>
-        <div className="right">
+        </Sub>
+        <Sub>
+          {
+            MiddleSlot &&
+            <MiddleSlot></MiddleSlot>
+          }
+        </Sub>
+        <Sub>
           <ChartLine
             style={{display: this.props.chat ? 'block' : 'none'}}
             theme="outline"
@@ -48,8 +74,10 @@ export default class TopNav extends React.Component {
             size="24" 
             fill="#333"
           />
-        </div>
-      </div>
+        </Sub>
+      </Wrapper>
     )
   }
 }
+
+export default withRouter(TopNav)

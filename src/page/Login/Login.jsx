@@ -2,7 +2,7 @@ import React from 'react'
 import axios from 'axios'
 import Navigation from '../../common/Navigation/Navigation.jsx';
 
-import './Login.less'
+// import './Login.less'
 
 export default class Login extends React.Component {
   constructor(props) {

@@ -6,7 +6,7 @@ import {
   withRouter
 } from 'react-router-dom'
 import { Left } from '@icon-park/react';
-import './Navigation.less'
+// import './Navigation.less'
 
 class Navigation extends React.Component {
   constructor (props) {

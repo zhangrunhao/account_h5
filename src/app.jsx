@@ -14,16 +14,15 @@ import Record from './page/Record/Record.jsx'
 import Balance from './page/Balance/Balance.jsx'
 
 import './style/reset.css'
-import './app.less'
 
 export default function App() {
   return (
     <BrowserRouter>
       <div className="app">
         <Switch>
-          <Route path='/login'><Login /></Route>
-          <Route path='/register'><Register /></Route>
-          <Route path='/bill'><Bill /></Route>
+          <Route path="/login"><Login /></Route>
+          <Route path="/register"><Register /></Route>
+          <Route path="/bill"><Bill /></Route>
           <Route path="/record"><Record /></Route>
           <Route path="/balance"><Balance /></Route>
           <Route path="/"><Home /></Route>
