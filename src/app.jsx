@@ -1,5 +1,7 @@
 import React from 'react'
-
+import {
+  CSSTransition
+} from 'react-transition-group'
 import {
   BrowserRouter,
   Switch,
@@ -12,21 +14,37 @@ import Register from './page/Register/Register.jsx'
 import Bill from './page/Bill/Bill.jsx'
 import Record from './page/Record/Record.jsx'
 import Balance from './page/Balance/Balance.jsx'
-
+import './animation/animation.js'
 import './style/reset.css'
+
+const routes = [{
+  path: '/', name: 'Home', Component: Home, animation: false
+}, {
+  path: '/login', name: 'Login', Component: Login, animation: false
+}, {
+  path: '/register', name: 'Register', Component: Register, animation: false
+}, {
+  path: '/bill', name: 'Bill', Component: Bill, animation: false
+}, {
+  path: '/record', name: 'Record', Component: Record, animation: true
+}, {
+  path: '/balance', name: 'Balance', Component: Balance, animation: false
+}]
 
 export default function App() {
   return (
     <BrowserRouter>
       <div className="app">
-        <Switch>
-          <Route path="/login"><Login /></Route>
-          <Route path="/register"><Register /></Route>
-          <Route path="/bill"><Bill /></Route>
-          <Route path="/record"><Record /></Route>
-          <Route path="/balance"><Balance /></Route>
-          <Route path="/"><Home /></Route>
-        </Switch>
+        {
+          routes.map(({path, Component, animation}) => 
+            <Route key={path} exact path={path}>
+              {
+                ({match}) =>
+                  match && <Component />
+              }
+            </Route>
+          )
+        }
       </div>
     </BrowserRouter>
   )

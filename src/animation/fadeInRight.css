@@ -1,0 +1,26 @@
+
+
+.fadeInRight-enter {
+  opacity: 0;
+  transform: translateX(100%);
+}
+
+
+.fadeInRight-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 300ms, transform 300ms;
+}
+
+
+.fadeInRight-exit {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+
+.fadeInRight-exit-active {
+  opacity: 0;
+  transform: translateX(100%);
+  transition: opacity 300ms, transform 300ms;
+}
