@@ -1,10 +1,6 @@
 import React from 'react'
 import {
-  CSSTransition
-} from 'react-transition-group'
-import {
   BrowserRouter,
-  Switch,
   Route
 } from 'react-router-dom'
 
@@ -14,8 +10,9 @@ import Register from './page/Register/Register.jsx'
 import Bill from './page/Bill/Bill.jsx'
 import Record from './page/Record/Record.jsx'
 import Balance from './page/Balance/Balance.jsx'
+
 import './animation/animation.js'
-import './style/reset.css'
+
 
 const routes = [{
   path: '/', name: 'Home', Component: Home, animation: false

@@ -5,11 +5,11 @@ import RecordInput from './RecordInput/RecordInput.jsx'
 export default class Record extends React.Component {
   render () {
     return (
-      <div>
+      <>
         <TopNav back></TopNav>
         <TypeChoose></TypeChoose>
         <RecordInput></RecordInput>
-      </div>
+      </>
     )
   }
 }

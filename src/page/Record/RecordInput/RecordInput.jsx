@@ -34,7 +34,7 @@ const InputMain = styled.div`
   flex-wrap: wrap;
 `
 
-const InputButton = styled.div`
+const InputButton = styled.button`
   width: 1.875rem;
   height: 1.16rem;
   line-height: 1.16rem;
