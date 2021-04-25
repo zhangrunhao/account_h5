@@ -8,7 +8,7 @@ export default class Balance extends React.Component {
   render () {
     return (
       <div className="balance">
-        <TopNav back></TopNav>
+        <TopNav back>账户</TopNav>
         <Summary></Summary>
         <Account></Account>
         <BottomNav></BottomNav>

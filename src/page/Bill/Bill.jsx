@@ -8,7 +8,7 @@ export default class Bill extends React.Component {
   render () {
     return (
       <>
-        <TopNav back middleSlot={Test}></TopNav>
+        <TopNav back>账单</TopNav>
         <Summary></Summary>
         <ul>
           <DayItem></DayItem>
@@ -24,12 +24,5 @@ export default class Bill extends React.Component {
         <BottomNav></BottomNav>
       </>
     )
-  }
-}
-
-
-class Test extends React.Component {
-  render () {
-    return <h1>Test Component</h1>
   }
 }
