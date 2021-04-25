@@ -39,7 +39,6 @@ class TopNav extends React.Component {
     this.props.history.goBack()
   }
   render() {
-    const MiddleSlot = this.props.middleSlot
     return (
       <Wrapper>
         <Sub>
@@ -57,8 +56,7 @@ class TopNav extends React.Component {
         </Sub>
         <Sub>
           {
-            MiddleSlot &&
-            <MiddleSlot></MiddleSlot>
+            this.props.children
           }
         </Sub>
         <Sub>

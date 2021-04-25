@@ -9,9 +9,9 @@ module.exports = merge(baseWebpackConfig, {
   devtool: 'source-map',
   devServer: {
     historyApiFallback: true,
-    contentBase: path.resolve(__dirname, '../dist'),
+    contentBase: './',
     port: 9000,
-    compress: true,
+    compress: false,
     hot: true
   },
 })
