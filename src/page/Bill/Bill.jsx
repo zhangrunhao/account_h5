@@ -2,7 +2,7 @@ import React from 'react'
 import TopNav from '../../common/TopNav/TopNav.jsx'
 import BottomNav from '../../common/BottomNav/BottomNav.jsx'
 import Summary from './Summary/Summary.jsx'
-import DayItem from './DayItem/DayItem.jsx'
+import AccountBillDayDetail from '../../common/AccountBillDayDetail/AccountBillDayDetail.jsx'
 
 export default class Bill extends React.Component {
   render () {
@@ -11,15 +11,12 @@ export default class Bill extends React.Component {
         <TopNav back>账单</TopNav>
         <Summary></Summary>
         <ul>
-          <DayItem></DayItem>
-          <DayItem></DayItem>
-          <DayItem></DayItem>
-          <DayItem></DayItem>
-          <DayItem></DayItem>
-          <DayItem></DayItem>
-          <DayItem></DayItem>
-          <DayItem></DayItem>
-          <DayItem></DayItem>
+          <AccountBillDayDetail></AccountBillDayDetail>
+          <AccountBillDayDetail></AccountBillDayDetail>
+          <AccountBillDayDetail></AccountBillDayDetail>
+          <AccountBillDayDetail></AccountBillDayDetail>
+          <AccountBillDayDetail></AccountBillDayDetail>
+          <AccountBillDayDetail></AccountBillDayDetail>
         </ul>
         <BottomNav></BottomNav>
       </>

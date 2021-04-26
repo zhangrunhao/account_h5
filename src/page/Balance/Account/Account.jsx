@@ -1,4 +1,5 @@
 import React from 'react'
+import { withRouter } from 'react-router'
 import styled from 'styled-components'
 
 const Wrapper = styled.div`
@@ -52,15 +53,19 @@ const Number = styled.div`
 
 `
 
-export default class Account extends React.Component {
+class Account extends React.Component {
+  handleAccountClick (id) {
+    console.log(id)
+    this.props.history.push(`/balance_detail/${id}`)
+  }
   render () {
     return (
       <Wrapper>
         <Title>账户列表</Title>
         <List>
           {
-            Array(20).fill("").map(() => 
-              <Item key={Math.random()}>
+            Array(20).fill("aaa").map(() => 
+              <Item key={Math.random()} onClick={this.handleAccountClick.bind(this, Math.random())}>
                 <Icon>
                   <img src="http://pic.616pic.com/ys_img/00/03/78/04RotuWM2Y.jpg" alt=""/>
                 </Icon>
@@ -74,3 +79,5 @@ export default class Account extends React.Component {
     )
   }
 }
+
+export default withRouter(Account)

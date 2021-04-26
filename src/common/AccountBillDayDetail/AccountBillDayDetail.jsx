@@ -15,6 +15,7 @@ const Title = styled.div`
 `
 
 const ListItem = styled.li`
+  margin: .1rem 0;
   height: .5rem;
   line-height: .5rem;
   display: flex;
@@ -22,7 +23,7 @@ const ListItem = styled.li`
 `
 
 const Flag = styled.div`
-  flex-grow: 1;
+  width: .6rem;
   position: relative;
   &::after {
     position: absolute;
@@ -39,7 +40,7 @@ const Flag = styled.div`
 `
 
 const Desc = styled.div`
-  flex-grow: 9;
+  width: 100%;
   font-size: .22rem;
   display: flex;
   flex-direction: column;
@@ -58,12 +59,12 @@ const Remark = styled.div`
 `
 
 const Num = styled.div`
-  flex-grow: 2;
+  width: 2rem;
   font-size: .3rem;
   color: #cc6060;
 `
 
-export default class DayItem extends React.Component {
+export default class AccountBillDayDetail extends React.Component {
   render () {
     return (
       <Wrapper>
@@ -72,13 +73,32 @@ export default class DayItem extends React.Component {
           <div>支:0.33 收:222</div>
         </Title>
         <ul>
+
           <ListItem>
             <Flag></Flag>
             <Desc>
               <Name>三餐</Name>
               <Remark>鸡蛋灌饼</Remark>
             </Desc>
-            <Num>-.33</Num>
+            <Num>-11.20</Num>
+          </ListItem>
+
+          <ListItem>
+            <Flag></Flag>
+            <Desc>
+              <Name>交通</Name>
+              <Remark>滴滴</Remark>
+            </Desc>
+            <Num>-13.00</Num>
+          </ListItem>
+
+          <ListItem>
+            <Flag></Flag>
+            <Desc>
+              <Name>交通</Name>
+              <Remark>滴滴打车</Remark>
+            </Desc>
+            <Num>-11.20</Num>
           </ListItem>
         </ul>
       </Wrapper>
