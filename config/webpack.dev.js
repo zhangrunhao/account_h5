@@ -1,4 +1,3 @@
-const path = require('path')
 const baseWebpackConfig = require('./webpack.base.js')
 const {
   merge
@@ -12,6 +11,13 @@ module.exports = merge(baseWebpackConfig, {
     contentBase: './',
     port: 9000,
     compress: false,
-    hot: true
+    hot: true,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8080/',
+        // changeOrigin: true,
+        secure: false
+      }
+    }
   },
 })

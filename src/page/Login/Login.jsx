@@ -5,6 +5,10 @@ import {
   Form
 } from 'formik'
 import NavTop from '../../common/TopNav/TopNav.jsx'
+import request from '../../util/request'
+import {
+  setToken
+} from '../../util/auth'
 
 function validateEmail (value) {
   let error
@@ -26,6 +30,17 @@ export default class Login extends React.Component {
   constructor (props) {
     super(props)
   }
+  postSignin (data) {
+    request({
+      url: '/api/users/login',
+      method: 'POST',
+      data
+    }).then(res => {
+      res && res.data && res.data.token && setToken(res.data.token)
+    }).catch(err => {
+      console.log(err)
+    })
+  }
   render () {
     return (
       <>
@@ -36,7 +51,7 @@ export default class Login extends React.Component {
             password: ""
           }}
           onSubmit = {(values => {
-            console.log(values)
+            this.postSignin(values)
           })}
         >
           {
