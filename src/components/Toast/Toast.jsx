@@ -7,7 +7,7 @@ import {
 import {
   Success,
   Error,
-  CloseWifi,
+  EmotionUnhappy,
   Loading
 } from '@icon-park/react'
 
@@ -46,7 +46,7 @@ class Toast extends React.Component {
       icon: '',
       success: <Success size="40" fill="#fff"></Success>,
       fail: <Error size="40" fill="#fff"></Error>,
-      offline: <CloseWifi size="40" fill="#fff"></CloseWifi>,
+      offline: <EmotionUnhappy size="40" fill="#fff"></EmotionUnhappy>,
       loading: <Loading size="40" fill="#fff"></Loading>
     }
     return types[this.type]

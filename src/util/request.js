@@ -30,7 +30,7 @@ service.interceptors.response.use(
     }
   }, 
   error => {
-    Toast.fail(error.message)
+    Toast.offline(error.message)
     return Promise.reject(error)
   }
 )
