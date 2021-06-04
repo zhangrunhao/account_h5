@@ -1,4 +1,5 @@
 import axios from 'axios'
+import Toast from '../components/Toast/Toast.jsx'
 import {
   getToken
 } from './auth.js'
@@ -19,9 +20,9 @@ service.interceptors.response.use(
   response => {
     const res = response.data
     if (res.code != 200) {
-      // TODO: 弹出提醒
+      Toast.fail(res.message)
       if (res.code === 401) {
-        // TODO: 登录提醒
+        // TODO: 重新登录
       }
       return Promise.reject('error')
     } else {
@@ -29,7 +30,7 @@ service.interceptors.response.use(
     }
   }, 
   error => {
-    // TODO: 弹框提醒
+    Toast.fail(error.message)
     return Promise.reject(error)
   }
 )
