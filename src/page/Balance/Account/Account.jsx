@@ -2,6 +2,8 @@ import React from 'react'
 import { withRouter } from 'react-router'
 import styled from 'styled-components'
 
+import History from '../../../util/history.js'
+
 const Wrapper = styled.div`
   background-color: #fff;
   margin: .2rem;
@@ -55,8 +57,8 @@ const Number = styled.div`
 
 class Account extends React.Component {
   handleAccountClick (id) {
-    console.log(id)
-    this.props.history.push(`/balance_detail/${id}`)
+    const path = `/balance_detail/${id}`
+    History.push(this, path)
   }
   render () {
     return (

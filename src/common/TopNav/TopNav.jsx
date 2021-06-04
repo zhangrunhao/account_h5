@@ -9,6 +9,8 @@ import {
   withRouter
 } from 'react-router-dom'
 
+import History from '../../util/history.js'
+
 import styled from 'styled-components'
 
 const Wrapper = styled.div`
@@ -36,7 +38,7 @@ class TopNav extends React.Component {
     super(props)
   }
   handleBackClick() {
-    this.props.history.goBack()
+    History.back(this)
   }
   render() {
     return (

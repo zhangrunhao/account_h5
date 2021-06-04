@@ -1,7 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
-import TopNav from '../TopNav/TopNav.jsx'
 import Drawer from '../../components/Drawer/Drawer.jsx'
+
+import History from '../../util/history'
 
 const Wrapper = styled.div`
   width: 100%;
@@ -33,16 +34,16 @@ class BottomNav extends React.Component {
     }
   }
   handleHomeButtonClick () {
-    this.props.history.push('/bill')
+    History.push(this, '/bill')
   }
   handleAddOneButtonClick () {
     // this.setState({
     //   drawerVisible: !this.state.drawerVisible
     // })
-    this.props.history.push('/record')
+    History.push(this, '/record')
   }
   handleBankCardButtonClick () {
-    this.props.history.push('/balance')
+    History.push(this, '/balance')
   }
   render () {
     return (
