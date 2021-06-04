@@ -12,6 +12,7 @@ import Bill from './page/Bill/Bill.jsx'
 import Record from './page/Record/Record.jsx'
 import Balance from './page/Balance/Balance.jsx'
 import BalanceDetail from './page/BalanceDetail/BalanceDetail.jsx'
+import BalanceEdit from './page/BalanceEdit/BalanceEdit.jsx'
 
 import './animation/animation.js'
 
@@ -27,6 +28,7 @@ export default function App() {
           <Route path="/record" component={Record}></Route>
           <Route path="/balance" component={Balance}></Route>
           <Route path="/balance_detail/:id" component={BalanceDetail}></Route>
+          <Route path="/balance_edit/:id" component={BalanceEdit}></Route>
           <Route path="/" component={Home}></Route>
         </Switch>
       </div>

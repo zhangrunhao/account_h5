@@ -70,8 +70,9 @@ class TopNav extends React.Component {
           />
           <AddOne
             style={{display: this.props.add ? 'block' : 'none'}}
+            onClick={() => this.props.addClick()}
             theme="outline"
-            size="24" 
+            size="24"
             fill="#333"
           />
         </Sub>
