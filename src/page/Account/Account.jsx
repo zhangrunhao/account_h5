@@ -6,7 +6,7 @@ import {
 
 
 import Summary from './Summary/Summary.jsx'
-import Account from './Account/Account.jsx'
+import AccountList from './AccountList/AccountList.jsx'
 
 import TopNav from '../../common/TopNav/TopNav.jsx'
 import BottomNav from '../../common/BottomNav/BottomNav.jsx'
@@ -15,9 +15,9 @@ import History from '../../util/history.js'
 const Wrapper = styled.div`
 `
 
-class Balance extends React.Component {
+class Account extends React.Component {
   addClick () {
-    History.push(this, '/balance_edit/new')
+    History.push(this, '/account_edit/new')
   }
   render () {
     return (
@@ -30,11 +30,11 @@ class Balance extends React.Component {
           账户
         </TopNav>
         <Summary></Summary>
-        <Account></Account>
+        <AccountList></AccountList>
         <BottomNav></BottomNav>
       </Wrapper>
     )
   }
 }
 
-export default withRouter(Balance)
+export default withRouter(Account)

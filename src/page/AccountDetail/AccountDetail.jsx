@@ -17,7 +17,7 @@ const Summary = styled.div`
   font-size: .34rem;
 `
 
-class BalanceDetail extends React.Component {
+class AccountDetail extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -48,4 +48,4 @@ class BalanceDetail extends React.Component {
   }
 }
 
-export default withRouter(BalanceDetail)
+export default withRouter(AccountDetail)

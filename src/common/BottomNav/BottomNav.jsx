@@ -43,7 +43,7 @@ class BottomNav extends React.Component {
     History.push(this, '/record')
   }
   handleBankCardButtonClick () {
-    History.push(this, '/balance')
+    History.push(this, '/account')
   }
   render () {
     return (

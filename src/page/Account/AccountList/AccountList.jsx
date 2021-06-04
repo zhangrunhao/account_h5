@@ -55,9 +55,9 @@ const Number = styled.div`
 
 `
 
-class Account extends React.Component {
+class AccountList extends React.Component {
   handleAccountClick (id) {
-    const path = `/balance_detail/${id}`
+    const path = `/account_detail/${id}`
     History.push(this, path)
   }
   render () {
@@ -82,4 +82,4 @@ class Account extends React.Component {
   }
 }
 
-export default withRouter(Account)
+export default withRouter(AccountList)

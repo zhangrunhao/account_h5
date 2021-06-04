@@ -10,9 +10,10 @@ import Login from './page/Login/Login.jsx'
 import Register from './page/Register/Register.jsx'
 import Bill from './page/Bill/Bill.jsx'
 import Record from './page/Record/Record.jsx'
-import Balance from './page/Balance/Balance.jsx'
-import BalanceDetail from './page/BalanceDetail/BalanceDetail.jsx'
-import BalanceEdit from './page/BalanceEdit/BalanceEdit.jsx'
+
+import Account from './page/Account/Account.jsx'
+import AccountDetail from './page/AccountDetail/AccountDetail.jsx'
+import AccountEdit from './page/AccountEdit/AccountEdit.jsx'
 
 import './animation/animation.js'
 
@@ -26,9 +27,9 @@ export default function App() {
           <Route path="/register" component={Register}></Route>
           <Route path="/bill" component={Bill}></Route>
           <Route path="/record" component={Record}></Route>
-          <Route path="/balance" component={Balance}></Route>
-          <Route path="/balance_detail/:id" component={BalanceDetail}></Route>
-          <Route path="/balance_edit/:id" component={BalanceEdit}></Route>
+          <Route path="/account" component={Account}></Route>
+          <Route path="/account_detail/:id" component={AccountDetail}></Route>
+          <Route path="/account_edit/:id" component={AccountEdit}></Route>
           <Route path="/" component={Home}></Route>
         </Switch>
       </div>
