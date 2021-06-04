@@ -8,7 +8,12 @@ const back = (comp) => {
   comp.props.history.goBack()
 }
 
+const getParam = (comp, param) => {
+  return comp.props.match.params[param]
+}
+
 export default {
+  getParam,
   push,
   back
 }

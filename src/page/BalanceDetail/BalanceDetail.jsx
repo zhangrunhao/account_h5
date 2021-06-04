@@ -5,6 +5,7 @@ import {
 import NavTop from '../../common/TopNav/TopNav.jsx'
 import AccountBillDayDetail from '../../common/AccountBillDayDetail/AccountBillDayDetail.jsx'
 import styled from 'styled-components'
+import History from '../../util/history.js'
 
 const Summary = styled.div`
   background-color: #fff;
@@ -24,9 +25,8 @@ class BalanceDetail extends React.Component {
     }
   }
   componentDidMount () {
-    const id = this.props.match.params.id
     this.setState({
-      id
+      id: History.getParam(this, 'id')
     })
   }
   render () {
