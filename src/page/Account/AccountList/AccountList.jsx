@@ -4,6 +4,10 @@ import styled from 'styled-components'
 
 import History from '../../../util/history.js'
 
+import {
+  getAccountList
+} from '../../../api/account.js'
+
 const Wrapper = styled.div`
   background-color: #fff;
   margin: .2rem;
@@ -52,12 +56,24 @@ const Name = styled.div`
 const Number = styled.div`
   flex: 0 1 .2rem;
   margin-right: .15rem;
-
 `
 
 class AccountList extends React.Component {
-  handleAccountClick (id) {
-    const path = `/account_detail/${id}`
+  constructor (props) {
+    super(props)
+    this.state = {
+      accountList: []
+    }
+  }
+  componentDidMount () {
+    getAccountList().then(data => {
+      this.setState({
+        accountList: data.data
+      })
+    })
+  }
+  handleAccountClick (account) {
+    const path = `/account_detail/${account.accountId}`
     History.push(this, path)
   }
   render () {
@@ -66,12 +82,12 @@ class AccountList extends React.Component {
         <Title>账户列表</Title>
         <List>
           {
-            Array(20).fill("aaa").map(() => 
-              <Item key={Math.random()} onClick={this.handleAccountClick.bind(this, Math.random())}>
+            this.state.accountList.map((i) => 
+              <Item key={i.accountId} onClick={this.handleAccountClick.bind(this, i)}>
                 <Icon>
-                  <img src="http://pic.616pic.com/ys_img/00/03/78/04RotuWM2Y.jpg" alt=""/>
+                  <img src={i.icon} alt=""/>
                 </Icon>
-                <Name>蚂蚁花呗</Name>
+                <Name>{i.name}</Name>
                 <Number>-20.30</Number>
               </Item>
             )

@@ -3,7 +3,9 @@ import {
   Left,
   SettingConfig,
   AddOne,
-  ChartLine
+  ChartLine,
+  Delete,
+  Edit
 } from '@icon-park/react';
 import {
   withRouter
@@ -71,6 +73,20 @@ class TopNav extends React.Component {
           <AddOne
             style={{display: this.props.add ? 'block' : 'none'}}
             onClick={() => this.props.addClick()}
+            theme="outline"
+            size="24"
+            fill="#333"
+          />
+          <Edit
+            style={{display: this.props.edit ? 'block' : 'none'}}
+            onClick={() => this.props.editClick()}
+            theme="outline"
+            size="24"
+            fill="#333"
+          />
+          <Delete
+            style={{display: this.props.delete ? 'block' : 'none'}}
+            onClick={() => this.props.deleteClick()}
             theme="outline"
             size="24"
             fill="#333"

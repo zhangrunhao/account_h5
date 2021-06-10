@@ -1,23 +1,28 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import {
   withRouter
 } from 'react-router-dom'
 import {
   Formik,
   Field,
-  Form
+  Form,
+  useField,
+  useFormikContext
 } from 'formik'
-
+import * as Yup from 'yup'
 import TopNav from '../../common/TopNav/TopNav.jsx'
 import History from '../../util/history.js'
+import Toast from '../../components/Toast/Toast.jsx'
+import {
+  addAccount,
+  updateAccount,
+  getAccountDetail
+} from '../../api/account.js'
+import styled from 'styled-components'
 
-function validateName(value) {
-  let error
-  if (!value) {
-    error = "Required"
-  }
-  return error
-}
+const ErrorTip = styled.div`
+  color: red;
+`
 
 class AccountEdit extends React.Component {
   constructor (props) {
@@ -33,17 +38,28 @@ class AccountEdit extends React.Component {
         title: '新建账户'
       })
     } else {
-      // TODO: 此处需要根据账户id查询账户信息, 并显示
       this.setState({
-        title: '编辑账户'
-        // name: 
+        title: '编辑账户',
+        id: id
       })
     }
   }
   onSubmit (data) {
-    console.log('submit', data)
+    if (this.state.title === '新建账户') {
+      addAccount(data).then(r => {
+        Toast.success("操作成功")
+      })
+    } else if (this.state.title === '编辑账户') {
+      data = Object.assign(data, {
+        accountId: this.state.id
+      })
+      updateAccount(data).then(r => {
+        Toast.success("操作成功")
+      })
+    }
   }
   render () {
+    const id = History.getParam(this, 'id')
     return (
       <>
         <TopNav back>
@@ -51,29 +67,76 @@ class AccountEdit extends React.Component {
             this.state.title
           }
         </TopNav>
-        <Formik
-          initialValues={{
-            name: "",
-          }}
-          onSubmit={values => {
-            this.onSubmit(values)
-          }}
-        >
-          {
-            ({errors, touched}) => 
-              <Form>
-                <label htmlFor="name">Name: </label>
-                <Field id="name" name="name" validate={validateName}></Field>
-                {errors.name && touched.name && <div>Errors: {errors.name}</div>}
-                <br />
-
-                <button type="submit">Confirm</button>
-              </Form>
-          }
-        </Formik>
+        <EditForm id={id} onSubmit={this.onSubmit.bind(this)}></EditForm>
       </>
     )
   }
 }
+
+function EditForm (props) {
+  const [data, setData] = React.useState({})
+  React.useEffect(() => {
+    (props.id !== 'new') && getAccountDetail(props.id).then(r => {
+      setData(r.data)
+    })
+  }, [props.id])
+  return (
+    <Formik
+      initialValues={{
+        name: '',
+        type: '',
+        icon: '',
+        color: '',
+      }}
+      validationSchema={
+        Yup.object().shape({
+          name: Yup.string().min(2, 'Too Short!').required('Required!'),
+          type: Yup.string().required('Required!'),
+          icon: Yup.string().required('Required!'),
+          color: Yup.string().required('Required!'),
+        })
+      }
+      onSubmit={(values) => {
+        props.onSubmit(values)
+      }}
+    >
+      <Form>
+        <MyFiled data={data} name="name"/>
+        <br/>
+        <MyFiled data={data} name="type"/>
+        <br/>
+        <MyFiled data={data} name="icon"/>
+        <br/>
+        <MyFiled data={data} name="color"/>
+        <br/>
+        <button type="submit">Confirm</button>
+      </Form>
+    </Formik>
+  )
+}
+
+function MyFiled (props) {
+  const {
+    setFieldValue
+  } = useFormikContext()
+  const [field, meta] = useField(props)
+  React.useEffect(() => {
+    props && props.data && props.data.name && setFieldValue(props.name, props.data[props.name])
+  }, [props.data])
+  return (
+    <>
+      <label>{props.name}: </label>
+      <input {...props} {...field} />
+      {
+        meta.touched && meta.error
+        ?
+        (<ErrorTip>{meta.error}</ErrorTip>)
+        :
+        null
+      }
+    </>
+  )
+}
+
 
 export default withRouter(AccountEdit)
