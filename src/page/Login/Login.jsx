@@ -5,7 +5,8 @@ import {
   Form
 } from 'formik'
 import NavTop from '../../common/TopNav/TopNav.jsx'
-import request from '../../util/request'
+import Toast from '../../components/Toast/Toast.jsx'
+import request from '../../util/request.js'
 import {
   setToken
 } from '../../util/auth'
@@ -36,7 +37,10 @@ export default class Login extends React.Component {
       method: 'POST',
       data
     }).then(res => {
-      res && res.data && res.data.token && setToken(res.data.token)
+      if (res && res.data && res.data.token) {
+        setToken(res.data.token)
+        Toast.success("登录成功")
+      }
     }).catch(err => {
       console.log(err)
     })
