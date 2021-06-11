@@ -11,7 +11,7 @@ export default class Record extends React.Component {
   render () {
     return (
       <Wrapper>
-        <TopNav back></TopNav>
+        <TopNav back>记录</TopNav>
         <TypeChoose></TypeChoose>
         <RecordInput></RecordInput>
       </Wrapper>

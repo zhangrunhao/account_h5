@@ -9,6 +9,10 @@ import History from '../../util/history.js'
 import {
   deleteAccount
 } from '../../api/account'
+import {
+  Edit,
+  Delete
+} from '@icon-park/react'
 const Summary = styled.div`
   background-color: #fff;
   margin: .3rem;
@@ -48,10 +52,28 @@ class AccountDetail extends React.Component {
       <Wrapper>
         <NavTop 
           back
-          delete
-          edit
-          deleteClick={this.deleteClick.bind(this)}
-          editClick={this.editClick.bind(this)}
+          rightIconComponents={[
+            {
+              component: Edit,
+              props: {
+                key: 'edit',
+                onClick: this.editClick.bind(this),
+                theme: 'outline',
+                size: '24',
+                fill: '#333'
+              }
+            },
+            {
+              component: Delete,
+              props: {
+                key: 'delete',
+                onClick: this.deleteClick.bind(this),
+                theme: 'outline',
+                size: '24',
+                fill: '#333'
+              }
+            }
+          ]}
         >
           账户id: {this.state.id}
         </NavTop>

@@ -1,11 +1,6 @@
 import React from 'react'
 import { 
   Left,
-  SettingConfig,
-  AddOne,
-  ChartLine,
-  Delete,
-  Edit
 } from '@icon-park/react';
 import {
   withRouter
@@ -52,11 +47,15 @@ class TopNav extends React.Component {
             theme="outline"
             size="24"
             fill="#333"/>
-          <SettingConfig
-            style={{display: this.props.setting ? 'block' : 'none'}}
-            theme="outline"
-            size="24"
-            fill="#333"/>
+            {
+              this.props.LeftIconComponents ?
+              this.props.LeftIconComponents.map(c => {
+                return (
+                  <c.component {...c.props}></c.component>
+                )
+              }) :
+              null
+            }
         </Sub>
         <Sub>
           {
@@ -64,33 +63,15 @@ class TopNav extends React.Component {
           }
         </Sub>
         <Sub>
-          <ChartLine
-            style={{display: this.props.chat ? 'block' : 'none'}}
-            theme="outline"
-            size="24"
-            fill="#333"
-          />
-          <AddOne
-            style={{display: this.props.add ? 'block' : 'none'}}
-            onClick={() => this.props.addClick()}
-            theme="outline"
-            size="24"
-            fill="#333"
-          />
-          <Edit
-            style={{display: this.props.edit ? 'block' : 'none'}}
-            onClick={() => this.props.editClick()}
-            theme="outline"
-            size="24"
-            fill="#333"
-          />
-          <Delete
-            style={{display: this.props.delete ? 'block' : 'none'}}
-            onClick={() => this.props.deleteClick()}
-            theme="outline"
-            size="24"
-            fill="#333"
-          />
+          {
+            this.props.rightIconComponents ?
+            this.props.rightIconComponents.map(c => {
+              return (
+                <c.component {...c.props}></c.component>
+              )
+            }) :
+            null
+          }
         </Sub>
       </Wrapper>
     )
