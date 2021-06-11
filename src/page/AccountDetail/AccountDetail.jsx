@@ -19,6 +19,10 @@ const Summary = styled.div`
   font-size: .34rem;
 `
 
+const Wrapper = styled.div`
+  padding-top: 1rem;
+`
+
 class AccountDetail extends React.Component {
   constructor (props) {
     super(props)
@@ -41,7 +45,7 @@ class AccountDetail extends React.Component {
   }
   render () {
     return (
-      <>
+      <Wrapper>
         <NavTop 
           back
           delete
@@ -61,7 +65,7 @@ class AccountDetail extends React.Component {
           <AccountBillDayDetail></AccountBillDayDetail>
           <AccountBillDayDetail></AccountBillDayDetail>
         </ul>
-      </>
+      </Wrapper>
     )
   }
 }

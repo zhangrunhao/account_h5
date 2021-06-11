@@ -5,7 +5,7 @@ const Wrapper = styled.div`
 `
 
 const Total = styled.div`
-  margin: .2rem;
+  margin-bottom: .2rem;
   padding: .2rem;
   background-color: #fff;
   border-radius: .1rem;

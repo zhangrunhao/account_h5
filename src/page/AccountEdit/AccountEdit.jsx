@@ -20,6 +20,10 @@ import {
 } from '../../api/account.js'
 import styled from 'styled-components'
 
+const Wrapper = styled.div`
+padding-top: 1rem;
+`
+
 const ErrorTip = styled.div`
   color: red;
 `
@@ -61,14 +65,14 @@ class AccountEdit extends React.Component {
   render () {
     const id = History.getParam(this, 'id')
     return (
-      <>
+      <Wrapper>
         <TopNav back>
           {
             this.state.title
           }
         </TopNav>
         <EditForm id={id} onSubmit={this.onSubmit.bind(this)}></EditForm>
-      </>
+      </Wrapper>
     )
   }
 }

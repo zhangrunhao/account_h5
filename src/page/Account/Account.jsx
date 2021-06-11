@@ -13,6 +13,7 @@ import BottomNav from '../../common/BottomNav/BottomNav.jsx'
 import History from '../../util/history.js'
 
 const Wrapper = styled.div`
+  padding: 1rem .3rem;
 `
 
 class Account extends React.Component {

@@ -10,7 +10,10 @@ import request from '../../util/request.js'
 import {
   setToken
 } from '../../util/auth'
-
+import styled from 'styled-components'
+const Wrapper = styled.div`
+padding-top: 1rem;
+`
 function validateEmail (value) {
   let error
   if (!value) {
@@ -47,7 +50,7 @@ export default class Login extends React.Component {
   }
   render () {
     return (
-      <>
+      <Wrapper>
         <NavTop back>登录</NavTop>
         <Formik
           initialValues={{
@@ -78,7 +81,7 @@ export default class Login extends React.Component {
             </Form>
           }
         </Formik>
-      </>
+      </Wrapper>
     );
   }
 }
