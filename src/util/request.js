@@ -2,7 +2,7 @@ import axios from 'axios'
 import Toast from '../components/Toast/Toast.jsx'
 import {
   getToken
-} from './auth.js'
+} from './token.js'
 
 const service = axios.create({
   baseURL: 'http://localhost:9000'

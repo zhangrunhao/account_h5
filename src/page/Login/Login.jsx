@@ -11,7 +11,7 @@ import {
 } from '../../api/user.js'
 import {
   setToken
-} from '../../util/auth'
+} from '../../util/token.js'
 import styled from 'styled-components'
 const Wrapper = styled.div`
 padding-top: 1rem;
