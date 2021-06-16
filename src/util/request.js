@@ -5,8 +5,8 @@ import {
 } from './auth.js'
 
 const service = axios.create({
-  baseURL: 'http://localhost:9000',
-  timeout: 15000
+  baseURL: 'http://localhost:9000'
+  // timeout: 15000
 })
 
 const token = getToken()
