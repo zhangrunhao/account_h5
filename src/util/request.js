@@ -9,10 +9,8 @@ const service = axios.create({
   // timeout: 15000
 })
 
-const token = getToken()
-
 service.interceptors.request.use(config => {
-  config.headers['Authorization'] = token
+  config.headers['Authorization'] = getToken()
   return config
 })
 
