@@ -17,10 +17,13 @@ service.interceptors.request.use(config => {
 service.interceptors.response.use(
   response => {
     const res = response.data
-    if (res.code != 200) {
-      Toast.fail(res.message)
+    if (res.code != 200) {      
       if (res.code === 401) {
-        // TODO: 重新登录
+        Toast.fail(res.message, 1500, () => {
+          location.href=`${location.origin}/#/login`
+        })
+      } else {
+        Toast.fail(res.message)
       }
       return Promise.reject('error')
     } else {

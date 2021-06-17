@@ -40,10 +40,15 @@ export default class Login extends React.Component {
     loginUser(values).then(res => {
       if (res && res.data && res.data.token) {
         setToken(res.data.token)
-        Toast.success("登录成功")
+        Toast.success("登录成功", 1000, () => {
+          if (history.length > 2) {
+            history.back()
+          } else {
+            location.href = `${location.origin}/#/home`
+          }
+        })
       }
     }).catch(err => {
-      console.log(err)
     })
   }
   render () {
