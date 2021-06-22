@@ -13,6 +13,9 @@ import {
   Edit,
   Delete
 } from '@icon-park/react'
+import alert from '../../components/Modal/alert.jsx'
+import { isFunction } from 'loadsh'
+import Toast from '../../components/Toast/Toast.jsx'
 const Summary = styled.div`
   background-color: #fff;
   margin: .3rem;
@@ -41,7 +44,27 @@ class AccountDetail extends React.Component {
     })
   }
   deleteClick () {
-    // deleteAccount(this.state.id)
+    function close() {
+      alertOrig && isFunction(alertOrig.close) && alertOrig.close()
+    }
+    function remove(id) {
+      console.log('remove id', id)
+      deleteAccount(id).then(r => {
+        Toast.success('删除成功')
+        close()
+        history.back()
+      })
+    }
+    const alertOrig = alert({
+      footer: () => {
+        return (
+          <div>
+            <button onClick={close}>取消</button>
+            <button onClick={remove.bind(this, this.state.id)}>确定</button>
+          </div>
+        )
+      }
+    });
   }
   editClick () {
     const path = `/account_edit/${this.state.id}`
