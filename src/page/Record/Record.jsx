@@ -5,7 +5,7 @@ import RecordInput from './RecordInput/RecordInput.jsx'
 import styled from 'styled-components'
 
 const Wrapper = styled.div`
-  padding-top: 1rem;
+  padding-top: .8rem;
 `
 export default class Record extends React.Component {
   render () {

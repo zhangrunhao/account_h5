@@ -13,6 +13,8 @@ import {
   setToken
 } from '../../util/token.js'
 import styled from 'styled-components'
+import { withRouter } from 'react-router-dom'
+import History from '../../util/history.js'
 const Wrapper = styled.div`
 padding-top: 1rem;
 `
@@ -32,7 +34,7 @@ function validatePassword (value) {
   }
   return error
 }
-export default class Login extends React.Component {
+class Login extends React.Component {
   constructor (props) {
     super(props)
   }
@@ -42,7 +44,7 @@ export default class Login extends React.Component {
         setToken(res.data.token)
         Toast.success("登录成功", 1000, () => {
           if (history.length > 2) {
-            history.back()
+            History.back(this)
           } else {
             location.href = `${location.origin}/#/home`
           }
@@ -88,3 +90,5 @@ export default class Login extends React.Component {
     );
   }
 }
+
+export default withRouter(Login)

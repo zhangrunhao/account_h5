@@ -52,7 +52,7 @@ class AccountDetail extends React.Component {
       deleteAccount(id).then(r => {
         Toast.success('删除成功')
         close()
-        history.back()
+        History.back(this)
       })
     }
     const alertOrig = alert({
