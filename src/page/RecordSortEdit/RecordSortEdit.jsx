@@ -14,8 +14,9 @@ import {
   Delete
 } from '@icon-park/react'
 
-import TopNav from '../../common/TopNav/TopNav.jsx'
+import alert from '../../components/Modal/alert.jsx'
 import Toast from '../../components/Toast/Toast.jsx'
+import TopNav from '../../common/TopNav/TopNav.jsx'
 import History from '../../util/history.js'
 import {
   getRecordSort,
@@ -23,6 +24,7 @@ import {
   updateRecordSort,
   deleteRecordSort
 } from '../../api/recordSort'
+import { isFunction, remove } from 'lodash'
 
 const Wrapper = styled.div`
 padding-top: 1rem;
@@ -73,11 +75,26 @@ class RecordSortEdit extends React.Component {
     }
   }
   deleteClick() {
-    const id = History.getParam(this, 'id')
-    deleteRecordSort(id).then(r => {
-      Toast.success('删除成功', null, () => {
-        History.back(this)
+    function close() {
+      alertOrig && isFunction(alertOrig.close) && alertOrig.close()
+    }
+    function remove() {
+      close()
+      deleteRecordSort(History.getParam(this, 'id')).then(r => {
+        Toast.success('删除成功', null, () => {
+          History.back(this)
+        })
       })
+    }
+
+    const alertOrig = alert({
+      footer: () => {
+        return (
+          <div>
+            <button onClick={remove.bind(this)}>确定</button>
+          </div>
+        )
+      }
     })
   }
   render() {
