@@ -125,7 +125,7 @@ function MyFiled (props) {
   } = useFormikContext()
   const [field, meta] = useField(props)
   React.useEffect(() => {
-    props && props.data && props.data.name && setFieldValue(props.name, props.data[props.name])
+    props && props.data && props.name && props.data[props.name] && setFieldValue(props.name, props.data[props.name])
   }, [props.data])
   return (
     <>

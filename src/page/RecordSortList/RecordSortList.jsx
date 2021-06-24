@@ -10,6 +10,9 @@ import {
 
 import TopNav from '../../common/TopNav/TopNav.jsx'
 import History from '../../util/history.js'
+import {
+  getRecordSortList
+} from '../../api/recordSort.js'
 
 const Wrapper = styled.div`
 padding-top: .8rem;
@@ -54,6 +57,19 @@ align-items: center;
 `
 
 class RecordSortList extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      sortList: []
+    }
+  }
+  componentDidMount() {
+    getRecordSortList().then(r => {
+      this.setState({
+        sortList: r.data
+      })
+    })
+  }
   arrowRightClick(id) {
     const path = `/record_sort_edit/${id}`
     History.push(this, path)
@@ -84,17 +100,14 @@ class RecordSortList extends React.Component {
         </TopNav>
         <List>
           {
-            new Array(10).fill({
-              icon: 'https://scpic.chinaz.net/Files/pic/icons128/8125/q1.png',
-              name: '零食'
-            }).map((v, i) => {
+           this.state.sortList.map((v, i) => {
               const CompItem = (i % 2 == 0) ? DoubleItem : SingleItem
               return (
-                <CompItem key={i}>
+                <CompItem key={v.recordSortId}>
                   <Image src={v.icon} alt="" />
                   <Name>{v.name}</Name>
                   <Icon>
-                    <ArrowRight onClick={this.arrowRightClick.bind(this, i)} theme="outline" size="24" fill="#000000"/>
+                    <ArrowRight onClick={this.arrowRightClick.bind(this, v.recordSortId)} theme="outline" size="24" fill="#000000"/>
                   </Icon>
                 </CompItem>
               )

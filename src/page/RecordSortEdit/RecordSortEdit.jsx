@@ -10,11 +10,26 @@ import {
   useField,
   useFormikContext
 } from 'formik'
+import {
+  Delete
+} from '@icon-park/react'
 
 import TopNav from '../../common/TopNav/TopNav.jsx'
+import Toast from '../../components/Toast/Toast.jsx'
 import History from '../../util/history.js'
+import {
+  getRecordSort,
+  addRecordSort,
+  updateRecordSort,
+  deleteRecordSort
+} from '../../api/recordSort'
+
 const Wrapper = styled.div`
 padding-top: 1rem;
+`
+
+const ErrorTip = styled.div`
+  color: red;
 `
 
 class RecordSortEdit extends React.Component {
@@ -37,13 +52,55 @@ class RecordSortEdit extends React.Component {
     }
   }
   onSubmit(values) {
-    console.log(values)
+    console.log('submit')
+    if (this.state.title === '新建收支记录类型') {
+      console.log('add submit', values)
+      addRecordSort(values).then(r => {
+        Toast.success('添加成功', 1000, () => {
+          History.back(this)
+        })
+      })
+    } else {
+      values = Object.assign(values, {
+        recordSortId: History.getParam(this, 'id')
+      })
+      console.log('update submit', values)
+      updateRecordSort(values).then(r => {
+        Toast.success('修改成功', 1000, () => {
+          History.back(this)
+        })
+      })
+    }
+  }
+  deleteClick() {
+    const id = History.getParam(this, 'id')
+    deleteRecordSort(id).then(r => {
+      Toast.success('删除成功', null, () => {
+        History.back(this)
+      })
+    })
   }
   render() {
     const id = History.getParam(this, 'id')
     return (
       <Wrapper>
-        <TopNav back>{this.state.title}</TopNav>
+        <TopNav
+          rightIconComponents={[
+            {
+              component: Delete,
+              props: {
+                key: 'delete',
+                onClick: this.deleteClick.bind(this),
+                theme: 'outline',
+                size: '24',
+                fill: '#333'
+              }
+            }
+          ]}
+          back
+        >
+          {this.state.title}
+        </TopNav>
         <EditForm id={id} onSubmit={this.onSubmit.bind(this)}></EditForm>
       </Wrapper>
     )
@@ -53,19 +110,22 @@ class RecordSortEdit extends React.Component {
 function EditForm(props) {
   const [data, setDate] = React.useState({})
   React.useEffect(() => {
-    // TODO: 获取数据并注入data
-    // (props.id !== 'new') && 
+    (props.id !== 'new') && getRecordSort(props.id).then(r => {
+      setDate(r.data)
+    })
   }, [props.id])
   return (
     <Formik
       initialValues={{
         name: '',
-        icon: ''
+        icon: '',
+        type: '',
       }}
       validationSchema={
         Yup.object().shape({
           name: Yup.string().min(2, 'Too Short!').required('Required'),
-          icon: Yup.string().required('Required!')
+          icon: Yup.string().required('Required!'),
+          type: Yup.string().required('Required!')
         })
       }
       onSubmit={values => {
@@ -77,6 +137,8 @@ function EditForm(props) {
         <br/>
         <MyFiled data={data} name="name"></MyFiled>
         <br/>
+        <MyFiled data={data} name="type"></MyFiled>
+        <br/>
         <button type="submit">Confirm</button>
       </Form>
     </Formik>
@@ -85,12 +147,11 @@ function EditForm(props) {
 
 function MyFiled(props) {
   const {
-    setFiledValue
+    setFieldValue
   } = useFormikContext()
   const [field, meta] = useField(props)
   React.useEffect(() => {
-    let i
-    (i = props) && (i = i.data) && (i = i.name) && setFiledValue(i)
+    props && props.data && props.name && props.data[props.name] && setFieldValue(props.name, props.data[props.name])
   }, [props.data])
   return (
     <>
