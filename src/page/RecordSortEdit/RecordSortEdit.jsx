@@ -17,7 +17,7 @@ const Wrapper = styled.div`
 padding-top: 1rem;
 `
 
-class RecordTypeEdit extends React.Component {
+class RecordSortEdit extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -107,4 +107,4 @@ function MyFiled(props) {
   )
 }
 
-export default withRouter(RecordTypeEdit)
+export default withRouter(RecordSortEdit)

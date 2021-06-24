@@ -53,13 +53,13 @@ justify-content: center;
 align-items: center;
 `
 
-class RecordTypeList extends React.Component {
+class RecordSortList extends React.Component {
   arrowRightClick(id) {
-    const path = `/record_type_edit/${id}`
+    const path = `/record_sort_edit/${id}`
     History.push(this, path)
   }
   addClick() {
-    const path = `/record_type_edit/new`
+    const path = `/record_sort_edit/new`
     History.push(this, path)
   }
   render() {
@@ -106,4 +106,4 @@ class RecordTypeList extends React.Component {
   }
 }
 
-export default withRouter(RecordTypeList)
+export default withRouter(RecordSortList)

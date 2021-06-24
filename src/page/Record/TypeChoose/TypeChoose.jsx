@@ -67,7 +67,7 @@ class TypeChoose extends React.Component {
     })
   }
   editTypeButtonClick() {
-    const path = `/record_type_list`
+    const path = `/record_sort_list`
     History.push(this, path)
   }
   render () {

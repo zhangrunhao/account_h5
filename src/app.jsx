@@ -11,8 +11,8 @@ import Register from './page/Register/Register.jsx'
 import Bill from './page/Bill/Bill.jsx'
 
 import Record from './page/Record/Record.jsx'
-import RecordTypeList from './page/RecordTypeList/RecordTypeList.jsx'
-import RecordTypeEdit from './page/RecordTypeEdit/RecordTypeEdit.jsx'
+import RecordSortList from './page/RecordSortList/RecordSortList.jsx'
+import RecordSortEdit from './page/RecordSortEdit/RecordSortEdit.jsx'
 
 import Account from './page/Account/Account.jsx'
 import AccountDetail from './page/AccountDetail/AccountDetail.jsx'
@@ -30,8 +30,8 @@ export default function App() {
           <Route path="/register" component={Register}></Route>
           <Route path="/bill" component={Bill}></Route>
           <Route path="/record" component={Record}></Route>
-          <Route path="/record_type_list" component={RecordTypeList}></Route>
-          <Route path="/record_type_edit/:id" component={RecordTypeEdit}></Route>
+          <Route path="/record_sort_list" component={RecordSortList}></Route>
+          <Route path="/record_sort_edit/:id" component={RecordSortEdit}></Route>
           <Route path="/account" component={Account}></Route>
           <Route path="/account_detail/:id" component={AccountDetail}></Route>
           <Route path="/account_edit/:id" component={AccountEdit}></Route>
