@@ -1,12 +1,15 @@
 import React from 'react'
+import styled from 'styled-components'
 import {
   withRouter
 } from 'react-router-dom'
-import styled from 'styled-components'
-import TopNav from '../../common/TopNav/TopNav.jsx'
 import {
-  ArrowCircleRight
+  AddOne,
+  ArrowRight
 } from '@icon-park/react'
+
+import TopNav from '../../common/TopNav/TopNav.jsx'
+import History from '../../util/history.js'
 
 const Wrapper = styled.div`
 padding-top: .8rem;
@@ -51,28 +54,52 @@ align-items: center;
 `
 
 class RecordTypeList extends React.Component {
+  arrowRightClick(id) {
+    const path = `/record_type_edit/${id}`
+    History.push(this, path)
+  }
+  addClick() {
+    const path = `/record_type_edit/new`
+    History.push(this, path)
+  }
   render() {
     return (
       <Wrapper>
-        <TopNav back>收支记录类型列表</TopNav>
+        <TopNav
+          back
+          rightIconComponents={[
+            {
+              component: AddOne,
+              props: {
+                key: 'add',
+                onClick: this.addClick.bind(this),
+                theme: 'outline',
+                size: '24',
+                fill: '#333'
+              }
+            }
+          ]}
+        >
+          收支记录类型列表
+        </TopNav>
         <List>
-
-          <SingleItem>
-            <Image src="https://scpic.chinaz.net/Files/pic/icons128/8125/q1.png" alt="" />
-            <Name>零食</Name>
-            <Icon>
-              <ArrowCircleRight theme="outline" size="24" fill="#000000"/>
-            </Icon>
-          </SingleItem>
-
-          <DoubleItem>
-            <Image src="https://scpic.chinaz.net/Files/pic/icons128/8125/q1.png" alt="" />
-            <Name>零食</Name>
-            <Icon>
-              <ArrowCircleRight theme="outline" size="24" fill="#000000"/>
-            </Icon>
-          </DoubleItem>
-
+          {
+            new Array(10).fill({
+              icon: 'https://scpic.chinaz.net/Files/pic/icons128/8125/q1.png',
+              name: '零食'
+            }).map((v, i) => {
+              const CompItem = (i % 2 == 0) ? DoubleItem : SingleItem
+              return (
+                <CompItem key={i}>
+                  <Image src={v.icon} alt="" />
+                  <Name>{v.name}</Name>
+                  <Icon>
+                    <ArrowRight onClick={this.arrowRightClick.bind(this, i)} theme="outline" size="24" fill="#000000"/>
+                  </Icon>
+                </CompItem>
+              )
+            })
+          }
         </List>
       </Wrapper>
     )

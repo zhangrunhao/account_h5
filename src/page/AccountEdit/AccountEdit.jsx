@@ -1,15 +1,16 @@
-import React, {useState, useEffect} from 'react'
+import * as Yup from 'yup'
+import styled from 'styled-components'
+import React from 'react'
 import {
   withRouter
 } from 'react-router-dom'
 import {
   Formik,
-  Field,
   Form,
   useField,
   useFormikContext
 } from 'formik'
-import * as Yup from 'yup'
+
 import TopNav from '../../common/TopNav/TopNav.jsx'
 import History from '../../util/history.js'
 import Toast from '../../components/Toast/Toast.jsx'
@@ -18,7 +19,6 @@ import {
   updateAccount,
   getAccountDetail
 } from '../../api/account.js'
-import styled from 'styled-components'
 
 const Wrapper = styled.div`
 padding-top: 1rem;
