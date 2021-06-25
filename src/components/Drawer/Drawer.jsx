@@ -1,11 +1,11 @@
 import React from 'react'
-import { CSSTransition } from 'react-transition-group';
+import PropTypes from 'prop-types'
+import { CSSTransition } from 'react-transition-group'
 import styled from 'styled-components'
 import {
   getWinWidth,
   getWinHeight
 } from '../../util/util.js'
-
 
 const Wrapper = styled.div`
   position: fixed;
@@ -19,9 +19,6 @@ const Wrapper = styled.div`
 `
 
 export default class Drawer extends React.Component {
-  constructor (props) {
-    super(props)
-  }
   render () {
     return (
       <CSSTransition classNames="fadeInRight" timeout={300} in={this.props.visible} unmountOnExit>
@@ -33,4 +30,13 @@ export default class Drawer extends React.Component {
       </CSSTransition>
     )
   }
+}
+
+Drawer.propTypes = {
+  visible: PropTypes.bool,
+  children: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.array,
+    PropTypes.object
+  ])
 }

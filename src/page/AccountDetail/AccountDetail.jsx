@@ -37,17 +37,19 @@ class AccountDetail extends React.Component {
       id: ''
     }
   }
+
   componentDidMount () {
     const id = History.getParam(this, 'id')
     this.setState({
       id
     })
   }
+
   deleteClick () {
-    function close() {
+    function close () {
       alertOrig && isFunction(alertOrig.close) && alertOrig.close()
     }
-    function remove(id) {
+    function remove (id) {
       console.log('remove id', id)
       deleteAccount(id).then(r => {
         Toast.success('删除成功')
@@ -64,16 +66,18 @@ class AccountDetail extends React.Component {
           </div>
         )
       }
-    });
+    })
   }
+
   editClick () {
     const path = `/account_edit/${this.state.id}`
     History.push(this, path)
   }
+
   render () {
     return (
       <Wrapper>
-        <NavTop 
+        <NavTop
           back
           rightIconComponents={[
             {

@@ -57,28 +57,32 @@ align-items: center;
 `
 
 class RecordSortList extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       sortList: []
     }
   }
-  componentDidMount() {
+
+  componentDidMount () {
     getRecordSortList().then(r => {
       this.setState({
         sortList: r.data
       })
     })
   }
-  arrowRightClick(id) {
+
+  arrowRightClick (id) {
     const path = `/record_sort_edit/${id}`
     History.push(this, path)
   }
-  addClick() {
-    const path = `/record_sort_edit/new`
+
+  addClick () {
+    const path = '/record_sort_edit/new'
     History.push(this, path)
   }
-  render() {
+
+  render () {
     return (
       <Wrapper>
         <TopNav
@@ -100,8 +104,8 @@ class RecordSortList extends React.Component {
         </TopNav>
         <List>
           {
-           this.state.sortList.map((v, i) => {
-              const CompItem = (i % 2 == 0) ? DoubleItem : SingleItem
+            this.state.sortList.map((v, i) => {
+              const CompItem = (i % 2 === 0) ? DoubleItem : SingleItem
               return (
                 <CompItem key={v.recordSortId}>
                   <Image src={v.icon} alt="" />

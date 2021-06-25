@@ -38,9 +38,11 @@ class Toast extends React.Component {
     super(props)
     this.set(props)
   }
+
   componentWillUnmount () {
     isFunction(this.onClose) && this.onClose()
   }
+
   getTypeIcon () {
     const types = {
       icon: '',
@@ -51,13 +53,16 @@ class Toast extends React.Component {
     }
     return types[this.type]
   }
+
   set (params) {
     params = params || {}
     this.type = params.type || 'info'
     this.content = params.content || ''
     this.duration = params.duration || 1000
-    this.onClose = (isFunction(params.onClose) && params.onClose) || new Function()
+    this.onClose = (isFunction(params.onClose) && params.onClose) || function () {
+    }
   }
+
   render () {
     return (
       <>
@@ -88,7 +93,7 @@ function show (content, duration, type, onClose) {
   dom = document.createElement('div')
   document.body.appendChild(dom)
   ReactDom.render(
-    <Toast 
+    <Toast
       content={content}
       duration={duration}
       type={type}
@@ -125,7 +130,6 @@ function offline (content, duration, onClose) { // 离线
 function loading (content, duration, onClose) { // 加载
   return show(content, duration, 'loading', onClose)
 }
-
 
 export default {
   info,

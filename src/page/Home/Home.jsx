@@ -14,9 +14,11 @@ export default class Home extends React.Component {
     super()
     this.name = 'home'
   }
+
   click () {
     console.log(1111)
   }
+
   render () {
     return (
       <div>
@@ -25,6 +27,6 @@ export default class Home extends React.Component {
           点击
         </Wrapper>
       </div>
-    );
+    )
   }
 }

@@ -3,7 +3,9 @@ import styled from 'styled-components'
 import {
   withRouter
 } from 'react-router-dom'
-
+import {
+  AddOne
+} from '@icon-park/react'
 
 import Summary from './Summary/Summary.jsx'
 import AccountList from './AccountList/AccountList.jsx'
@@ -11,9 +13,6 @@ import AccountList from './AccountList/AccountList.jsx'
 import TopNav from '../../common/TopNav/TopNav.jsx'
 import BottomNav from '../../common/BottomNav/BottomNav.jsx'
 import History from '../../util/history.js'
-import {
-  AddOne
-} from '@icon-park/react'
 
 const Wrapper = styled.div`
   padding: 1rem .3rem;
@@ -23,6 +22,7 @@ class Account extends React.Component {
   addClick () {
     History.push(this, '/account_edit/new')
   }
+
   render () {
     return (
       <Wrapper>

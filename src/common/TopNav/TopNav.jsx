@@ -1,7 +1,8 @@
 import React from 'react'
-import { 
-  Left,
-} from '@icon-park/react';
+import PropTypes from 'prop-types'
+import {
+  Left
+} from '@icon-park/react'
 import {
   withRouter
 } from 'react-router-dom'
@@ -31,30 +32,26 @@ const Sub = styled.div`
 `
 
 class TopNav extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-  handleBackClick() {
+  handleBackClick () {
     History.back(this)
   }
-  render() {
+
+  render () {
     return (
       <Wrapper>
         <Sub>
           <Left
-            style={{display: this.props.back ? 'block' : 'none'}}
+            style={{ display: this.props.back ? 'block' : 'none' }}
             onClick={this.handleBackClick.bind(this)}
             theme="outline"
             size="24"
             fill="#333"/>
             {
-              this.props.LeftIconComponents ?
-              this.props.LeftIconComponents.map(c => {
-                return (
-                  <c.component {...c.props}></c.component>
+              this.props.LeftIconComponents
+                ? this.props.LeftIconComponents.map(c =>
+                  <c.component key={c.props.key} {...c.props}></c.component>
                 )
-              }) :
-              null
+                : null
             }
         </Sub>
         <Sub>
@@ -64,18 +61,27 @@ class TopNav extends React.Component {
         </Sub>
         <Sub>
           {
-            this.props.rightIconComponents ?
-            this.props.rightIconComponents.map(c => {
-              return (
-                <c.component {...c.props}></c.component>
+            this.props.rightIconComponents
+              ? this.props.rightIconComponents.map(c =>
+                <c.component key={c.props.key} {...c.props}></c.component>
               )
-            }) :
-            null
+              : null
           }
         </Sub>
       </Wrapper>
     )
   }
+}
+
+TopNav.propTypes = {
+  back: PropTypes.bool,
+  LeftIconComponents: PropTypes.array,
+  children: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.array,
+    PropTypes.object
+  ]),
+  rightIconComponents: PropTypes.array
 }
 
 export default withRouter(TopNav)

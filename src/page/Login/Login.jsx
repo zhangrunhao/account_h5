@@ -21,28 +21,25 @@ padding-top: 1rem;
 function validateEmail (value) {
   let error
   if (!value) {
-    error = "Required"
+    error = 'Required'
   } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
-    error = "Invalid email address"
+    error = 'Invalid email address'
   }
   return error
 }
 function validatePassword (value) {
   let error
   if (!value) {
-    error = "Required"
+    error = 'Required'
   }
   return error
 }
 class Login extends React.Component {
-  constructor (props) {
-    super(props)
-  }
   postSignin (values) {
     loginUser(values).then(res => {
       if (res && res.data && res.data.token) {
         setToken(res.data.token)
-        Toast.success("登录成功", 1000, () => {
+        Toast.success('登录成功', 1000, () => {
           if (history.length > 2) {
             History.back(this)
           } else {
@@ -50,17 +47,17 @@ class Login extends React.Component {
           }
         })
       }
-    }).catch(err => {
     })
   }
+
   render () {
     return (
       <Wrapper>
         <NavTop back>登录</NavTop>
         <Formik
           initialValues={{
-            email: "",
-            password: ""
+            email: '',
+            password: ''
           }}
           onSubmit = {(values => {
             this.postSignin(values)
@@ -70,7 +67,7 @@ class Login extends React.Component {
             ({
               errors,
               touched
-            }) => 
+            }) =>
             <Form>
               <label htmlFor="email">Email: </label>
               <Field id="email" name="email" validate={validateEmail}></Field>
@@ -87,7 +84,7 @@ class Login extends React.Component {
           }
         </Formik>
       </Wrapper>
-    );
+    )
   }
 }
 

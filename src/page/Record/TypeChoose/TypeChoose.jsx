@@ -1,5 +1,4 @@
 import React from 'react'
-import ReactDom from 'react-dom'
 import styled from 'styled-components'
 import BScroll from '@better-scroll/core'
 import {
@@ -17,7 +16,6 @@ import {
 
 const htmlFontSize = parseFloat(getStyleValue(document.querySelector('html'), 'font-size'))
 const winHeight = getWinHeight()
-
 
 const TypeChooseWrapper = styled.div`
  background-color: pink;
@@ -58,16 +56,17 @@ padding-top: .06rem;
 text-align: center;
 `
 
-
 class TypeChoose extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       sortList: []
     }
   }
-  componentDidMount() {
-    new BScroll(ReactDom.findDOMNode(this), {
+
+  componentDidMount () {
+    // eslint-disable-next-line no-new
+    new BScroll(this.node, {
       click: true
     })
     getRecordSortList().then(r => {
@@ -76,16 +75,18 @@ class TypeChoose extends React.Component {
       })
     })
   }
-  editTypeButtonClick() {
-    const path = `/record_sort_list`
+
+  editTypeButtonClick () {
+    const path = '/record_sort_list'
     History.push(this, path)
   }
+
   render () {
     return (
-      <TypeChooseWrapper>
+      <TypeChooseWrapper ref={node => { this.node = node }}>
         <ScrollWrapper>
           {
-            this.state.sortList.map(v => 
+            this.state.sortList.map(v =>
               <TypeChooseItem key={v.recordSortId}>
                 <TypeIcon src={v.icon}></TypeIcon>
                 <TypeName>{v.name}</TypeName>

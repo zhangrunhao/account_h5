@@ -1,5 +1,6 @@
 import * as Yup from 'yup'
 import styled from 'styled-components'
+import PropTypes from 'prop-types'
 import React from 'react'
 import {
   withRouter
@@ -35,6 +36,7 @@ class AccountEdit extends React.Component {
       title: '账户相关'
     }
   }
+
   componentDidMount () {
     const id = History.getParam(this, 'id')
     if (id === 'new') {
@@ -48,20 +50,22 @@ class AccountEdit extends React.Component {
       })
     }
   }
+
   onSubmit (data) {
     if (this.state.title === '新建账户') {
       addAccount(data).then(r => {
-        Toast.success("操作成功")
+        Toast.success('操作成功')
       })
     } else if (this.state.title === '编辑账户') {
       data = Object.assign(data, {
         accountId: this.state.id
       })
       updateAccount(data).then(r => {
-        Toast.success("操作成功")
+        Toast.success('操作成功')
       })
     }
   }
+
   render () {
     const id = History.getParam(this, 'id')
     return (
@@ -90,14 +94,14 @@ function EditForm (props) {
         name: '',
         type: '',
         icon: '',
-        color: '',
+        color: ''
       }}
       validationSchema={
         Yup.object().shape({
           name: Yup.string().min(2, 'Too Short!').required('Required!'),
           type: Yup.string().required('Required!'),
           icon: Yup.string().required('Required!'),
-          color: Yup.string().required('Required!'),
+          color: Yup.string().required('Required!')
         })
       }
       onSubmit={(values) => {
@@ -119,6 +123,11 @@ function EditForm (props) {
   )
 }
 
+EditForm.propTypes = {
+  id: PropTypes.string,
+  onSubmit: PropTypes.func
+}
+
 function MyFiled (props) {
   const {
     setFieldValue
@@ -133,14 +142,15 @@ function MyFiled (props) {
       <input {...props} {...field} />
       {
         meta.touched && meta.error
-        ?
-        (<ErrorTip>{meta.error}</ErrorTip>)
-        :
-        null
+          ? (<ErrorTip>{meta.error}</ErrorTip>)
+          : null
       }
     </>
   )
 }
-
+MyFiled.propTypes = {
+  data: PropTypes.object,
+  name: PropTypes.string
+}
 
 export default withRouter(AccountEdit)

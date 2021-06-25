@@ -3,10 +3,10 @@
  * @returns 屏幕宽度
  */
 export const getWinWidth = () => {
-  return document.documentElement.clientWidth
-  || window.screen.width
-  || window.outerWidth
-  || document.documentElement.scrollWidth
+  return document.documentElement.clientWidth ||
+    window.screen.width ||
+    window.outerWidth ||
+    document.documentElement.scrollWidth
 }
 
 /**
@@ -14,10 +14,10 @@ export const getWinWidth = () => {
  * @returns 屏幕高度
  */
 export const getWinHeight = () => {
-  return document.documentElement.clientHeight
-    || window.screen.height
-    || window.outerHeight
-    || document.documentElement.scrollHeight
+  return document.documentElement.clientHeight ||
+    window.screen.height ||
+    window.outerHeight ||
+    document.documentElement.scrollHeight
 }
 
 /**

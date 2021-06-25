@@ -1,5 +1,5 @@
 const push = (comp, path) => {
-  if (comp.props.history.location.pathname != path) {
+  if (comp.props.history.location.pathname !== path) {
     comp.props.history.push(path)
   }
 }

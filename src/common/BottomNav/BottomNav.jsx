@@ -1,8 +1,16 @@
 import React from 'react'
 import styled from 'styled-components'
-import Drawer from '../../components/Drawer/Drawer.jsx'
+import {
+  Home,
+  AddOne,
+  BankCard
+} from '@icon-park/react'
+import {
+  withRouter
+} from 'react-router-dom'
 
 import History from '../../util/history'
+import Drawer from '../../components/Drawer/Drawer.jsx'
 
 const Wrapper = styled.div`
   width: 100%;
@@ -17,15 +25,6 @@ const Wrapper = styled.div`
   justify-content: space-around;
   align-items: center;
 `
-
-import {
-  Home,
-  AddOne,
-  BankCard
-} from '@icon-park/react'
-import {
-  withRouter
-} from 'react-router-dom'
 class BottomNav extends React.Component {
   constructor (props) {
     super(props)
@@ -33,18 +32,22 @@ class BottomNav extends React.Component {
       drawerVisible: false
     }
   }
+
   handleHomeButtonClick () {
     History.push(this, '/bill')
   }
+
   handleAddOneButtonClick () {
     // this.setState({
     //   drawerVisible: !this.state.drawerVisible
     // })
     History.push(this, '/record')
   }
+
   handleBankCardButtonClick () {
     History.push(this, '/account')
   }
+
   render () {
     return (
       <>

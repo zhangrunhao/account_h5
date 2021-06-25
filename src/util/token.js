@@ -1,4 +1,4 @@
-const tokenKey = "loginToken"
+const tokenKey = 'loginToken'
 
 export const getToken = () => {
   return localStorage.getItem(tokenKey)

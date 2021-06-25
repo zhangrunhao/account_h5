@@ -43,7 +43,7 @@ const InputButton = styled.button`
   background-color: lavenderblush;
 `
 
-const inputMainButtonArrayInfo = [1, 2, 3, "删除", 4, 5, 6, "-", 7, 8, 9,  "+", "再记", 0, ".", "保存"]
+const inputMainButtonArrayInfo = [1, 2, 3, '删除', 4, 5, 6, '-', 7, 8, 9, '+', '再记', 0, '.', '保存']
 export default class RecordInput extends React.Component {
   render () {
     return (
@@ -56,7 +56,7 @@ export default class RecordInput extends React.Component {
         </ToolList>
         <InputMain>
           {
-            inputMainButtonArrayInfo.map((v, i) => 
+            inputMainButtonArrayInfo.map(v =>
               <InputButton key={v}>{v}</InputButton>
             )
           }

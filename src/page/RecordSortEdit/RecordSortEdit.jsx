@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import PropTypes from 'prop-types'
 import * as Yup from 'yup'
 import {
   withRouter
@@ -24,7 +25,7 @@ import {
   updateRecordSort,
   deleteRecordSort
 } from '../../api/recordSort'
-import { isFunction, remove } from 'lodash'
+import { isFunction } from 'lodash'
 
 const Wrapper = styled.div`
 padding-top: 1rem;
@@ -35,13 +36,14 @@ const ErrorTip = styled.div`
 `
 
 class RecordSortEdit extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       title: ''
     }
   }
-  componentDidMount() {
+
+  componentDidMount () {
     const id = History.getParam(this, 'id')
     if (id === 'new') {
       this.setState({
@@ -53,7 +55,8 @@ class RecordSortEdit extends React.Component {
       })
     }
   }
-  onSubmit(values) {
+
+  onSubmit (values) {
     console.log('submit')
     if (this.state.title === '新建收支记录类型') {
       console.log('add submit', values)
@@ -74,11 +77,12 @@ class RecordSortEdit extends React.Component {
       })
     }
   }
-  deleteClick() {
-    function close() {
+
+  deleteClick () {
+    function close () {
       alertOrig && isFunction(alertOrig.close) && alertOrig.close()
     }
-    function remove() {
+    function remove () {
       close()
       deleteRecordSort(History.getParam(this, 'id')).then(r => {
         Toast.success('删除成功', null, () => {
@@ -97,23 +101,25 @@ class RecordSortEdit extends React.Component {
       }
     })
   }
-  render() {
+
+  render () {
     const id = History.getParam(this, 'id')
+    const rightComps = (id === 'new')
+      ? []
+      : [{
+          component: Delete,
+          props: {
+            key: 'delete',
+            onClick: this.deleteClick.bind(this),
+            theme: 'outline',
+            size: '24',
+            fill: '#333'
+          }
+        }]
     return (
       <Wrapper>
         <TopNav
-          rightIconComponents={[
-            {
-              component: Delete,
-              props: {
-                key: 'delete',
-                onClick: this.deleteClick.bind(this),
-                theme: 'outline',
-                size: '24',
-                fill: '#333'
-              }
-            }
-          ]}
+          rightIconComponents={rightComps}
           back
         >
           {this.state.title}
@@ -124,7 +130,7 @@ class RecordSortEdit extends React.Component {
   }
 }
 
-function EditForm(props) {
+function EditForm (props) {
   const [data, setDate] = React.useState({})
   React.useEffect(() => {
     (props.id !== 'new') && getRecordSort(props.id).then(r => {
@@ -136,7 +142,7 @@ function EditForm(props) {
       initialValues={{
         name: '',
         icon: '',
-        type: '',
+        type: ''
       }}
       validationSchema={
         Yup.object().shape({
@@ -161,8 +167,12 @@ function EditForm(props) {
     </Formik>
   )
 }
+EditForm.propTypes = {
+  id: PropTypes.string,
+  onSubmit: PropTypes.func
+}
 
-function MyFiled(props) {
+function MyFiled (props) {
   const {
     setFieldValue
   } = useFormikContext()
@@ -176,13 +186,15 @@ function MyFiled(props) {
       <input {...props} {...field}></input>
       {
         meta.touched && meta.error
-        ?
-        (<ErrorTip>{meta.error}</ErrorTip>)
-        :
-        null
+          ? (<ErrorTip>{meta.error}</ErrorTip>)
+          : null
       }
     </>
   )
+}
+MyFiled.propTypes = {
+  name: PropTypes.string,
+  data: PropTypes.object
 }
 
 export default withRouter(RecordSortEdit)

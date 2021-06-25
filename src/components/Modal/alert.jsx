@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDom from 'react-dom'
 import styled from 'styled-components'
 
-function title() {
+function title () {
   const Wrapper = styled.div`
     height: .3rem;
   `
@@ -13,7 +13,7 @@ function title() {
   )
 }
 
-function message() {
+function message () {
   const Wrapper = styled.div`
     height: .7rem;
     line-height: .7rem;
@@ -27,7 +27,7 @@ function message() {
   )
 }
 
-function footer() {
+function footer () {
   return (
     <div>
       <button>取消</button>
@@ -76,7 +76,7 @@ const Message = styled.div`
 const Footer = styled.div`
 `
 
-export default function alert(params) {
+export default function alert (params) {
   params = params || {}
   params.title = params.title || title
   params.message = params.message || message
@@ -85,7 +85,7 @@ export default function alert(params) {
   const div = document.createElement('div')
   document.body.appendChild(div)
 
-  function close() {
+  function close () {
     ReactDom.unmountComponentAtNode(div)
     if (div && div.parentNode) {
       div.parentNode.removeChild(div)

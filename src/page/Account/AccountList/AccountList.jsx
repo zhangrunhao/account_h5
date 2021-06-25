@@ -65,6 +65,7 @@ class AccountList extends React.Component {
       accountList: []
     }
   }
+
   componentDidMount () {
     getAccountList().then(data => {
       this.setState({
@@ -72,22 +73,24 @@ class AccountList extends React.Component {
       })
     })
   }
+
   handleAccountClick (account) {
     const path = `/account_detail/${account.accountId}`
     History.push(this, path)
   }
+
   render () {
     return (
       <Wrapper>
         <Title>账户列表</Title>
         <List>
           {
-            this.state.accountList.map((i) => 
-              <Item key={i.accountId} onClick={this.handleAccountClick.bind(this, i)}>
+            this.state.accountList.map(v =>
+              <Item key={v.accountId} onClick={this.handleAccountClick.bind(this, v)}>
                 <Icon>
-                  <img src={i.icon} alt=""/>
+                  <img src={v.icon} alt=""/>
                 </Icon>
-                <Name>{i.name}</Name>
+                <Name>{v.name}</Name>
                 <Number>-20.30</Number>
               </Item>
             )

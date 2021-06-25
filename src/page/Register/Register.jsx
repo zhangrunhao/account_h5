@@ -16,39 +16,34 @@ const Wrapper = styled.div`
 function validateEmail (value) {
   let error
   if (!value) {
-    error = "Required"
+    error = 'Required'
   } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
-    error = "Invalid email address"
+    error = 'Invalid email address'
   }
   return error
 }
 function validatePassword (value) {
   let error
   if (!value) {
-    error = "Required"
+    error = 'Required'
   }
   return error
 }
 export default class Register extends React.Component {
-  constructor (props) {
-    super(props)
-  }
-
   postSignin (values) {
     registerUser(values).then(() => {
-      Toast.success("注册成功")
-    }).catch(err => {
-      console.log(err)
+      Toast.success('注册成功')
     })
   }
+
   render () {
     return (
       <Wrapper>
         <NavTop back>注册</NavTop>
         <Formik
           initialValues={{
-            email: "",
-            password: ""
+            email: '',
+            password: ''
           }}
           onSubmit = {(values => {
             this.postSignin(values)
@@ -58,19 +53,19 @@ export default class Register extends React.Component {
             ({
               errors,
               touched
-            }) => 
+            }) =>
             <Form>
-              <label htmlFor="email">Email: </label>
-              <Field id="email" name="email" validate={validateEmail}></Field>
+              <label htmlFor='email'>Email: </label>
+              <Field id='email' name='email' validate={validateEmail}></Field>
               {errors.email && touched.email && <div>Error: {errors.email}</div>}
               <br/>
 
-              <label htmlFor="password">Password: </label>
-              <Field id="password" type="password" name="password" validate={validatePassword}></Field>
+              <label htmlFor='password'>Password: </label>
+              <Field id='password' type='password' name='password' validate={validatePassword}></Field>
               {errors.password && touched.password && <div>Error: {errors.password}</div>}
               <br/>
 
-              <button type="submit">Register</button>
+              <button type='submit'>Register</button>
             </Form>
           }
         </Formik>

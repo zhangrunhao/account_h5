@@ -20,8 +20,7 @@ import AccountEdit from './page/AccountEdit/AccountEdit.jsx'
 
 import './animation/animation.js'
 
-
-export default function App() {
+export default function App () {
   return (
     <HashRouter>
       <div className="app">
