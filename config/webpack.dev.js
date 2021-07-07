@@ -19,5 +19,5 @@ module.exports = merge(baseWebpackConfig, {
         secure: false
       }
     }
-  },
+  }
 })
