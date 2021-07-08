@@ -1,12 +1,17 @@
 import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
+import _ from 'loadsh'
 import {
   colorTextBase,
   fillBase,
   fillTap
 } from '../../../style/Styles.js'
 import Button from '../../../components/Button/Button.jsx'
+import {
+  addRecord
+} from '../../../api/record.js'
+import Toast from '../../../components/Toast/Toast.jsx'
 
 const Wrapper = styled.div`
   position: fixed;
@@ -44,7 +49,7 @@ const ResultMoney = styled.div`
 const ToolList = styled.div`
 `
 
-const InputMain = styled.div`
+const KeyBoard = styled.div`
   display: flex;
   flex-wrap: wrap;
 `
@@ -62,28 +67,67 @@ const InputButton = styled.div`
   }
 `
 
-const inputMainButtonArrayInfo = [1, 2, 3, '删除', 4, 5, 6, '-', 7, 8, 9, '+', '再记', 0, '.', '保存']
+const keyBoardKeys = [1, 2, 3, '删除', 4, 5, 6, '-', 7, 8, 9, '+', '再记', 0, '.', '保存']
+
 export default class RecordInput extends React.Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      money: '0'
+    }
+  }
+
+  handleKeyBoardClick (key) {
+    if (_.isNumber(key)) { // 数字
+      let money = this.state.money + key
+      if (money.length > 1 && money.indexOf('0') === 0) money = money.substring(1)
+      this.setState({ money })
+    } else if (key === '.') { // 小数点
+      if (this.state.money.indexOf('.') > -1) return
+      this.setState({ money: this.state.money + key })
+    } else if (key === '删除') { // 删除
+      let money = this.state.money.slice(0, -1)
+      if (money.length < 1) money = '0'
+      this.setState({ money })
+    } else if (key === '-') {
+      // TODO: handle -
+    } else if (key === '+') {
+      // TODO: handle +
+    } else if (key === '再记') {
+      // TODO: handle 再记
+    } else if (key === '保存') {
+      addRecord({
+        recordSortId: this.props.sort.recordSortId,
+        accountId: 13,
+        remark: '这是一条备注',
+        spendTimeStamp: 1625748306265,
+        count: this.state.money
+      }).then(r => {
+        Toast.success('添加成功')
+        this.setState({ money: '0' })
+      })
+    }
+  }
+
   render () {
     return (
       <Wrapper>
         <RecordResult>
           <SortIcon src={this.props.sort.icon}></SortIcon>
           <SortName>{this.props.sort.name}</SortName>
-          <ResultMoney>100</ResultMoney>
+          <ResultMoney>{this.state.money}</ResultMoney>
         </RecordResult>
         <ToolList>
           <Button type="primary" size="small" inline>账户</Button>
           <Button type="warning" size="small" inline>2020/07/06</Button>
-          <Button size="small" inline>备注</Button>
         </ToolList>
-        <InputMain>
+        <KeyBoard>
           {
-            inputMainButtonArrayInfo.map(v =>
-              <InputButton key={v}>{v}</InputButton>
+            keyBoardKeys.map(v =>
+              <InputButton key={v} onClick={this.handleKeyBoardClick.bind(this, v)}>{v}</InputButton>
             )
           }
-        </InputMain>
+        </KeyBoard>
       </Wrapper>
     )
   }

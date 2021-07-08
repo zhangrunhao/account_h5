@@ -85,6 +85,7 @@ class SortChoose extends React.Component {
       this.setState({
         sortList: r.data
       })
+      if (r.data.length > 0) this.handleClickChooseItem(r.data[0])
     })
   }
 
