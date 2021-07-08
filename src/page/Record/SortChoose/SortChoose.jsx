@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import BScroll from '@better-scroll/core'
+import PropTypes from 'prop-types'
 import {
   withRouter
 } from 'react-router-dom'
@@ -13,27 +14,30 @@ import {
 import {
   getRecordSortList
 } from '../../../api/recordSort'
+import {
+  fillBase
+} from '../../../style/Styles.js'
 
 const htmlFontSize = parseFloat(getStyleValue(document.querySelector('html'), 'font-size'))
 const winHeight = getWinHeight()
 
-const TypeChooseWrapper = styled.div`
- background-color: pink;
- height: ${winHeight - htmlFontSize * (6.2 + 0.8)}px;
- overflow: hidden;
+const SortChooseWrapper = styled.div`
+  background-color: ${fillBase};
+  height: ${winHeight - htmlFontSize * (6.2 + 0.8)}px;
+  overflow: hidden;
 `
 
 const ScrollWrapper = styled.div`
- display: flex;
- flex-wrap: wrap;
+  display: flex;
+  flex-wrap: wrap;
 `
 
-const TypeChooseItem = styled.div`
+const SortChooseItem = styled.div`
   width: 1.5rem;
   height: .8rem;
 `
 
-const EditTypeButton = styled.div`
+const EditSortButton = styled.div`
   background-color: skyblue;
   border-radius: 50%;
   width: .8rem;
@@ -43,20 +47,20 @@ const EditTypeButton = styled.div`
   color: purple;
 `
 
-const TypeIcon = styled.img`
+const SortIcon = styled.img`
 display: block;
 margin: 0 auto;
 width: .4rem;
 height: .4rem;
 `
 
-const TypeName = styled.div`
+const SortName = styled.div`
 width: 100%;
 padding-top: .06rem;
 text-align: center;
 `
 
-class TypeChoose extends React.Component {
+class SortChoose extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -64,11 +68,19 @@ class TypeChoose extends React.Component {
     }
   }
 
-  componentDidMount () {
+  componentDidUpdate () {
     // eslint-disable-next-line no-new
     new BScroll(this.node, {
       click: true
     })
+  }
+
+  shouldComponentUpdate (nextProps, nextState) {
+    if (nextState.sortList === this.state.sortList) return false
+    return true
+  }
+
+  componentDidMount () {
     getRecordSortList().then(r => {
       this.setState({
         sortList: r.data
@@ -76,30 +88,38 @@ class TypeChoose extends React.Component {
     })
   }
 
-  editTypeButtonClick () {
+  editSortButtonClick () {
     const path = '/record_sort_list'
     History.push(this, path)
   }
 
+  handleClickChooseItem (item) {
+    this.props.chooseItem(item)
+  }
+
   render () {
     return (
-      <TypeChooseWrapper ref={node => { this.node = node }}>
+      <SortChooseWrapper ref={node => { this.node = node }}>
         <ScrollWrapper>
           {
             this.state.sortList.map(v =>
-              <TypeChooseItem key={v.recordSortId}>
-                <TypeIcon src={v.icon}></TypeIcon>
-                <TypeName>{v.name}</TypeName>
-              </TypeChooseItem>
+              <SortChooseItem onClick={this.handleClickChooseItem.bind(this, v)} key={v.recordSortId}>
+                <SortIcon src={v.icon}></SortIcon>
+                <SortName>{v.name}</SortName>
+              </SortChooseItem>
             )
           }
-          <EditTypeButton onClick={this.editTypeButtonClick.bind(this)}>
+          <EditSortButton onClick={this.editSortButtonClick.bind(this)}>
             编辑
-          </EditTypeButton>
+          </EditSortButton>
         </ScrollWrapper>
-      </TypeChooseWrapper>
+      </SortChooseWrapper>
     )
   }
 }
 
-export default withRouter(TypeChoose)
+export default withRouter(SortChoose)
+
+SortChoose.propTypes = {
+  chooseItem: PropTypes.func.isRequired
+}
