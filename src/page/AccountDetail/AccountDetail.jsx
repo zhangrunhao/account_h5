@@ -50,7 +50,6 @@ class AccountDetail extends React.Component {
       alertOrig && isFunction(alertOrig.close) && alertOrig.close()
     }
     function remove (id) {
-      console.log('remove id', id)
       deleteAccount(id).then(r => {
         Toast.success('删除成功')
         close()

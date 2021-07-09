@@ -1,32 +1,83 @@
+/* eslint-disable react/prop-types */
 import React from 'react'
 import styled from 'styled-components'
 
 const Wrapper = styled.div`
-width: 3rem;
-height: 1rem;
-line-height: 1rem;
-background-color: skyblue;
-color: rebeccapurple;
-text-align: center;
 `
+
+const Item = styled.div`
+height: 2rem;
+background-color: aquamarine;
+margin: .4rem 0;
+`
+
 export default class Home extends React.Component {
-  constructor () {
-    super()
-    this.name = 'home'
+  constructor (props) {
+    super(props)
+    this.state = {
+      item: {}
+    }
   }
 
-  click () {
-    console.log(1111)
+  handleClick (item) {
+    this.setState({
+      item
+    })
   }
 
   render () {
     return (
-      <div>
-        <h2>Home</h2>
-        <Wrapper onClick={this.click.bind(this)}>
-          点击
-        </Wrapper>
-      </div>
+      <Wrapper>
+        <Show item={this.state.item}></Show>
+        <Choose click={this.handleClick.bind(this)}></Choose>
+      </Wrapper>
+    )
+  }
+}
+
+class Show extends React.Component {
+  render () {
+    return (
+      <>
+        <div>name: {this.props.item.name}</div>
+        <div>age: {this.props.item.age}</div>
+      </>
+    )
+  }
+}
+
+class Choose extends React.Component {
+  handleClick (item) {
+    this.props.click(item)
+  }
+
+  render () {
+    return (
+      <>
+        <h1>A</h1>
+        {
+          [{
+            id: 0,
+            name: 'zhangrh',
+            age: 12
+          }, {
+            id: 1,
+            name: 'llll',
+            age: 19
+          }, {
+            id: 2,
+            name: 'ssss',
+            age: 2
+          }].map(v => {
+            return (
+              <Item key={v.id} onClick={this.handleClick.bind(this, v)}>
+                <div>name: {v.name}</div>
+                <div>age: {v.age}</div>
+              </Item>
+            )
+          })
+        }
+      </>
     )
   }
 }

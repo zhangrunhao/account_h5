@@ -80,6 +80,7 @@ export default class RecordInput extends React.Component {
   handleKeyBoardClick (key) {
     if (_.isNumber(key)) { // 数字
       let money = this.state.money + key
+      if (money.indexOf('.') > -1 && money.substring(money.indexOf('.')).length > 3) return
       if (money.length > 1 && money.indexOf('0') === 0) money = money.substring(1)
       this.setState({ money })
     } else if (key === '.') { // 小数点

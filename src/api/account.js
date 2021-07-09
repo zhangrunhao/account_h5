@@ -1,7 +1,5 @@
 import request from '../util/request.js'
 
-
-
 export const addAccount = (data) => {
   return request({
     url: '/api/account/add',

@@ -57,9 +57,7 @@ class RecordSortEdit extends React.Component {
   }
 
   onSubmit (values) {
-    console.log('submit')
     if (this.state.title === '新建收支记录类型') {
-      console.log('add submit', values)
       addRecordSort(values).then(r => {
         Toast.success('添加成功', 1000, () => {
           History.back(this)
@@ -69,7 +67,6 @@ class RecordSortEdit extends React.Component {
       values = Object.assign(values, {
         recordSortId: History.getParam(this, 'id')
       })
-      console.log('update submit', values)
       updateRecordSort(values).then(r => {
         Toast.success('修改成功', 1000, () => {
           History.back(this)
