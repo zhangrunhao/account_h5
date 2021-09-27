@@ -1,13 +1,13 @@
-const tokenKey = 'loginToken'
+const tokenKey = "loginToken";
 
 export const getToken = () => {
-  return localStorage.getItem(tokenKey)
-}
+  return localStorage.getItem(tokenKey);
+};
 
 export const setToken = (token) => {
-  return localStorage.setItem(tokenKey, token)
-}
+  return localStorage.setItem(tokenKey, token);
+};
 
 export const removeToken = () => {
-  return localStorage.removeItem(tokenKey)
-}
+  return localStorage.removeItem(tokenKey);
+};

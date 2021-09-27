@@ -1,29 +1,29 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from "react";
+import styled from "styled-components";
 
 const Wrapper = styled.div`
   background-color: #fff;
-  margin: .3rem;
-  border-radius: .1rem;
-`
+  margin: 0.3rem;
+  border-radius: 0.1rem;
+`;
 
 const Title = styled.div`
-  height: .5rem;
-  line-height: .5rem;
+  height: 0.5rem;
+  line-height: 0.5rem;
   display: flex;
   justify-content: space-around;
-`
+`;
 
 const ListItem = styled.li`
-  margin: .1rem 0;
-  height: .5rem;
-  line-height: .5rem;
+  margin: 0.1rem 0;
+  height: 0.5rem;
+  line-height: 0.5rem;
   display: flex;
   justify-content: space-around;
-`
+`;
 
 const Flag = styled.div`
-  width: .6rem;
+  width: 0.6rem;
   position: relative;
   &::after {
     position: absolute;
@@ -32,40 +32,40 @@ const Flag = styled.div`
     transform: translate(-50%, -50%);
     content: "";
     display: block;
-    width: .2rem;
-    height: .2rem;
+    width: 0.2rem;
+    height: 0.2rem;
     border-radius: 50%;
     background-color: #cc6060;
   }
-`
+`;
 
 const Desc = styled.div`
   width: 100%;
-  font-size: .22rem;
+  font-size: 0.22rem;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-`
+`;
 
 const Name = styled.div`
-  height: .24rem;
-  line-height: .24rem;
-`
+  height: 0.24rem;
+  line-height: 0.24rem;
+`;
 
 const Remark = styled.div`
   color: #a7a7a7;
-  height: .24rem;
-  line-height: .24rem;
-`
+  height: 0.24rem;
+  line-height: 0.24rem;
+`;
 
 const Num = styled.div`
   width: 2rem;
-  font-size: .3rem;
+  font-size: 0.3rem;
   color: #cc6060;
-`
+`;
 
 export default class AccountBillDayDetail extends React.Component {
-  render () {
+  render() {
     return (
       <Wrapper>
         <Title>
@@ -73,7 +73,6 @@ export default class AccountBillDayDetail extends React.Component {
           <div>支:0.33 收:222</div>
         </Title>
         <ul>
-
           <ListItem>
             <Flag></Flag>
             <Desc>
@@ -102,6 +101,6 @@ export default class AccountBillDayDetail extends React.Component {
           </ListItem>
         </ul>
       </Wrapper>
-    )
+    );
   }
 }

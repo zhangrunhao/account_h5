@@ -1,54 +1,41 @@
-import React from 'react'
-import styled from 'styled-components'
-import {
-  withRouter
-} from 'react-router-dom'
-import {
-  AddOne
-} from '@icon-park/react'
-
-import Summary from './Summary/Summary.jsx'
-import AccountList from './AccountList/AccountList.jsx'
-
-import TopNav from '../../common/TopNav/TopNav.jsx'
-import BottomNav from '../../common/BottomNav/BottomNav.jsx'
-import History from '../../util/history.js'
+import React from "react";
+import styled from "styled-components";
+import { withRouter } from "react-router-dom";
+import Summary from "./Summary/Summary.jsx";
+import AccountList from "./AccountList/AccountList.jsx";
+import BottomNav from "../../common/BottomNav/BottomNav.jsx";
+import History from "../../util/history.js";
+import { NavBar, Icon } from "antd-mobile";
+import { Left, AddOne } from "@icon-park/react";
 
 const Wrapper = styled.div`
-  padding: 1rem .3rem;
-`
+  padding: 1rem .2rem;
+`;
 
 class Account extends React.Component {
-  addClick () {
-    History.push(this, '/account_edit/new')
+  addClick() {
+    History.push(this, "/account_edit/new");
   }
 
-  render () {
+  render() {
     return (
       <Wrapper>
-        <TopNav
-          back
-          rightIconComponents={[
-            {
-              component: AddOne,
-              props: {
-                key: 'add',
-                onClick: this.addClick.bind(this),
-                theme: 'outline',
-                size: '24',
-                fill: '#333'
-              }
-            }
+        <NavBar
+          mode="light"
+          icon={<Left size="26"/>}
+          onLeftClick={() => History.back(this)}
+          rightContent={[
+            <AddOne key="0" size="26" onClick={() => this.addClick()}/>,
           ]}
         >
           账户
-        </TopNav>
+        </NavBar>
         <Summary></Summary>
         <AccountList></AccountList>
         <BottomNav></BottomNav>
       </Wrapper>
-    )
+    );
   }
 }
 
-export default withRouter(Account)
+export default withRouter(Account);

@@ -1,34 +1,34 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from "react";
+import styled from "styled-components";
 
 const Wrapper = styled.div`
   background-color: #fff;
-  border-radius: .05rem;
+  border-radius: 0.05rem;
   box-sizing: border-box;
-  margin: .2rem;
-  padding: .2rem;
+  margin: 0.2rem;
+  padding: 0.2rem;
   text-align: center;
-`
+`;
 
 const FontNormal = styled.div`
   color: #a5a5a5;
-`
+`;
 
 const FontBold = styled.div`
-  margin-top: .1rem;
+  margin-top: 0.1rem;
   font-size: large;
   color: #333030;
   font-weight: 700;
-`
+`;
 
 const Bottom = styled.div`
-  margin-top: .3rem;
+  margin-top: 0.3rem;
   display: flex;
   justify-content: space-between;
-`
+`;
 
 export default class Summary extends React.Component {
-  render () {
+  render() {
     return (
       <Wrapper>
         <div>
@@ -46,6 +46,6 @@ export default class Summary extends React.Component {
           </div>
         </Bottom>
       </Wrapper>
-    )
+    );
   }
 }

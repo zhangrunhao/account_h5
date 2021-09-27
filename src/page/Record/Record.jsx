@@ -1,33 +1,33 @@
-import React from 'react'
-import TopNav from '../../common/TopNav/TopNav.jsx'
-import SortChoose from './SortChoose/SortChoose.jsx'
-import RecordInput from './RecordInput/RecordInput.jsx'
-import styled from 'styled-components'
+import React from "react";
+import SortChoose from "./SortChoose/SortChoose.jsx";
+import RecordInput from "./RecordInput/RecordInput.jsx";
+import styled from "styled-components";
+import TopBackNav from "../../common/TopBackNav/TopBackNav.jsx";
 
 const Wrapper = styled.div`
-  padding-top: .8rem;
-`
+  padding-top: 0.8rem;
+`;
 export default class Record extends React.Component {
-  constructor (props) {
-    super(props)
+  constructor(props) {
+    super(props);
     this.state = {
-      sort: {}
-    }
+      sort: {},
+    };
   }
 
-  chooseItem (sort) {
+  chooseItem(sort) {
     this.setState({
-      sort
-    })
+      sort,
+    });
   }
 
-  render () {
+  render() {
     return (
       <Wrapper>
-        <TopNav back>记录</TopNav>
+        <TopBackNav>记录</TopBackNav>
         <SortChoose chooseItem={this.chooseItem.bind(this)}></SortChoose>
         <RecordInput sort={this.state.sort}></RecordInput>
       </Wrapper>
-    )
+    );
   }
 }

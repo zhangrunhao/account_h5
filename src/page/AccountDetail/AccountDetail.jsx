@@ -1,108 +1,78 @@
-import React from 'react'
-import {
-  withRouter
-} from 'react-router-dom'
-import NavTop from '../../common/TopNav/TopNav.jsx'
-import AccountBillDayDetail from '../../common/AccountBillDayDetail/AccountBillDayDetail.jsx'
-import styled from 'styled-components'
-import History from '../../util/history.js'
-import {
-  deleteAccount
-} from '../../api/account'
-import {
-  Edit,
-  Delete
-} from '@icon-park/react'
-import alert from '../../components/Modal/alert.jsx'
-import { isFunction } from 'loadsh'
-import Toast from '../../components/Toast/Toast.jsx'
+import React from "react";
+import styled from "styled-components";
+import { withRouter } from "react-router-dom";
+import { Modal, Toast, NavBar } from "antd-mobile";
+import { Left, Edit, Delete } from "@icon-park/react";
+import AccountBillDayDetail from "../../common/AccountBillDayDetail/AccountBillDayDetail.jsx";
+import History from "../../util/history.js";
+import { deleteAccount } from "../../api/account";
+
+const alert = Modal.alert;
+
 const Summary = styled.div`
   background-color: #fff;
-  margin: .3rem;
-  border-radius: .1rem;
+  margin: 0.3rem;
+  border-radius: 0.1rem;
   height: 1rem;
   line-height: 1rem;
   text-align: center;
-  font-size: .34rem;
-`
+  font-size: 0.34rem;
+`;
 
 const Wrapper = styled.div`
   padding-top: 1rem;
-`
+`;
 
 class AccountDetail extends React.Component {
-  constructor (props) {
-    super(props)
+  constructor(props) {
+    super(props);
     this.state = {
-      id: ''
-    }
+      id: "",
+    };
   }
 
-  componentDidMount () {
-    const id = History.getParam(this, 'id')
+  componentDidMount() {
+    const id = History.getParam(this, "id");
     this.setState({
-      id
-    })
+      id,
+    });
   }
 
-  deleteClick () {
-    function close () {
-      alertOrig && isFunction(alertOrig.close) && alertOrig.close()
-    }
-    function remove (id) {
-      deleteAccount(id).then(r => {
-        Toast.success('删除成功')
-        close()
-        History.back(this)
-      })
-    }
-    const alertOrig = alert({
-      footer: () => {
-        return (
-          <div>
-            <button onClick={close}>取消</button>
-            <button onClick={remove.bind(this, this.state.id)}>确定</button>
-          </div>
-        )
-      }
-    })
+  deleteClick() {
+    alert("删除", "确定删除此账户吗?", [
+      { text: "取消" },
+      {
+        text: "确定",
+        onPress: () => {
+          deleteAccount(this.state.id).then((r) => {
+            Toast.success("删除成功");
+            History.back(this);
+          });
+        },
+      },
+    ]);
   }
 
-  editClick () {
-    const path = `/account_edit/${this.state.id}`
-    History.push(this, path)
+  editClick() {
+    const path = `/account_edit/${this.state.id}`;
+    History.push(this, path);
   }
 
-  render () {
+  render() {
     return (
       <Wrapper>
-        <NavTop
-          back
-          rightIconComponents={[
-            {
-              component: Edit,
-              props: {
-                key: 'edit',
-                onClick: this.editClick.bind(this),
-                theme: 'outline',
-                size: '24',
-                fill: '#333'
-              }
-            },
-            {
-              component: Delete,
-              props: {
-                key: 'delete',
-                onClick: this.deleteClick.bind(this),
-                theme: 'outline',
-                size: '24',
-                fill: '#333'
-              }
-            }
+        <NavBar
+          mode="light"
+          icon={<Left size="26" />}
+          onLeftClick={() => History.back(this)}
+          rightContent={[
+            <Edit key="0" size="26" onClick={() => this.editClick()} />,
+            <Delete key="1" size="26" onClick={() => this.deleteClick()} />,
           ]}
         >
           账户id: {this.state.id}
-        </NavTop>
+        </NavBar>
+
         <Summary>余额: 200.00</Summary>
         <ul>
           <AccountBillDayDetail></AccountBillDayDetail>
@@ -114,8 +84,8 @@ class AccountDetail extends React.Component {
           <AccountBillDayDetail></AccountBillDayDetail>
         </ul>
       </Wrapper>
-    )
+    );
   }
 }
 
-export default withRouter(AccountDetail)
+export default withRouter(AccountDetail);

@@ -10,6 +10,14 @@
         "displayName": true,
         "fileName": true
       }
+    ],
+    [
+      "import",
+      {
+      "libraryName": "antd-mobile",
+      "libraryDirectory": "lib"
+      },
+      "antd-mobile"
     ]
   ]
 }
