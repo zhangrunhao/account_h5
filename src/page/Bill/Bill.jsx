@@ -1,5 +1,4 @@
 import React from "react";
-import BottomNav from "../../common/BottomNav/BottomNav.jsx";
 import Summary from "./Summary/Summary.jsx";
 import AccountBillDayDetail from "../../common/AccountBillDayDetail/AccountBillDayDetail.jsx";
 import styled from "styled-components";
@@ -22,7 +21,6 @@ export default class Bill extends React.Component {
           <AccountBillDayDetail></AccountBillDayDetail>
           <AccountBillDayDetail></AccountBillDayDetail>
         </ul>
-        <BottomNav></BottomNav>
       </Wrapper>
     );
   }

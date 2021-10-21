@@ -9,10 +9,16 @@ const back = (comp) => {
 };
 
 const getParam = (comp, param) => {
+  console.log(comp.props)
   return comp.props.match.params[param];
 };
 
+const getPath = (comp) => {
+  return comp.props.match.path
+}
+
 export default {
+  getPath,
   getParam,
   push,
   back,

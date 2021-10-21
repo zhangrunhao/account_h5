@@ -74,6 +74,7 @@ class AccountDetail extends React.Component {
         </NavBar>
 
         <Summary>余额: 200.00</Summary>
+
         <ul>
           <AccountBillDayDetail></AccountBillDayDetail>
           <AccountBillDayDetail></AccountBillDayDetail>

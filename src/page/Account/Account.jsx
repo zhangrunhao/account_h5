@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { withRouter } from "react-router-dom";
 import Summary from "./Summary/Summary.jsx";
 import AccountList from "./AccountList/AccountList.jsx";
-import BottomNav from "../../common/BottomNav/BottomNav.jsx";
 import History from "../../util/history.js";
 import { NavBar, Icon } from "antd-mobile";
 import { Left, AddOne } from "@icon-park/react";
@@ -32,7 +31,6 @@ class Account extends React.Component {
         </NavBar>
         <Summary></Summary>
         <AccountList></AccountList>
-        <BottomNav></BottomNav>
       </Wrapper>
     );
   }
