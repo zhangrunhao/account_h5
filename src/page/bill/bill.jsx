@@ -3,6 +3,7 @@ import Summary from "./Summary/Summary.jsx";
 import AccountBillDayDetail from "../../common/account-bill-day-detail/account-bill-day-detail.jsx";
 import styled from "styled-components";
 import TopBackNav from "../../common/top-back-nav/top-back-nav.jsx";
+import BottomTabBar from "../../common/bottom-tab-bar/bottom-tab-bar.jsx";
 
 const Wrapper = styled.div`
   padding: 1rem 0;
@@ -21,6 +22,7 @@ export default class Bill extends React.Component {
           <AccountBillDayDetail></AccountBillDayDetail>
           <AccountBillDayDetail></AccountBillDayDetail>
         </ul>
+        <BottomTabBar selectedTab="bill"></BottomTabBar>
       </Wrapper>
     );
   }

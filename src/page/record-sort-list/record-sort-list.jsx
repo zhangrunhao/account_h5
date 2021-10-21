@@ -64,12 +64,12 @@ class RecordSortList extends React.Component {
   }
 
   arrowRightClick(id) {
-    const path = `/record_sort_edit/${id}`;
+    const path = `/record-sort-edit/${id}`;
     History.push(this, path);
   }
 
   addClick() {
-    const path = "/record_sort_edit/new";
+    const path = "/record-sort-edit/new";
     History.push(this, path);
   }
 

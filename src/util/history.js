@@ -9,7 +9,6 @@ const back = (comp) => {
 };
 
 const getParam = (comp, param) => {
-  console.log(comp.props)
   return comp.props.match.params[param];
 };
 

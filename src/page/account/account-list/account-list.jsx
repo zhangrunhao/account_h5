@@ -72,7 +72,7 @@ class AccountList extends React.Component {
   }
 
   handleAccountClick(account) {
-    const path = `/account_detail/${account.accountId}`;
+    const path = `/account-detail/${account.accountId}`;
     History.push(this, path);
   }
 

@@ -54,7 +54,7 @@ class AccountDetail extends React.Component {
   }
 
   editClick() {
-    const path = `/account_edit/${this.state.id}`;
+    const path = `/account-edit/${this.state.id}`;
     History.push(this, path);
   }
 

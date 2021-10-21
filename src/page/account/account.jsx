@@ -6,6 +6,7 @@ import AccountList from "./account-list/account-list.jsx";
 import History from "../../util/history.js";
 import { NavBar, Icon } from "antd-mobile";
 import { Left, AddOne } from "@icon-park/react";
+import BottomTabBar from '../../common/bottom-tab-bar/bottom-tab-bar.jsx'
 
 const Wrapper = styled.div`
   padding: 1rem .2rem;
@@ -13,7 +14,7 @@ const Wrapper = styled.div`
 
 class Account extends React.Component {
   addClick() {
-    History.push(this, "/account_edit/new");
+    History.push(this, "/account-edit/new");
   }
 
   render() {
@@ -31,6 +32,7 @@ class Account extends React.Component {
         </NavBar>
         <Summary></Summary>
         <AccountList></AccountList>
+        <BottomTabBar selectedTab="account"></BottomTabBar>
       </Wrapper>
     );
   }

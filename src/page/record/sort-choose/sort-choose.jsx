@@ -83,7 +83,7 @@ class SortChoose extends React.Component {
   }
 
   editSortButtonClick() {
-    const path = "/record_sort_list";
+    const path = "/record-sort-list";
     History.push(this, path);
   }
 
