@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { withRouter } from "react-router-dom";
 import Summary from "./Summary/Summary.jsx";
-import AccountList from "./AccountList/AccountList.jsx";
+import AccountList from "./account-list/account-list.jsx";
 import History from "../../util/history.js";
 import { NavBar, Icon } from "antd-mobile";
 import { Left, AddOne } from "@icon-park/react";

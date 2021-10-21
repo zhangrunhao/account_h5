@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./App.jsx";
+import App from "./app.jsx";
 
 import "antd-mobile/dist/antd-mobile.css";
 import "./style/reset.css";

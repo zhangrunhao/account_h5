@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { withRouter } from "react-router-dom";
 import { Modal, Toast, NavBar } from "antd-mobile";
 import { Left, Edit, Delete } from "@icon-park/react";
-import AccountBillDayDetail from "../../common/AccountBillDayDetail/AccountBillDayDetail.jsx";
+import AccountBillDayDetail from "../../common/account-bill-day-detail/account-bill-day-detail.jsx";
 import History from "../../util/history.js";
 import { deleteAccount } from "../../api/account";
 

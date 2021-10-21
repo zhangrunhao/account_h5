@@ -1,8 +1,8 @@
 import React from "react";
-import SortChoose from "./SortChoose/SortChoose.jsx";
-import RecordInput from "./RecordInput/RecordInput.jsx";
+import SortChoose from "./sort-choose/sort-choose.jsx";
+import RecordInput from "./record-input/record-input.jsx";
 import styled from "styled-components";
-import TopBackNav from "../../common/TopBackNav/TopBackNav.jsx";
+import TopBackNav from "../../common/top-back-nav/top-back-nav.jsx";
 
 const Wrapper = styled.div`
   padding-top: 0.8rem;

@@ -1,8 +1,8 @@
 import React from "react";
 import Summary from "./Summary/Summary.jsx";
-import AccountBillDayDetail from "../../common/AccountBillDayDetail/AccountBillDayDetail.jsx";
+import AccountBillDayDetail from "../../common/account-bill-day-detail/account-bill-day-detail.jsx";
 import styled from "styled-components";
-import TopBackNav from "../../common/TopBackNav/TopBackNav.jsx";
+import TopBackNav from "../../common/top-back-nav/top-back-nav.jsx";
 
 const Wrapper = styled.div`
   padding: 1rem 0;

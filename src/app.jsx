@@ -1,18 +1,18 @@
 import React from "react";
 import { HashRouter, Route, Switch } from "react-router-dom";
 
-import Home from "./page/Home/Home.jsx";
-import Login from "./page/Login/Login.jsx";
-import Register from "./page/Register/Register.jsx";
-import Bill from "./page/Bill/Bill.jsx";
+import Home from "./page/home/home.jsx";
+import Login from "./page/login/login.jsx";
+import Register from "./page/register/register.jsx";
+import Bill from "./page/bill/bill.jsx";
 
-import Record from "./page/Record/Record.jsx";
-import RecordSortList from "./page/RecordSortList/RecordSortList.jsx";
-import RecordSortEdit from "./page/RecordSortEdit/RecordSortEdit.jsx";
+import Record from "./page/record/record.jsx";
+import RecordSortList from "./page/record-sort-list/record-sort-list.jsx";
+import RecordSortEdit from "./page/record-sort-edit/record-sort-edit.jsx";
 
-import Account from "./page/Account/Account.jsx";
-import AccountDetail from "./page/AccountDetail/AccountDetail.jsx";
-import AccountEdit from "./page/AccountEdit/AccountEdit.jsx";
+import Account from "./page/account/account.jsx";
+import AccountDetail from "./page/account-detail/account-detail.jsx";
+import AccountEdit from "./page/account-edit/account-edit.jsx";
 
 import "./animation/animation.js";
 
