@@ -17,9 +17,8 @@ service.interceptors.response.use(
     const res = response.data;
     if (res.code !== 200) {
       if (res.code === 401) {
-        Toast.fail(res.message, 1500, () => {
-          location.href = `${location.origin}/#/login`;
-        });
+        Toast.fail(res.message);
+        location.href = `${location.origin}/#/login`;
       } else {
         Toast.fail(res.message);
       }

@@ -4,10 +4,10 @@ import BScroll from "@better-scroll/core";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
 
-import History from "../../../util/history.js";
-import { getStyleValue, getWinHeight } from "../../../util/util.js";
-import { getRecordSortList } from "../../../api/recordSort";
-import { fillBase } from "../../../style/Styles.js";
+import History from "../../util/history.js";
+import { getStyleValue, getWinHeight } from "../../util/util.js";
+import { getRecordSortList } from "../../api/recordSort";
+import { fillBase } from "../../style/Styles.js";
 
 const htmlFontSize = parseFloat(
   getStyleValue(document.querySelector("html"), "font-size")
@@ -88,7 +88,7 @@ class SortChoose extends React.Component {
   }
 
   handleClickChooseItem(item) {
-    this.props.chooseItem(item);
+    this.props.sortChange(item);
   }
 
   render() {
@@ -120,5 +120,5 @@ class SortChoose extends React.Component {
 export default withRouter(SortChoose);
 
 SortChoose.propTypes = {
-  chooseItem: PropTypes.func.isRequired,
+  sortChange: PropTypes.func.isRequired,
 };
