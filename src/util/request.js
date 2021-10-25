@@ -3,8 +3,7 @@ import axios from "axios";
 import { getToken } from "./token.js";
 
 const service = axios.create({
-  baseURL: "http://localhost:9000",
-  // timeout: 15000
+  timeout: 15000
 });
 
 service.interceptors.request.use((config) => {
