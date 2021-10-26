@@ -70,7 +70,6 @@ export default class RecordResult extends React.Component {
           value={this.state.remark}
           onChange={this.handleRemarkInputChange.bind(this)}
           placeholder="请输入备注"
-          // onBlur={this.remarkOnBlur.bind(this)}
         ></Remark>
         <ResultMoney>{this.props.money}</ResultMoney>
       </Wrapper>

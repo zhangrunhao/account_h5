@@ -4,11 +4,20 @@ import AccountBillDayDetail from "../../common/account-bill-day-detail/account-b
 import styled from "styled-components";
 import TopBackNav from "../../common/top-back-nav/top-back-nav.jsx";
 import BottomTabBar from "../../common/bottom-tab-bar/bottom-tab-bar.jsx";
+import { getRecordList } from '../../api/record.js'
 
 const Wrapper = styled.div`
   padding: 1rem 0;
 `;
 export default class Bill extends React.Component {
+  constructor(props) {
+    super(props)
+  }
+  componentDidMount() {
+    getRecordList().then(r => {
+      console.log(r)
+    })
+  }
   render() {
     return (
       <Wrapper>

@@ -7,3 +7,10 @@ export const addRecord = (data) => {
     data,
   });
 };
+
+export const getRecordList = () => {
+  return request({
+    url: "/api/record/getListByUser",
+    method: 'Get'
+  })
+}

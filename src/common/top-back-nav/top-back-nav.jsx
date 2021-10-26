@@ -10,10 +10,6 @@ import { NavBar } from "antd-mobile";
 const Wrapper = styled.div``;
 
 class TopBackNav extends React.Component {
-  handleBackClick() {
-    History.back(this);
-  }
-
   render() {
     return (
       <Wrapper>
