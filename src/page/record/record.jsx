@@ -1,12 +1,20 @@
 import React from "react";
 import SortChoose from "./sort-choose.jsx";
 import styled from "styled-components";
-import TopBackNav from "../../common/top-back-nav/top-back-nav.jsx";
+import { Left } from "@icon-park/react";
+import History from "../../util/history.js";
 import { addRecord } from "../../api/record.js";
-import { Toast } from "antd-mobile";
+import { Toast, NavBar, Tabs } from "antd-mobile";
 import ToolList from "./tool-list.jsx";
 import InputKeyBoard from "./input-key-board.jsx";
 import RecordResult from "./record-result.jsx";
+import { withRouter } from "react-router-dom";
+
+const tabs = [
+  { title: "收入", key: "income" },
+  { title: "支出", key: "expend" },
+  { title: "转账", key: "transfer" },
+];
 
 const Wrapper = styled.div`
   padding-top: 0.8rem;
@@ -19,11 +27,12 @@ const RecordInput = styled.div`
   width: 100%;
 `;
 
-export default class Record extends React.Component {
+class Record extends React.Component {
   constructor(props) {
     super(props);
     this.recordResult = React.createRef();
     this.state = {
+      sortType: tabs[1].key,
       sort: {},
       money: "0",
       date: new Date(Date.now()),
@@ -47,28 +56,49 @@ export default class Record extends React.Component {
     this.setState({ remark });
   }
   submitSave() {
-    addRecord({
-      recordSortId: this.state.sort.recordSortId,
-      accountId: this.state.accountId,
-      remark: this.state.remark,
-      spendTimeStamp: new Date(this.state.date).getTime(),
-      count: this.state.money,
-    }).then((r) => {
-      Toast.success("添加成功");
-      this.recordResult.current.clearRemarkInput();
-      this.setState({
-        money: "0"
+    if (this.state.sortType === "transfer") {
+    } else {
+      addRecord({
+        recordSortId: this.state.sort.recordSortId,
+        accountId: this.state.accountId,
+        remark: this.state.remark,
+        spendTimeStamp: new Date(this.state.date).getTime(),
+        count: this.state.sortType === "expend" ? '-' + this.state.money : this.state.money,
+      }).then(() => {
+        Toast.success("添加成功");
+        this.recordResult.current.clearRemarkInput();
+        this.setState({
+          money: "0",
+        });
       });
-    });
+    }
   }
   submitAgain() {
     console.log("record again");
   }
+  tabChange(e) {
+    this.setState({
+      sortType: e.key,
+    });
+  }
   render() {
     return (
       <Wrapper>
-        <TopBackNav>记录</TopBackNav>
-        <SortChoose sortChange={this.sortChange.bind(this)}></SortChoose>
+        <NavBar
+          mode="light"
+          icon={<Left size="26" />}
+          onLeftClick={() => History.back(this)}
+        >
+          <Tabs
+            tabs={tabs}
+            initialPage={this.state.sortType}
+            onChange={this.tabChange.bind(this)}
+          ></Tabs>
+        </NavBar>
+        <SortChoose
+          type={this.state.sortType}
+          sortChange={this.sortChange.bind(this)}
+        ></SortChoose>
         <RecordInput>
           <RecordResult
             ref={this.recordResult}
@@ -90,3 +120,5 @@ export default class Record extends React.Component {
     );
   }
 }
+
+export default withRouter(Record);

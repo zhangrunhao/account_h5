@@ -57,7 +57,10 @@ class SortChoose extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      sortList: [],
+      sortList: {
+        expend: [],
+        income: [],
+      },
     };
   }
 
@@ -68,27 +71,21 @@ class SortChoose extends React.Component {
     });
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    if (nextState.sortList === this.state.sortList) return false;
-    return true;
-  }
-
   componentDidMount() {
     getRecordSortList().then((r) => {
       this.setState({
-        sortList: r.data,
+        sortList: {
+          expend: r.data.filter((i) => i.type === "expend"),
+          income: r.data.filter((i) => i.type === "income"),
+        },
       });
-      if (r.data.length > 0) this.handleClickChooseItem(r.data[0]);
+      this.props.sortChange(this.state.sortList[this.props.type][0]);
     });
   }
 
   editSortButtonClick() {
     const path = "/record-sort-list";
     History.push(this, path);
-  }
-
-  handleClickChooseItem(item) {
-    this.props.sortChange(item);
   }
 
   render() {
@@ -98,20 +95,24 @@ class SortChoose extends React.Component {
           this.node = node;
         }}
       >
-        <ScrollWrapper>
-          {this.state.sortList.map((v) => (
-            <SortChooseItem
-              onClick={this.handleClickChooseItem.bind(this, v)}
-              key={v.recordSortId}
-            >
-              <SortIcon src={v.icon}></SortIcon>
-              <SortName>{v.name}</SortName>
-            </SortChooseItem>
-          ))}
-          <EditSortButton onClick={this.editSortButtonClick.bind(this)}>
-            编辑
-          </EditSortButton>
-        </ScrollWrapper>
+        {this.props.type === "transfer" ? (
+          <div>转账模块</div>
+        ) : (
+          <ScrollWrapper>
+            {this.state.sortList[this.props.type].map((v) => (
+              <SortChooseItem
+                onClick={(v) => this.props.sortChange(v)}
+                key={v.recordSortId}
+              >
+                <SortIcon src={v.icon}></SortIcon>
+                <SortName>{v.name}</SortName>
+              </SortChooseItem>
+            ))}
+            <EditSortButton onClick={this.editSortButtonClick.bind(this)}>
+              编辑
+            </EditSortButton>
+          </ScrollWrapper>
+        )}
       </SortChooseWrapper>
     );
   }
@@ -121,4 +122,5 @@ export default withRouter(SortChoose);
 
 SortChoose.propTypes = {
   sortChange: PropTypes.func.isRequired,
+  type: PropTypes.string.isRequired,
 };
