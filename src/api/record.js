@@ -14,3 +14,11 @@ export const getRecordList = () => {
     method: 'Get'
   })
 }
+
+export const getRecordListByAccount = (data) => {
+  return request({
+    url: "/api/record/getListByAccount",
+    method: "Get",
+    params: data
+  });
+};

@@ -101,7 +101,7 @@ class SortChoose extends React.Component {
           <ScrollWrapper>
             {this.state.sortList[this.props.type].map((v) => (
               <SortChooseItem
-                onClick={(v) => this.props.sortChange(v)}
+                onClick={e => this.props.sortChange(v)}
                 key={v.recordSortId}
               >
                 <SortIcon src={v.icon}></SortIcon>

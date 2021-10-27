@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import PropTypes from "prop-types";
 
 const Wrapper = styled.div`
   background-color: #fff;
@@ -35,6 +36,17 @@ const Flag = styled.div`
     width: 0.2rem;
     height: 0.2rem;
     border-radius: 50%;
+  }
+`;
+
+const FlagIncome = styled(Flag)`
+  &::after {
+    background-color: #217870;
+  }
+`;
+
+const FlagExpend = styled(Flag)`
+  &::after {
     background-color: #cc6060;
   }
 `;
@@ -61,7 +73,14 @@ const Remark = styled.div`
 const Num = styled.div`
   width: 2rem;
   font-size: 0.3rem;
+`;
+
+const NumExpend = styled(Num)`
   color: #cc6060;
+`;
+
+const NumIncome = styled(Num)`
+  color: #217870;
 `;
 
 export default class AccountBillDayDetail extends React.Component {
@@ -69,38 +88,37 @@ export default class AccountBillDayDetail extends React.Component {
     return (
       <Wrapper>
         <Title>
-          <div>02.19 今天</div>
+          <div>{this.props.info.title}</div>
           <div>支:0.33 收:222</div>
         </Title>
         <ul>
-          <ListItem>
-            <Flag></Flag>
-            <Desc>
-              <Name>三餐</Name>
-              <Remark>鸡蛋灌饼</Remark>
-            </Desc>
-            <Num>-11.20</Num>
-          </ListItem>
-
-          <ListItem>
-            <Flag></Flag>
-            <Desc>
-              <Name>交通</Name>
-              <Remark>滴滴</Remark>
-            </Desc>
-            <Num>-13.00</Num>
-          </ListItem>
-
-          <ListItem>
-            <Flag></Flag>
-            <Desc>
-              <Name>交通</Name>
-              <Remark>滴滴打车</Remark>
-            </Desc>
-            <Num>-11.20</Num>
-          </ListItem>
+          {this.props.info.array.map((i) => {
+            console.log(i);
+            return (
+              <ListItem key={i.recordId}>
+                {i.type === "expend" ? (
+                  <FlagExpend></FlagExpend>
+                ) : (
+                  <FlagIncome></FlagIncome>
+                )}
+                <Desc>
+                  <Name>{i.recordSortId}</Name>
+                  <Remark>{i.remark}</Remark>
+                </Desc>
+                {i.type === "expend" ? (
+                  <NumExpend>{i.count}</NumExpend>
+                ) : (
+                  <NumIncome>{i.count}</NumIncome>
+                )}
+              </ListItem>
+            );
+          })}
         </ul>
       </Wrapper>
     );
   }
 }
+
+AccountBillDayDetail.prototypes = {
+  info: PropTypes.object.isRequired,
+};

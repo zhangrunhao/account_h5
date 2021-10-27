@@ -74,7 +74,6 @@ class Record extends React.Component {
     }
   }
   submitAgain() {
-    console.log("record again");
   }
   tabChange(e) {
     this.setState({

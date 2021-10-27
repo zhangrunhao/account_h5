@@ -5,7 +5,9 @@ import { Modal, Toast, NavBar } from "antd-mobile";
 import { Left, Edit, Delete } from "@icon-park/react";
 import AccountBillDayDetail from "../../common/account-bill-day-detail/account-bill-day-detail.jsx";
 import History from "../../util/history.js";
-import { deleteAccount } from "../../api/account";
+import { deleteAccount } from "../../api/account.js";
+import { getRecordListByAccount } from "../../api/record.js";
+import { recordToList } from '../../util/record.js'
 
 const alert = Modal.alert;
 
@@ -28,13 +30,19 @@ class AccountDetail extends React.Component {
     super(props);
     this.state = {
       id: "",
+      recordList: [],
     };
   }
 
   componentDidMount() {
     const id = History.getParam(this, "id");
-    this.setState({
-      id,
+    getRecordListByAccount({
+      accountId: id,
+    }).then((r) => {
+      this.setState({
+        id,
+        recordList: recordToList(r.data),
+      });
     });
   }
 
@@ -76,13 +84,9 @@ class AccountDetail extends React.Component {
         <Summary>余额: 200.00</Summary>
 
         <ul>
-          <AccountBillDayDetail></AccountBillDayDetail>
-          <AccountBillDayDetail></AccountBillDayDetail>
-          <AccountBillDayDetail></AccountBillDayDetail>
-          <AccountBillDayDetail></AccountBillDayDetail>
-          <AccountBillDayDetail></AccountBillDayDetail>
-          <AccountBillDayDetail></AccountBillDayDetail>
-          <AccountBillDayDetail></AccountBillDayDetail>
+          {this.state.recordList.map((i) => (
+            <AccountBillDayDetail key={i.title} info={i}></AccountBillDayDetail>
+          ))}
         </ul>
       </Wrapper>
     );

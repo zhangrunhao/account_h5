@@ -27,6 +27,7 @@ class AccountEdit extends React.Component {
     super(props);
     this.state = {
       title: "账户相关",
+      id: ''
     };
   }
 

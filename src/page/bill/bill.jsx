@@ -1,10 +1,11 @@
 import React from "react";
-import Summary from "./Summary/Summary.jsx";
+// import Summary from "./Summary/Summary.jsx";
 import AccountBillDayDetail from "../../common/account-bill-day-detail/account-bill-day-detail.jsx";
 import styled from "styled-components";
 import TopBackNav from "../../common/top-back-nav/top-back-nav.jsx";
 import BottomTabBar from "../../common/bottom-tab-bar/bottom-tab-bar.jsx";
 import { getRecordList } from '../../api/record.js'
+import { recordToList } from '../../util/record.js'
 
 const Wrapper = styled.div`
   padding: 1rem 0;
@@ -12,24 +13,28 @@ const Wrapper = styled.div`
 export default class Bill extends React.Component {
   constructor(props) {
     super(props)
+    this.state = {
+      recordList: []
+    }
   }
   componentDidMount() {
     getRecordList().then(r => {
-      console.log(r)
+      this.setState({
+        recordList: recordToList(r.data)
+      })
     })
   }
   render() {
     return (
       <Wrapper>
         <TopBackNav>账单</TopBackNav>
-        <Summary></Summary>
+        {/* <Summary></Summary> */}
         <ul>
-          <AccountBillDayDetail></AccountBillDayDetail>
-          <AccountBillDayDetail></AccountBillDayDetail>
-          <AccountBillDayDetail></AccountBillDayDetail>
-          <AccountBillDayDetail></AccountBillDayDetail>
-          <AccountBillDayDetail></AccountBillDayDetail>
-          <AccountBillDayDetail></AccountBillDayDetail>
+          {
+            this.state.recordList.map(i => 
+              <AccountBillDayDetail key={i.title} info={i}></AccountBillDayDetail>
+            )
+          }
         </ul>
         <BottomTabBar selectedTab="bill"></BottomTabBar>
       </Wrapper>
