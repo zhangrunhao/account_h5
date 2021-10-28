@@ -1,5 +1,4 @@
 import React from "react";
-// import Summary from "./Summary/Summary.jsx";
 import AccountBillDayDetail from "../../common/account-bill-day-detail/account-bill-day-detail.jsx";
 import styled from "styled-components";
 import TopBackNav from "../../common/top-back-nav/top-back-nav.jsx";
@@ -28,7 +27,6 @@ export default class Bill extends React.Component {
     return (
       <Wrapper>
         <TopBackNav>账单</TopBackNav>
-        {/* <Summary></Summary> */}
         <ul>
           {
             this.state.recordList.map(i => 
@@ -36,7 +34,7 @@ export default class Bill extends React.Component {
             )
           }
         </ul>
-        <BottomTabBar key="bill"></BottomTabBar>
+        <BottomTabBar active="bill"></BottomTabBar>
       </Wrapper>
     );
   }

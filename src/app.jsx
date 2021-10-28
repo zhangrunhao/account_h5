@@ -26,14 +26,12 @@ export default function App() {
           <Route path="/bill" component={Bill}></Route>
           <Route path="/record" component={Record}></Route>
           <Route path="/record-sort-list" component={RecordSortList}></Route>
-          <Route
-            path="/record-sort-edit/:id"
-            component={RecordSortEdit}
-          ></Route>
+          <Route path="/record-sort-edit/:id" component={RecordSortEdit}></Route>
           <Route path="/account" component={Account}></Route>
           <Route path="/account-detail/:id" component={AccountDetail}></Route>
           <Route path="/account-edit/:id" component={AccountEdit}></Route>
-          <Route path="/" component={Home}></Route>
+          <Route path="/home" component={Home}></Route>
+          <Route path="/" component={Bill}></Route>
         </Switch>
       </div>
     </HashRouter>

@@ -2,9 +2,9 @@ import React from "react";
 import { withRouter } from "react-router";
 import styled from "styled-components";
 
-import History from "../../../util/history.js";
+import History from "../../util/history.js";
 
-import { getAccountList } from "../../../api/account.js";
+import { getAccountList } from "../../api/account.js";
 
 const Wrapper = styled.div`
   background-color: #fff;

@@ -88,7 +88,7 @@ class Record extends React.Component {
     return (
       <Wrapper>
         <NavBar>
-          <Tabs onChange={this.tabChange.bind(this)}>
+          <Tabs onChange={this.tabChange.bind(this)} defaultActiveKey="expend">
             {tabs.map((tab) => (
               <Tabs.TabPane title={tab.title} key={tab.key}></Tabs.TabPane>
             ))}

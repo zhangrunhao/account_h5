@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { withRouter } from "react-router-dom";
-import Summary from "./Summary/Summary.jsx";
-import AccountList from "./account-list/account-list.jsx";
+import Summary from "./Summary.jsx";
+import AccountList from "./account-list.jsx";
 import History from "../../util/history.js";
 import NavBar from "../../common/top-back-nav/top-back-nav.jsx";
 import { AddOne } from "@icon-park/react";
@@ -13,21 +13,17 @@ const Wrapper = styled.div`
 `;
 
 class Account extends React.Component {
-  addClick() {
-    History.push(this, "/account-edit/new");
-  }
-
   render() {
     return (
       <Wrapper>
         <NavBar
-          right={[<AddOne key="0" size="26" onClick={() => this.addClick()} />]}
+          right={[<AddOne key="0" size="26" onClick={() => History.push(this, "/account-edit/new")} />]}
         >
           账户
         </NavBar>
         <Summary></Summary>
         <AccountList></AccountList>
-        <BottomTabBar selectedTab="account"></BottomTabBar>
+        <BottomTabBar active="account"></BottomTabBar>
       </Wrapper>
     );
   }

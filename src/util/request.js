@@ -21,9 +21,9 @@ service.interceptors.response.use(
         icon: "fail",
         content: res.message,
       });
+      if (res.code === 401) location.href = `${location.origin}/#/login`;
       throw new Error(res.message)
     }
-    if (res.code === 401) location.href = `${location.origin}/#/login`;
   },
   (error) => {
     Toast.show({

@@ -34,14 +34,11 @@ const tabs = [
 ];
 
 class BottomTabBar extends React.Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
     return (
       <Wrapper>
         <TabBar
-          defaultActiveKey={this.props.key}
+          defaultActiveKey={this.props.active}
           onChange={(key) => {
             history.push(this, key);
           }}
@@ -59,8 +56,8 @@ class BottomTabBar extends React.Component {
   }
 }
 
-BottomTabBar.prototypes = {
-  key: PropTypes.string.isRequired,
+BottomTabBar.propTypes = {
+  active: PropTypes.string.isRequired,
 };
 
 export default withRouter(BottomTabBar);
