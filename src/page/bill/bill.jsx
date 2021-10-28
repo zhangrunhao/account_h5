@@ -36,7 +36,7 @@ export default class Bill extends React.Component {
             )
           }
         </ul>
-        <BottomTabBar selectedTab="bill"></BottomTabBar>
+        <BottomTabBar key="bill"></BottomTabBar>
       </Wrapper>
     );
   }

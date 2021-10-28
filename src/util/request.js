@@ -3,7 +3,7 @@ import axios from "axios";
 import { getToken } from "./token.js";
 
 const service = axios.create({
-  timeout: 15000
+  timeout: 15000,
 });
 
 service.interceptors.request.use((config) => {
@@ -14,21 +14,22 @@ service.interceptors.request.use((config) => {
 service.interceptors.response.use(
   (response) => {
     const res = response.data;
-    if (res.code !== 200) {
-      if (res.code === 401) {
-        Toast.fail(res.message);
-        location.href = `${location.origin}/#/login`;
-      } else {
-        Toast.fail(res.message);
-      }
-      return Promise.reject(new Error("error"));
+    if (res.code === 200) {
+      return res
     } else {
-      return response.data;
+      Toast.show({
+        icon: "fail",
+        content: res.message,
+      });
+      throw new Error(res.message)
     }
+    if (res.code === 401) location.href = `${location.origin}/#/login`;
   },
   (error) => {
-    Toast.offline(error.message);
-    return Promise.reject(error);
+    Toast.show({
+      icon: 'fail',
+      content: error.message
+    })
   }
 );
 

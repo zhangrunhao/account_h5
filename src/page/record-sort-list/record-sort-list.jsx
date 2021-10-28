@@ -4,7 +4,7 @@ import { withRouter } from "react-router-dom";
 import { Left, AddOne, ArrowRight } from "@icon-park/react";
 import History from "../../util/history.js";
 import { getRecordSortList } from "../../api/recordSort.js";
-import { NavBar } from "antd-mobile";
+import NavBar from "../../common/top-back-nav/top-back-nav.jsx";
 const Wrapper = styled.div`
   padding-top: 0.8rem;
 `;
@@ -77,12 +77,7 @@ class RecordSortList extends React.Component {
     return (
       <Wrapper>
         <NavBar
-          mode="light"
-          icon={<Left size="26" />}
-          onLeftClick={() => History.back(this)}
-          rightContent={[
-            <AddOne key="0" size="26" onClick={() => this.addClick()} />,
-          ]}
+          right={[<AddOne key="0" size="26" onClick={() => this.addClick()} />]}
         >
           收支记录类型列表
         </NavBar>

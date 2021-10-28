@@ -1,171 +1,140 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import PropTypes from "prop-types";
-import * as Yup from "yup";
-import { withRouter } from "react-router-dom";
-import { Formik, Form, useField, useFormikContext } from "formik";
-import { Delete, Left } from "@icon-park/react";
-import { Modal, Toast, NavBar } from "antd-mobile";
-import History from "../../util/history.js";
+import { Delete } from "@icon-park/react";
+import { Dialog, Form, Toast, Button, Input, Radio, Space } from "antd-mobile";
+import NavBar from "../../common/top-back-nav/top-back-nav.jsx";
 import {
   getRecordSort,
   addRecordSort,
   updateRecordSort,
   deleteRecordSort,
 } from "../../api/recordSort";
-const alert = Modal.alert;
+import { useHistory } from "react-router";
 const Wrapper = styled.div`
   padding-top: 1rem;
 `;
 
-const ErrorTip = styled.div`
-  color: red;
-`;
-
-class RecordSortEdit extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      title: "",
-    };
-  }
-
-  componentDidMount() {
-    const id = History.getParam(this, "id");
+export default (props) => {
+  const id = props.match.params["id"];
+  const [title, setTitle] = useState("新建");
+  const [form] = Form.useForm();
+  const history = useHistory();
+  const onFinish = (values) => {
     if (id === "new") {
-      this.setState({
-        title: "新建收支记录类型",
+      addRecordSort(values).then(() => {
+        Toast.show({
+          icon: "success",
+          content: "添加成功",
+        });
+        history.goBack();
       });
     } else {
-      this.setState({
-        title: "修改收支记录类型",
+      updateRecordSort(
+        Object.assign(values, {
+          recordSortId: id,
+        })
+      ).then(() => {
+        Toast.show({
+          icon: "success",
+          content: "编辑成功",
+        });
+        history.goBack();
       });
     }
-  }
-
-  onSubmit(values) {
-    if (this.state.title === "新建收支记录类型") {
-      addRecordSort(values).then((r) => {
-        Toast.success("添加成功");
-        History.back(this);
-      });
-    } else {
-      values = Object.assign(values, {
-        recordSortId: History.getParam(this, "id"),
-      });
-      updateRecordSort(values).then((r) => {
-        Toast.success("修改成功");
-        History.back(this);
-      });
-    }
-  }
-
-  deleteClick() {
-    alert("删除", "确定删除此记录类型吗?", [
-      { text: "取消" },
-      {
-        text: "确定",
-        onPress: () => {
-          deleteRecordSort(History.getParam(this, "id")).then((r) => {
-            Toast.success("删除成功");
-            History.back(this);
+  };
+  const deleteClick = () => {
+    Dialog.confirm({
+      title: "删除",
+      content: "确定删除此记录类型吗?",
+      onConfirm: () => {
+        deleteRecordSort(i).then((r) => {
+          Toast.show({
+            icon: "success",
+            content: "删除成功",
           });
-        },
+          history.goBack();
+        });
       },
-    ]);
-  }
-
-  render() {
-    const id = History.getParam(this, "id");
-    return (
-      <Wrapper>
-        <NavBar
-          mode="light"
-          icon={<Left size="26" />}
-          onLeftClick={() => History.back(this)}
-          rightContent={
-            id === "new"
-              ? []
-              : [
-                  <Delete
-                    key="0"
-                    size="26"
-                    onClick={() => this.deleteClick()}
-                  />,
-                ]
-          }
-        >
-          账户
-        </NavBar>
-        <EditForm id={id} onSubmit={this.onSubmit.bind(this)}></EditForm>
-      </Wrapper>
-    );
-  }
-}
-
-function EditForm(props) {
-  const [data, setDate] = React.useState({});
-  React.useEffect(() => {
-    props.id !== "new" &&
-      getRecordSort(props.id).then((r) => {
-        setDate(r.data);
+    });
+  };
+  useEffect(() => {
+    if (id !== "new") {
+      setTitle("编辑");
+      getRecordSort(id).then((r) => {
+        form.setFieldsValue({
+          name: r.data.name,
+          icon: r.data.icon,
+          type: r.data.type,
+        });
       });
-  }, [props.id]);
+    }
+  }, [id]);
   return (
-    <Formik
-      initialValues={{
-        name: "",
-        icon: "",
-        type: "",
-      }}
-      validationSchema={Yup.object().shape({
-        name: Yup.string().min(2, "Too Short!").required("Required"),
-        icon: Yup.string().required("Required!"),
-        type: Yup.string().required("Required!"),
-      })}
-      onSubmit={(values) => {
-        props.onSubmit(values);
-      }}
-    >
-      <Form>
-        <MyFiled data={data} name="icon"></MyFiled>
-        <br />
-        <MyFiled data={data} name="name"></MyFiled>
-        <br />
-        <MyFiled data={data} name="type"></MyFiled>
-        <br />
-        <button type="submit">Confirm</button>
+    <Wrapper>
+      <NavBar
+        right={
+          id === "new"
+            ? []
+            : [<Delete key="0" size="26" onClick={() => deleteClick()} />]
+        }
+      >
+        {title}收支种类
+      </NavBar>
+      <Form
+        form={form}
+        layout="horizontal"
+        onFinish={onFinish}
+        footer={
+          <Button block type="submit" color="primary">
+            提交
+          </Button>
+        }
+      >
+        <Form.Item
+          name="name"
+          label="名称"
+          required
+          rules={[
+            {
+              required: true,
+              message: "名称不可为空",
+            },
+          ]}
+        >
+          <Input placeholder="请输入名称" clearable></Input>
+        </Form.Item>
+        <Form.Item
+          name="type"
+          label="类型"
+          required
+          rules={[
+            {
+              required: true,
+              message: "类型不可为空",
+            },
+          ]}
+        >
+          <Radio.Group>
+            <Space direction="vertical">
+              <Radio value="income">收入</Radio>
+              <Radio value="expend">支出</Radio>
+            </Space>
+          </Radio.Group>
+        </Form.Item>
+        <Form.Item
+          name="icon"
+          label="图标"
+          required
+          rules={[
+            {
+              required: true,
+              message: "图标不可为空",
+            },
+          ]}
+        >
+          <Input placeholder="图标地址" clearable></Input>
+        </Form.Item>
       </Form>
-    </Formik>
+    </Wrapper>
   );
-}
-EditForm.propTypes = {
-  id: PropTypes.string,
-  onSubmit: PropTypes.func,
 };
-
-function MyFiled(props) {
-  const { setFieldValue } = useFormikContext();
-  const [field, meta] = useField(props);
-  React.useEffect(() => {
-    props &&
-      props.data &&
-      props.name &&
-      props.data[props.name] &&
-      setFieldValue(props.name, props.data[props.name]);
-  }, [props.data]);
-  return (
-    <>
-      <label>{props.name}: </label>
-      <input {...props} {...field}></input>
-      {meta.touched && meta.error ? <ErrorTip>{meta.error}</ErrorTip> : null}
-    </>
-  );
-}
-
-MyFiled.propTypes = {
-  name: PropTypes.string,
-  data: PropTypes.object,
-};
-
-export default withRouter(RecordSortEdit);

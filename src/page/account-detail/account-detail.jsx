@@ -1,15 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 import { withRouter } from "react-router-dom";
-import { Modal, Toast, NavBar } from "antd-mobile";
-import { Left, Edit, Delete } from "@icon-park/react";
+import { Edit, Delete } from "@icon-park/react";
 import AccountBillDayDetail from "../../common/account-bill-day-detail/account-bill-day-detail.jsx";
 import History from "../../util/history.js";
 import { deleteAccount } from "../../api/account.js";
 import { getRecordListByAccount } from "../../api/record.js";
-import { recordToList } from '../../util/record.js'
-
-const alert = Modal.alert;
+import { recordToList } from "../../util/record.js";
+import { Dialog, Toast } from "antd-mobile";
+import NavBar from "../../common/top-back-nav/top-back-nav.jsx";
 
 const Summary = styled.div`
   background-color: #fff;
@@ -47,18 +46,19 @@ class AccountDetail extends React.Component {
   }
 
   deleteClick() {
-    alert("删除", "确定删除此账户吗?", [
-      { text: "取消" },
-      {
-        text: "确定",
-        onPress: () => {
-          deleteAccount(this.state.id).then((r) => {
-            Toast.success("删除成功");
-            History.back(this);
+    Dialog.confirm({
+      title: "删除",
+      content: "确定删除此账户吗?",
+      onConfirm: () => {
+        deleteAccount(this.state.id).then((r) => {
+          Toast.show({
+            icon: "success",
+            content: "删除成功",
           });
-        },
+          History.back(this);
+        });
       },
-    ]);
+    });
   }
 
   editClick() {
@@ -70,10 +70,7 @@ class AccountDetail extends React.Component {
     return (
       <Wrapper>
         <NavBar
-          mode="light"
-          icon={<Left size="26" />}
-          onLeftClick={() => History.back(this)}
-          rightContent={[
+          right={[
             <Edit key="0" size="26" onClick={() => this.editClick()} />,
             <Delete key="1" size="26" onClick={() => this.deleteClick()} />,
           ]}

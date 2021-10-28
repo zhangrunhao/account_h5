@@ -93,7 +93,6 @@ export default class AccountBillDayDetail extends React.Component {
         </Title>
         <ul>
           {this.props.info.array.map((i) => {
-            console.log(i);
             return (
               <ListItem key={i.recordId}>
                 {i.type === "expend" ? (

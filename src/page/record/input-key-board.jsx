@@ -2,8 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import _ from "loadsh";
 import { colorTextBase, fillBase, fillTap } from "../../style/Styles.js";
-import { Toast } from "antd-mobile";
-import { addRecord } from "../../api/record.js";
 import PropTypes from "prop-types";
 
 const Wrapper = styled.div``;

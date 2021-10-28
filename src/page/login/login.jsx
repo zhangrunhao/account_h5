@@ -1,87 +1,72 @@
 import React from "react";
-import { Formik, Field, Form } from "formik";
-import TopBackNav from "../../common/top-back-nav/top-back-nav.jsx";
+import { Input, Form, Toast, Button } from "antd-mobile";
+import NavBar from "../../common/top-back-nav/top-back-nav.jsx";
+import styled from "styled-components";
 import { loginUser } from "../../api/user.js";
 import { setToken } from "../../util/token.js";
-import styled from "styled-components";
-import { withRouter } from "react-router-dom";
-import History from "../../util/history.js";
-import { Toast } from "antd-mobile";
+import { useHistory } from "react-router-dom";
+
 const Wrapper = styled.div`
   padding-top: 1rem;
 `;
-function validateEmail(value) {
-  let error;
-  if (!value) {
-    error = "Required";
-  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
-    error = "Invalid email address";
-  }
-  return error;
-}
-function validatePassword(value) {
-  let error;
-  if (!value) {
-    error = "Required";
-  }
-  return error;
-}
-class Login extends React.Component {
-  postSignin(values) {
+
+export default () => {
+  const history = useHistory();
+  const onFinish = (values) => {
     loginUser(values).then((res) => {
       if (res && res.data && res.data.token) {
         setToken(res.data.token);
-        Toast.success("登录成功");
+        Toast.show({
+          icon: "success",
+          content: "登录成功",
+        });
         if (history.length > 2) {
-          History.back(this);
+          history.goBack();
         } else {
           location.href = `${location.origin}/#/home`;
         }
       }
     });
-  }
-
-  render() {
-    return (
-      <Wrapper>
-        <TopBackNav>登录</TopBackNav>
-        <Formik
-          initialValues={{
-            email: "",
-            password: "",
-          }}
-          onSubmit={(values) => {
-            this.postSignin(values);
-          }}
+  };
+  return (
+    <Wrapper>
+      <NavBar>登录</NavBar>
+      <Form
+        layout="horizontal"
+        onFinish={onFinish}
+        footer={
+          <Button block type="submit" color="primary">
+            提交
+          </Button>
+        }
+      >
+        <Form.Item
+          name="email"
+          label="邮箱"
+          required
+          rules={[
+            {
+              required: true,
+              message: "邮箱不可为空",
+            },
+          ]}
         >
-          {({ errors, touched }) => (
-            <Form>
-              <label htmlFor="email">Email: </label>
-              <Field id="email" name="email" validate={validateEmail}></Field>
-              {errors.email && touched.email && (
-                <div>Error: {errors.email}</div>
-              )}
-              <br />
-
-              <label htmlFor="password">Password: </label>
-              <Field
-                id="password"
-                type="password"
-                name="password"
-                validate={validatePassword}
-              ></Field>
-              {errors.password && touched.password && (
-                <div>Error: {errors.password}</div>
-              )}
-              <br />
-
-              <button type="submit">Login</button>
-            </Form>
-          )}
-        </Formik>
-      </Wrapper>
-    );
-  }
-}
-
-export default withRouter(Login);
+          <Input placeholder="请输入邮箱" clearable></Input>
+        </Form.Item>
+        <Form.Item
+          name="password"
+          label="密码"
+          required
+          rules={[
+            {
+              required: true,
+              message: "密码不可为空",
+            },
+          ]}
+        >
+          <Input placeholder="请输入密码" clearable type="password"></Input>
+        </Form.Item>
+      </Form>
+    </Wrapper>
+  );
+};

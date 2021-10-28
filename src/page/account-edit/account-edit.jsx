@@ -1,151 +1,129 @@
-import * as Yup from "yup";
 import styled from "styled-components";
-import PropTypes from "prop-types";
-import React from "react";
-import { withRouter } from "react-router-dom";
-import { Formik, Form, useField, useFormikContext } from "formik";
-
-import History from "../../util/history.js";
+import { useHistory } from "react-router-dom";
 import {
   addAccount,
   updateAccount,
   getAccountDetail,
 } from "../../api/account.js";
-import { Toast, NavBar } from "antd-mobile";
-import { Left } from "@icon-park/react";
-
+import NavBar from "../../common/top-back-nav/top-back-nav.jsx";
+import React, { useEffect, useState } from "react";
+import { Form, Input, Button, Space, Radio, Toast } from "antd-mobile";
 const Wrapper = styled.div`
   padding-top: 1rem;
 `;
 
-const ErrorTip = styled.div`
-  color: red;
-`;
-
-class AccountEdit extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      title: "账户相关",
-      id: ''
-    };
-  }
-
-  componentDidMount() {
-    const id = History.getParam(this, "id");
+export default (props) => {
+  const history = useHistory();
+  const [form] = Form.useForm();
+  const [title, setTitle] = useState("新建");
+  const id = props.match.params["id"];
+  const onFinish = (values) => {
     if (id === "new") {
-      this.setState({
-        title: "新建账户",
+      addAccount(values).then(() => {
+        Toast.show({
+          icon: "success",
+          content: "添加成功",
+        });
+        history.goBack();
       });
     } else {
-      this.setState({
-        title: "编辑账户",
-        id: id,
+      updateAccount(Object.assign(values, {
+        accountId: id,
+      })).then(() => {
+        Toast.show({
+          icon: "success",
+          content: "编辑成功",
+        });
+        history.goBack();
       });
     }
-  }
+  };
 
-  onSubmit(data) {
-    if (this.state.title === "新建账户") {
-      addAccount(data).then((r) => {
-        Toast.success("操作成功");
-        History.back(this);
-      });
-    } else if (this.state.title === "编辑账户") {
-      data = Object.assign(data, {
-        accountId: this.state.id,
-      });
-      updateAccount(data).then((r) => {
-        Toast.success("操作成功");
-        History.back(this);
+  useEffect(() => {
+    if (id !== "new") {
+      setTitle("编辑");
+      getAccountDetail(id).then((r) => {
+        form.setFieldsValue({
+          name: r.data.name,
+          type: r.data.type,
+          icon: r.data.icon,
+          color: r.data.color,
+        });
       });
     }
-  }
+  }, [id]);
 
-  render() {
-    const id = History.getParam(this, "id");
-    return (
-      <Wrapper>
-        <NavBar
-          mode="light"
-          icon={<Left size="26" />}
-          onLeftClick={() => History.back(this)}
+  return (
+    <Wrapper>
+      <NavBar>{title}账户</NavBar>
+      <Form
+        form={form}
+        layout="horizontal"
+        onFinish={onFinish}
+        footer={
+          <Button block type="submit" color="primary">
+            提交
+          </Button>
+        }
+      >
+        <Form.Item
+          name="name"
+          label="名称"
+          required
+          rules={[
+            {
+              required: true,
+              message: "名称不可为空",
+            },
+          ]}
         >
-          {this.state.title}
-        </NavBar>
-        <EditForm id={id} onSubmit={this.onSubmit.bind(this)}></EditForm>
-      </Wrapper>
-    );
-  }
-}
-
-function EditForm(props) {
-  const [data, setData] = React.useState({});
-  React.useEffect(() => {
-    props.id !== "new" &&
-      getAccountDetail(props.id).then((r) => {
-        setData(r.data);
-      });
-  }, [props.id]);
-  return (
-    <Formik
-      initialValues={{
-        name: "",
-        type: "",
-        icon: "",
-        color: "",
-      }}
-      validationSchema={Yup.object().shape({
-        name: Yup.string().min(2, "Too Short!").required("Required!"),
-        type: Yup.string().required("Required!"),
-        icon: Yup.string().required("Required!"),
-        color: Yup.string().required("Required!"),
-      })}
-      onSubmit={(values) => {
-        props.onSubmit(values);
-      }}
-    >
-      <Form>
-        <MyFiled data={data} name="name" />
-        <br />
-        <MyFiled data={data} name="type" />
-        <br />
-        <MyFiled data={data} name="icon" />
-        <br />
-        <MyFiled data={data} name="color" />
-        <br />
-        <button type="submit">Confirm</button>
+          <Input placeholder="请输入名称" clearable></Input>
+        </Form.Item>
+        <Form.Item
+          name="type"
+          label="类型"
+          required
+          rules={[
+            {
+              required: true,
+              message: "类型不可为空",
+            },
+          ]}
+        >
+          <Radio.Group>
+            <Space direction="vertical">
+              <Radio value="1">资产</Radio>
+              <Radio value="2">负债</Radio>
+            </Space>
+          </Radio.Group>
+        </Form.Item>
+        <Form.Item
+          name="icon"
+          label="图标"
+          required
+          rules={[
+            {
+              required: true,
+              message: "图标不可为空",
+            },
+          ]}
+        >
+          <Input placeholder="图标地址" clearable></Input>
+        </Form.Item>
+        <Form.Item
+          name="color"
+          label="颜色"
+          required
+          rules={[
+            {
+              required: true,
+              message: "颜色不可为空",
+            },
+          ]}
+        >
+          <Input placeholder="输入颜色" clearable></Input>
+        </Form.Item>
       </Form>
-    </Formik>
+    </Wrapper>
   );
-}
-
-EditForm.propTypes = {
-  id: PropTypes.string,
-  onSubmit: PropTypes.func,
 };
-
-function MyFiled(props) {
-  const { setFieldValue } = useFormikContext();
-  const [field, meta] = useField(props);
-  React.useEffect(() => {
-    props &&
-      props.data &&
-      props.name &&
-      props.data[props.name] &&
-      setFieldValue(props.name, props.data[props.name]);
-  }, [props.data]);
-  return (
-    <>
-      <label>{props.name}: </label>
-      <input {...props} {...field} />
-      {meta.touched && meta.error ? <ErrorTip>{meta.error}</ErrorTip> : null}
-    </>
-  );
-}
-MyFiled.propTypes = {
-  data: PropTypes.object,
-  name: PropTypes.string,
-};
-
-export default withRouter(AccountEdit);

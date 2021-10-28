@@ -1,10 +1,9 @@
 import React from "react";
 import SortChoose from "./sort-choose.jsx";
 import styled from "styled-components";
-import { Left } from "@icon-park/react";
-import History from "../../util/history.js";
 import { addRecord } from "../../api/record.js";
-import { Toast, NavBar, Tabs } from "antd-mobile";
+import { Toast, Tabs } from "antd-mobile";
+import NavBar from "../../common/top-back-nav/top-back-nav.jsx";
 import ToolList from "./tool-list.jsx";
 import InputKeyBoard from "./input-key-board.jsx";
 import RecordResult from "./record-result.jsx";
@@ -17,7 +16,7 @@ const tabs = [
 ];
 
 const Wrapper = styled.div`
-  padding-top: 0.8rem;
+  padding-top: 1rem;
 `;
 
 const RecordInput = styled.div`
@@ -63,9 +62,15 @@ class Record extends React.Component {
         accountId: this.state.accountId,
         remark: this.state.remark,
         spendTimeStamp: new Date(this.state.date).getTime(),
-        count: this.state.sortType === "expend" ? '-' + this.state.money : this.state.money,
+        count:
+          this.state.sortType === "expend"
+            ? "-" + this.state.money
+            : this.state.money,
       }).then(() => {
-        Toast.success("添加成功");
+        Toast.show({
+          icon: "success",
+          content: "添加成功",
+        });
         this.recordResult.current.clearRemarkInput();
         this.setState({
           money: "0",
@@ -73,27 +78,23 @@ class Record extends React.Component {
       });
     }
   }
-  submitAgain() {
-  }
-  tabChange(e) {
+  submitAgain() {}
+  tabChange(key) {
     this.setState({
-      sortType: e.key,
+      sortType: key,
     });
   }
   render() {
     return (
       <Wrapper>
-        <NavBar
-          mode="light"
-          icon={<Left size="26" />}
-          onLeftClick={() => History.back(this)}
-        >
-          <Tabs
-            tabs={tabs}
-            initialPage={this.state.sortType}
-            onChange={this.tabChange.bind(this)}
-          ></Tabs>
+        <NavBar>
+          <Tabs onChange={this.tabChange.bind(this)}>
+            {tabs.map((tab) => (
+              <Tabs.TabPane title={tab.title} key={tab.key}></Tabs.TabPane>
+            ))}
+          </Tabs>
         </NavBar>
+
         <SortChoose
           type={this.state.sortType}
           sortChange={this.sortChange.bind(this)}
