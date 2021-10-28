@@ -67,6 +67,9 @@ export default () => {
           <Input placeholder="请输入密码" clearable type="password"></Input>
         </Form.Item>
       </Form>
+      <Button block onClick={() => {
+        location.href = `${location.origin}/#/register`;
+      }}>没有帐号, 点击去注册</Button>
     </Wrapper>
   );
 };
