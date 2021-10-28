@@ -1,28 +1,24 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
+import { FontSize } from "@icon-park/react";
 const Wrapper = styled.div`
   width: 100%;
   height: 1rem;
+  background: #fff;
 `;
 
 const SortIcon = styled.img`
   float: left;
-  margin: 0.2rem 0.1rem 0 0.1rem;
-  width: 0.6rem;
-  height: 0.6rem;
-`;
-
-const SortName = styled.div`
-  float: left;
-  height: 1rem;
-  line-height: 1rem;
+  margin: .1rem 0;
+  width: 10vw;
+  height: 10vw;
 `;
 
 const Remark = styled.input`
   float: left;
   height: 1rem;
-  width: 60%;
+  width: 60vw;
   overflow: hidden;
   padding-left: 0.1rem;
 
@@ -34,10 +30,11 @@ const Remark = styled.input`
 `;
 
 const ResultMoney = styled.div`
+  max-width: 30vw;
   float: right;
   height: 1rem;
   line-height: 1rem;
-  font-size: 0.6rem;
+  overflow: hidden;
 `;
 
 export default class RecordResult extends React.Component {
@@ -60,18 +57,42 @@ export default class RecordResult extends React.Component {
     });
     this.props.remarkChange("");
   }
-  forceClearRemark() {}
+  getResultMoneyStyle() {
+    const length = this.props.money.length;
+    if (length < 6) {
+      return {
+        fontSize: ".6rem",
+      };
+    } else if (length < 10) {
+      return {
+        fontSize: ".4rem",
+      };
+    } else if (length < 13) {
+      return {
+        fontSize: ".3rem",
+      };
+    } else if (length < 20) {
+      return {
+        fontSize: '.2rem'
+      }
+    } else {
+      return {
+        fontSize: '.16rem'
+      }
+    }
+  }
   render() {
     return (
       <Wrapper>
         <SortIcon src={this.props.sort.icon}></SortIcon>
-        <SortName>{this.props.sort.name}</SortName>
         <Remark
           value={this.state.remark}
           onChange={this.handleRemarkInputChange.bind(this)}
           placeholder="请输入备注"
         ></Remark>
-        <ResultMoney>{this.props.money}</ResultMoney>
+        <ResultMoney style={this.getResultMoneyStyle.call(this)}>
+          {this.props.money}
+        </ResultMoney>
       </Wrapper>
     );
   }

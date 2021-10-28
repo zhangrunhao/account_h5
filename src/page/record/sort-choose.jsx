@@ -3,7 +3,7 @@ import styled from "styled-components";
 import BScroll from "@better-scroll/core";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
-
+import Transfer from "./transfer.jsx";
 import History from "../../util/history.js";
 import { getStyleValue, getWinHeight } from "../../util/util.js";
 import { getRecordSortList } from "../../api/recordSort";
@@ -15,8 +15,8 @@ const htmlFontSize = parseFloat(
 const winHeight = getWinHeight();
 
 const SortChooseWrapper = styled.div`
-  background-color: ${fillBase};
-  height: ${winHeight - htmlFontSize * (6.2 + 0.8)}px;
+  // background-color: ${fillBase};
+  // height: ${winHeight - htmlFontSize * (6.2 + 0.8)}px;
   overflow: hidden;
 `;
 
@@ -26,8 +26,10 @@ const ScrollWrapper = styled.div`
 `;
 
 const SortChooseItem = styled.div`
-  width: 1.5rem;
+  width: 0.8rem;
   height: 0.8rem;
+  background-color: #fff;
+  border-radius: 20px;
 `;
 
 const EditSortButton = styled.div`
@@ -96,7 +98,7 @@ class SortChoose extends React.Component {
         }}
       >
         {this.props.type === "transfer" ? (
-          <div>转账模块</div>
+          <Transfer></Transfer>
         ) : (
           <ScrollWrapper>
             {this.state.sortList[this.props.type].map((v) => (

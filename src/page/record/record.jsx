@@ -88,13 +88,12 @@ class Record extends React.Component {
     return (
       <Wrapper>
         <NavBar>
-          <Tabs onChange={this.tabChange.bind(this)} defaultActiveKey="expend">
+          <Tabs onChange={this.tabChange.bind(this)} defaultActiveKey={this.state.sortType}>
             {tabs.map((tab) => (
               <Tabs.TabPane title={tab.title} key={tab.key}></Tabs.TabPane>
             ))}
           </Tabs>
         </NavBar>
-
         <SortChoose
           type={this.state.sortType}
           sortChange={this.sortChange.bind(this)}

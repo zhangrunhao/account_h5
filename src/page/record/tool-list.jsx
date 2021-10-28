@@ -1,10 +1,12 @@
 import styled from "styled-components";
 import React from "react";
 import PropTypes from "prop-types";
-import { Picker, Button, DatePicker } from "antd-mobile";
+import { Picker, Button, DatePicker, Space } from "antd-mobile";
 import { getAccountList } from "../../api/account.js";
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  background: #fff;
+`;
 let now = new Date();
 
 export default class ToolList extends React.Component {
@@ -37,15 +39,32 @@ export default class ToolList extends React.Component {
   render() {
     return (
       <Wrapper>
-        <Button
-          onClick={() => {
-            this.setState({
-              accountPickerVisible: true,
-            });
-          }}
-        >
-          账户: {this.state.accountValue}
-        </Button>
+        <Space style={{ "--gap": "18px" }}>
+          <Button
+            size="small"
+            color='primary'
+            fill='outline'
+            onClick={() => {
+              this.setState({
+                accountPickerVisible: true,
+              });
+            }}
+          >
+            账户: {this.state.accountValue}
+          </Button>
+          <Button
+            size="small"
+            color='primary'
+            fill='outline'
+            onClick={() => {
+              this.setState({
+                datePickerVisible: true,
+              });
+            }}
+          >
+            {this.state.dateValue.toLocaleDateString()}
+          </Button>
+        </Space>
         <Picker
           visible={this.state.accountPickerVisible}
           cols={1}
@@ -61,15 +80,6 @@ export default class ToolList extends React.Component {
             this.props.accountChange(v);
           }}
         ></Picker>
-        <Button
-          onClick={() => {
-            this.setState({
-              datePickerVisible: true,
-            });
-          }}
-        >
-          {this.state.dateValue.toLocaleDateString()}
-        </Button>
         <DatePicker
           visible={this.state.datePickerVisible}
           onClose={() => {
