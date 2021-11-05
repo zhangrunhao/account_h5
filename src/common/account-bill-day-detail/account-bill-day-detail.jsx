@@ -88,7 +88,7 @@ export default class AccountBillDayDetail extends React.Component {
     return (
       <Wrapper>
         <Title>
-          <div>{this.props.info.title}</div>
+          <div>{this.props.info.date}</div>
           <div>支:0.33 收:222</div>
         </Title>
         <ul>

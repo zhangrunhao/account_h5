@@ -3,7 +3,6 @@ import AccountBillDayDetail from "../../common/account-bill-day-detail/account-b
 import styled from "styled-components";
 import BottomTabBar from "../../common/bottom-tab-bar/bottom-tab-bar.jsx";
 import { getRecordList } from "../../api/record.js";
-import { recordToList } from "../../util/record.js";
 import { AllApplication } from "@icon-park/react";
 import { NavBar, Popup } from "antd-mobile";
 import SlidePopup from "./slide-popup.jsx";
@@ -27,7 +26,7 @@ export default () => {
   const id = 1;
   useEffect(() => {
     getRecordList().then((r) => {
-      setRecordList(recordToList(r.data));
+      setRecordList(r.data);
     });
   }, [id]);
   return (
@@ -50,7 +49,7 @@ export default () => {
       </Popup>
       <ul>
         {recordList.map((i) => (
-          <AccountBillDayDetail key={i.title} info={i}></AccountBillDayDetail>
+          <AccountBillDayDetail key={i.date} info={i}></AccountBillDayDetail>
         ))}
       </ul>
       <BottomTabBar active="bill"></BottomTabBar>

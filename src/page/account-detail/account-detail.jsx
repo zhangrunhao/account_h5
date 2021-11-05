@@ -4,9 +4,9 @@ import { withRouter } from "react-router-dom";
 import { Edit, Delete } from "@icon-park/react";
 import AccountBillDayDetail from "../../common/account-bill-day-detail/account-bill-day-detail.jsx";
 import History from "../../util/history.js";
-import { deleteAccount } from "../../api/account.js";
+import { getAccountDetail, deleteAccount } from "../../api/account.js";
 import { getRecordListByAccount } from "../../api/record.js";
-import { recordToList } from "../../util/record.js";
+// import { recordToList } from "../../util/record.js";
 import { Dialog, Toast } from "antd-mobile";
 import NavBar from "../../common/top-back-nav/top-back-nav.jsx";
 
@@ -30,19 +30,28 @@ class AccountDetail extends React.Component {
     this.state = {
       id: "",
       recordList: [],
+      name: ""
     };
   }
 
   componentDidMount() {
     const id = History.getParam(this, "id");
+    this.setState({
+      id
+    })
     getRecordListByAccount({
       accountId: id,
     }).then((r) => {
+      console.log(r)
       this.setState({
-        id,
-        recordList: recordToList(r.data),
+        recordList: r.data,
       });
     });
+    getAccountDetail(id).then(r => {
+      this.setState({
+        name: r.data.name
+      })
+    })
   }
 
   deleteClick() {
@@ -75,14 +84,14 @@ class AccountDetail extends React.Component {
             <Delete key="1" size="26" onClick={() => this.deleteClick()} />,
           ]}
         >
-          账户id: {this.state.id}
+          {this.state.name}
         </NavBar>
 
         <Summary>余额: 200.00</Summary>
 
         <ul>
           {this.state.recordList.map((i) => (
-            <AccountBillDayDetail key={i.title} info={i}></AccountBillDayDetail>
+            <AccountBillDayDetail key={i.date} info={i}></AccountBillDayDetail>
           ))}
         </ul>
       </Wrapper>
