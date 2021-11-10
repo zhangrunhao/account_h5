@@ -81,7 +81,8 @@ class SortChoose extends React.Component {
           income: r.data.filter((i) => i.type === "income"),
         },
       });
-      this.props.sortChange(this.state.sortList[this.props.type][0]);
+      const sort = this.state.sortList[this.props.type][0]
+      this.props.sortChange((sort || {}));
     });
   }
 

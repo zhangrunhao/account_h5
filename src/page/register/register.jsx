@@ -2,30 +2,26 @@ import React from "react";
 import { Input, Form, Toast, Button } from "antd-mobile";
 import NavBar from "../../common/top-back-nav/top-back-nav.jsx";
 import styled from "styled-components";
-import { registerUser } from "../../api/user.js";
+import { registerUser, loginUser } from "../../api/user.js";
 import { setToken } from "../../util/token.js";
-import { useHistory } from "react-router-dom";
 
 const Wrapper = styled.div`
   padding-top: 1rem;
 `;
 
 export default () => {
-  const history = useHistory();
   const onFinish = (values) => {
-    registerUser(values).then((res) => {
-      if (res && res.data && res.data.token) {
-        setToken(res.data.token);
-        Toast.show({
-          icon: "success",
-          content: "登录成功",
-        });
-        if (history.length > 2) {
-          history.goBack();
-        } else {
-          location.href = `${location.origin}/#/home`;
+    registerUser(values).then(() => {
+      Toast.show({
+        icon: "success",
+        content: "注册成功",
+      });
+      loginUser(values).then((res) => {
+        if (res && res.data && res.data.token) {
+          setToken(res.data.token);
+          location.href = `${location.origin}/#/`;
         }
-      }
+      });
     });
   };
   return (
