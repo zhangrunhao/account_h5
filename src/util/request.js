@@ -17,12 +17,18 @@ service.interceptors.response.use(
     if (res.code === 200) {
       return res
     } else {
-      Toast.show({
-        icon: "fail",
-        content: res.message,
-      });
-      if (res.code === 401) location.href = `${location.origin}/#/login`;
-      throw new Error(res.message)
+      if (res.code === 401) {
+        Toast.show({
+          content: "请先登录帐号",
+        });
+        location.href = `${location.origin}/#/login`;
+      } else {
+        Toast.show({
+          icon: "fail",
+          content: res.message,
+        });
+        throw new Error(res.message)
+      }
     }
   },
   (error) => {

@@ -1,18 +1,22 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import { FontSize } from "@icon-park/react";
+import Icon from "@icon-park/react/es/all";
+
 const Wrapper = styled.div`
   width: 100%;
   height: 1rem;
   background: #fff;
 `;
 
-const SortIcon = styled.img`
+const SortIcon = styled.div`
   float: left;
-  margin: .1rem 0;
+  margin: 0.1rem 0;
   width: 10vw;
   height: 10vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Remark = styled.input`
@@ -73,18 +77,32 @@ export default class RecordResult extends React.Component {
       };
     } else if (length < 20) {
       return {
-        fontSize: '.2rem'
-      }
+        fontSize: ".2rem",
+      };
     } else {
       return {
-        fontSize: '.16rem'
-      }
+        fontSize: ".16rem",
+      };
     }
   }
   render() {
+    console.log(this.props.sort.icon);
     return (
       <Wrapper>
-        <SortIcon src={this.props.sort.icon}></SortIcon>
+        <SortIcon>
+          {this.props.sort.icon ? (
+            <Icon
+              size={34}
+              size="28"
+              fill="#333"
+              strokeLinejoin="miter"
+              strokeLinecap="butt"
+              type={this.props.sort.icon}
+            ></Icon>
+          ) : (
+            <></>
+          )}
+        </SortIcon>
         <Remark
           value={this.state.remark}
           onChange={this.handleRemarkInputChange.bind(this)}

@@ -3,33 +3,43 @@ import styled from "styled-components";
 import BScroll from "@better-scroll/core";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
+import Icon from "@icon-park/react/es/all";
+
 import Transfer from "./transfer.jsx";
 import History from "../../util/history.js";
-import { getStyleValue, getWinHeight } from "../../util/util.js";
 import { getRecordSortList } from "../../api/recordSort";
-import { fillBase } from "../../style/Styles.js";
-
-const htmlFontSize = parseFloat(
-  getStyleValue(document.querySelector("html"), "font-size")
-);
-const winHeight = getWinHeight();
 
 const SortChooseWrapper = styled.div`
-  // background-color: ${fillBase};
-  // height: ${winHeight - htmlFontSize * (6.2 + 0.8)}px;
   overflow: hidden;
 `;
 
 const ScrollWrapper = styled.div`
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
+  align-content: flex-start;
 `;
 
-const SortChooseItem = styled.div`
+const ScrollItem = styled.div`
+  flex: 0 0 25%;
+  height: 1.2rem;
+`;
+
+const IconWrapper = styled.div`
+  background-color: #fff;
   width: 0.8rem;
   height: 0.8rem;
-  background-color: #fff;
-  border-radius: 20px;
+  border-radius: 0.35rem;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const IconName = styled.div`
+  text-align: center;
+  height: 0.4rem;
+  line-height: 0.4rem;
 `;
 
 const EditSortButton = styled.div`
@@ -40,19 +50,6 @@ const EditSortButton = styled.div`
   line-height: 0.8rem;
   text-align: center;
   color: purple;
-`;
-
-const SortIcon = styled.img`
-  display: block;
-  margin: 0 auto;
-  width: 0.4rem;
-  height: 0.4rem;
-`;
-
-const SortName = styled.div`
-  width: 100%;
-  padding-top: 0.06rem;
-  text-align: center;
 `;
 
 class SortChoose extends React.Component {
@@ -81,8 +78,8 @@ class SortChoose extends React.Component {
           income: r.data.filter((i) => i.type === "income"),
         },
       });
-      const sort = this.state.sortList[this.props.type][0]
-      this.props.sortChange((sort || {}));
+      const sort = this.state.sortList[this.props.type][0];
+      this.props.sortChange(sort || {});
     });
   }
 
@@ -103,17 +100,26 @@ class SortChoose extends React.Component {
         ) : (
           <ScrollWrapper>
             {this.state.sortList[this.props.type].map((v) => (
-              <SortChooseItem
-                onClick={e => this.props.sortChange(v)}
-                key={v.recordSortId}
-              >
-                <SortIcon src={v.icon}></SortIcon>
-                <SortName>{v.name}</SortName>
-              </SortChooseItem>
+              <ScrollItem key={v.recordSortId}>
+                <IconWrapper>
+                  <Icon
+                    onClick={(e) => this.props.sortChange(v)}
+                    size={34}
+                    type={v.icon}
+                    size="28"
+                    fill="#333"
+                    strokeLinejoin="miter"
+                    strokeLinecap="butt"
+                  ></Icon>
+                </IconWrapper>
+                <IconName>{v.name}</IconName>
+              </ScrollItem>
             ))}
-            <EditSortButton onClick={this.editSortButtonClick.bind(this)}>
-              编辑
-            </EditSortButton>
+            <ScrollItem>
+              <EditSortButton onClick={this.editSortButtonClick.bind(this)}>
+                编辑
+              </EditSortButton>
+            </ScrollItem>
           </ScrollWrapper>
         )}
       </SortChooseWrapper>

@@ -1,50 +1,15 @@
 import React from "react";
 import styled from "styled-components";
 import { withRouter } from "react-router-dom";
-import { Left, AddOne, ArrowRight } from "@icon-park/react";
+import { List } from "antd-mobile";
+import Icon from "@icon-park/react/es/all";
 import History from "../../util/history.js";
 import { getRecordSortList } from "../../api/recordSort.js";
 import NavBar from "../../common/top-back-nav/top-back-nav.jsx";
+
+
 const Wrapper = styled.div`
   padding-top: 0.8rem;
-`;
-
-const List = styled.ul`
-  width: 100%;
-`;
-
-const Item = styled.li`
-  width: 100%;
-  height: 1rem;
-  display: flex;
-`;
-
-const SingleItem = styled(Item)`
-  background-color: aliceblue;
-`;
-
-const DoubleItem = styled(Item)`
-  background-color: bisque;
-`;
-
-const Image = styled.img`
-  width: 1rem;
-  height: 1rem;
-  flex: 0 0 1rem;
-`;
-
-const Name = styled.div`
-  height: 1rem;
-  line-height: 1rem;
-  flex: 1 1 auto;
-`;
-
-const Icon = styled.div`
-  width: 1rem;
-  flex: 0 0 1rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 `;
 
 class RecordSortList extends React.Component {
@@ -77,29 +42,20 @@ class RecordSortList extends React.Component {
     return (
       <Wrapper>
         <NavBar
-          right={[<AddOne key="0" size="26" onClick={() => this.addClick()} />]}
+          right={[<Icon key="0" type="AddOne" size="26" onClick={() => this.addClick()} />]}
         >
           收支记录类型列表
         </NavBar>
-
         <List>
-          {this.state.sortList.map((v, i) => {
-            const CompItem = i % 2 === 0 ? DoubleItem : SingleItem;
-            return (
-              <CompItem key={v.recordSortId}>
-                <Image src={v.icon} alt="" />
-                <Name>{v.name}</Name>
-                <Icon>
-                  <ArrowRight
-                    onClick={this.arrowRightClick.bind(this, v.recordSortId)}
-                    theme="outline"
-                    size="24"
-                    fill="#000000"
-                  />
-                </Icon>
-              </CompItem>
-            );
-          })}
+          {this.state.sortList.map((v) => (
+            <List.Item
+              key={v.recordSortId}
+              prefix={<Icon type={v.icon}></Icon>}
+              onClick={this.arrowRightClick.bind(this, v.recordSortId)}
+            >
+              {v.name}
+            </List.Item>
+          ))}
         </List>
       </Wrapper>
     );
