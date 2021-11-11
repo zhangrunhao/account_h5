@@ -40,6 +40,7 @@ class Record extends React.Component {
     };
   }
   sortChange(sort) {
+    console.log("record sortChange");
     this.setState({ sort });
   }
   moneyChange(money) {
@@ -57,28 +58,40 @@ class Record extends React.Component {
   submitSave() {
     if (this.state.sortType === "transfer") {
     } else {
-      addRecord({
-        recordSortId: this.state.sort.recordSortId,
-        accountId: this.state.accountId,
-        remark: this.state.remark,
-        spendTimeStamp: new Date(this.state.date).getTime(),
-        count:
-          this.state.sortType === "expend"
-            ? "-" + this.state.money
-            : this.state.money,
-      }).then(() => {
+      this.toAddRecord().then(() => {
         Toast.show({
           icon: "success",
           content: "添加成功",
         });
-        this.recordResult.current.clearRemarkInput();
-        this.setState({
-          money: "0",
-        });
+        // TODO: 是否来自账户详细列表
+        this.props.history.push("bill");
       });
     }
   }
-  submitAgain() {}
+  submitAgain() {
+    this.toAddRecord().then(() => {
+      Toast.show({
+        icon: "success",
+        content: "添加成功",
+      });
+      this.recordResult.current.clearRemarkInput();
+      this.setState({
+        money: "0",
+      });
+    });
+  }
+  toAddRecord() {
+    return addRecord({
+      recordSortId: this.state.sort.recordSortId,
+      accountId: this.state.accountId,
+      remark: this.state.remark,
+      spendTimeStamp: new Date(this.state.date).getTime(),
+      count:
+        this.state.sortType === "expend"
+          ? "-" + this.state.money
+          : this.state.money,
+    });
+  }
   tabChange(key) {
     this.setState({
       sortType: key,
@@ -88,7 +101,10 @@ class Record extends React.Component {
     return (
       <Wrapper>
         <NavBar>
-          <Tabs onChange={this.tabChange.bind(this)} defaultActiveKey={this.state.sortType}>
+          <Tabs
+            onChange={this.tabChange.bind(this)}
+            defaultActiveKey={this.state.sortType}
+          >
             {tabs.map((tab) => (
               <Tabs.TabPane title={tab.title} key={tab.key}></Tabs.TabPane>
             ))}
