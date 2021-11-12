@@ -1,8 +1,88 @@
-import React from "react";
+import { DoubleDown } from "@icon-park/react";
+import { Button, Picker } from "antd-mobile";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { getAccountList } from "../../api/account.js";
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  margin-top: 1rem;
+`;
+
+const IconWrapper = styled.div`
+  height: 0.8rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 export default (props) => {
-  return <Wrapper>转账模块</Wrapper>;
+  const [inPickerVisible, setInPickerVisible] = useState(false);
+  const [outPickerVisible, setOutPickerVisible] = useState(false);
+  const [accountData, setAccountData] = useState([]);
+  const [inValue, setInValue] = useState();
+  const [outValue, setOutValue] = useState();
+  const [inName, setInName] = useState("");
+  const [outName, setOutName] = useState("");
+
+  useEffect(() => {
+    getAccountList().then((r) => {
+      const accountData = r.data.map((i) => {
+        return {
+          label: i.name,
+          value: i.accountId,
+        };
+      });
+      setAccountData([accountData]);
+    });
+  }, []);
+
+  return (
+    <Wrapper>
+      <Button block size="large" onClick={() => setOutPickerVisible(true)}>
+        {outName}
+      </Button>
+      <IconWrapper>
+        <DoubleDown size="30"></DoubleDown>
+      </IconWrapper>
+      <Button block size="large" onClick={() => setInPickerVisible(true)}>
+        {inName}
+      </Button>
+
+      {/* out Picker */}
+      <Picker
+        visible={outPickerVisible}
+        cols={1}
+        columns={accountData}
+        defaultValue={outValue}
+        onClose={() => {
+          setOutPickerVisible(false);
+        }}
+        onConfirm={(v) => {
+          const accountName = accountData[0].find((i) => {
+            return i.value === v[0];
+          }).label;
+          setOutValue(v);
+          setOutName(accountName);
+        }}
+      ></Picker>
+
+      {/* in Picker */}
+      <Picker
+        visible={inPickerVisible}
+        cols={1}
+        columns={accountData}
+        defaultValue={inValue}
+        onClose={() => {
+          setInPickerVisible(false);
+        }}
+        onConfirm={(v) => {
+          const accountName = accountData[0].find((i) => {
+            return i.value === v[0];
+          }).label;
+          setInValue(v);
+          setInName(accountName);
+        }}
+      ></Picker>
+    </Wrapper>
+  );
 };
