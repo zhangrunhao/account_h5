@@ -2,11 +2,13 @@ import styled from "styled-components";
 import React from "react";
 import PropTypes from "prop-types";
 import { Picker, Button, DatePicker, Space } from "antd-mobile";
+import moment from 'moment'
 import { getAccountList } from "../../api/account.js";
 
 const Wrapper = styled.div`
   background: #fff;
 `;
+
 let now = new Date();
 
 export default class ToolList extends React.Component {
@@ -16,6 +18,7 @@ export default class ToolList extends React.Component {
       datePickerVisible: false,
       accountPickerVisible: false,
       dateValue: now,
+      accountName: "",
       accountValue: [],
       accountData: [],
     };
@@ -29,9 +32,13 @@ export default class ToolList extends React.Component {
         };
       });
       const accountValue = accountData.length > 0 ? [accountData[0].value] : [];
+      const accountName = accountData.find((i) => {
+        return i.value === accountValue[0]
+      }).label
       this.setState({
         accountData: [accountData],
         accountValue,
+        accountName,
       });
       this.props.accountChange(accountValue);
     });
@@ -50,7 +57,7 @@ export default class ToolList extends React.Component {
               });
             }}
           >
-            账户: {this.state.accountValue}
+            账户: {this.state.accountName}
           </Button>
           <Button
             size="small"
@@ -62,7 +69,7 @@ export default class ToolList extends React.Component {
               });
             }}
           >
-            {this.state.dateValue.toLocaleDateString()}
+            {moment(this.state.dateValue).format('YYYY年MM月DD日')}
           </Button>
         </Space>
         <Picker
@@ -76,7 +83,13 @@ export default class ToolList extends React.Component {
             });
           }}
           onConfirm={(v) => {
-            this.setState({ accountValue: v });
+            const accountName = this.state.accountData[0].find((i) => {
+              return i.value === v[0]
+            }).label
+            this.setState({ 
+              accountValue: v,
+              accountName
+            });
             this.props.accountChange(v);
           }}
         ></Picker>
@@ -90,6 +103,7 @@ export default class ToolList extends React.Component {
           defaultValue={this.state.dateValue}
           max={now}
           onConfirm={(value) => {
+            console.log(value)
             this.setState({
               dateValue: value,
             });
