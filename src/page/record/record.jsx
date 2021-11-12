@@ -40,7 +40,6 @@ class Record extends React.Component {
     };
   }
   sortChange(sort) {
-    console.log("record sortChange");
     this.setState({ sort });
   }
   moneyChange(money) {

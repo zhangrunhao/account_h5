@@ -47,7 +47,7 @@ export default (props) => {
       title: "删除",
       content: "确定删除此记录类型吗?",
       onConfirm: () => {
-        deleteRecordSort(i).then((r) => {
+        deleteRecordSort(id).then((r) => {
           Toast.show({
             icon: "success",
             content: "删除成功",
@@ -132,7 +132,7 @@ export default (props) => {
             },
           ]}
         >
-          <Input placeholder="图标地址" clearable></Input>
+          <Input placeholder="暂时为IconPark对应名称" clearable></Input>
         </Form.Item>
       </Form>
     </Wrapper>

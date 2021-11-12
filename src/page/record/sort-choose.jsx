@@ -61,16 +61,7 @@ class SortChoose extends React.Component {
         income: [],
       },
     };
-  }
 
-  componentDidUpdate() {
-    // eslint-disable-next-line no-new
-    new BScroll(this.node, {
-      click: true,
-    });
-  }
-
-  componentDidMount() {
     getRecordSortList().then((r) => {
       this.setState({
         sortList: {
@@ -80,6 +71,17 @@ class SortChoose extends React.Component {
       });
       const sort = this.state.sortList[this.props.type][0];
       this.props.sortChange(sort || {});
+    });
+
+    
+  }
+  
+  componentDidUpdate() {}
+  
+  componentDidMount() {
+    // eslint-disable-next-line no-new
+    new BScroll(this.node, {
+      click: true,
     });
   }
 
@@ -103,7 +105,9 @@ class SortChoose extends React.Component {
               <ScrollItem key={v.recordSortId}>
                 <IconWrapper>
                   <Icon
-                    onClick={(e) => this.props.sortChange(v)}
+                    onClick={(e) => {
+                      this.props.sortChange(v);
+                    }}
                     size={34}
                     type={v.icon}
                     size="28"

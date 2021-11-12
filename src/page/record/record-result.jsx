@@ -86,7 +86,6 @@ export default class RecordResult extends React.Component {
     }
   }
   render() {
-    console.log(this.props.sort.icon);
     return (
       <Wrapper>
         <SortIcon>
