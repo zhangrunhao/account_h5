@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import _ from "loadsh";
+import NP from 'number-precision'
 import { colorTextBase, fillBase, fillTap } from "../../style/Styles.js";
 import PropTypes from "prop-types";
 
@@ -55,7 +56,7 @@ export default class InputKeyBoard extends React.Component {
       if (
         money.indexOf(".") > -1 && //  存在.
         money.indexOf("+") < 0 && // 不存在+
-        money.indexOf("-") < 0 &&  // 不存在-
+        money.indexOf("-") < 0 && // 不存在-
         money.substring(money.lastIndexOf(".")).length > 2 // 小数点后, 最多两位
       ) {
         return;
@@ -89,7 +90,7 @@ export default class InputKeyBoard extends React.Component {
       if (
         money.indexOf(".") > -1 && // 存在.
         money.indexOf("+") < 0 && // 不存在+
-        money.indexOf("-") < 0  // 不存在-
+        money.indexOf("-") < 0 // 不存在-
       ) {
         return;
       }
@@ -134,17 +135,17 @@ export default class InputKeyBoard extends React.Component {
       }
     } else if (key === "-") {
       // -
-      if (money.indexOf('-') > -1) {
+      if (money.indexOf("-") > -1) {
         // 存在 -
-        const arr = money.split('-'); // 先计算
-        money = Number(arr[0]) - Number(arr[1]) + ""
+        const arr = money.split("-"); // 先计算
+        money = NP.minus(parseFloat(arr[0]), parseFloat(arr[1])).toString();
+        if (parseFloat(money) < 0) money = "0"; // 如果 - 完, 小于0, 就等于0
       }
 
       if (money.indexOf("+") > -1) {
         // 存在+
         const arr = money.split("+"); // 先计算
-        money = Number(arr[0]) + Number(arr[1]) + "";
-        if (Number(money) < 0) money = "0"; // 如果 - 完, 小于0, 就等于0
+        money = NP.plus(parseFloat(arr[0]), parseFloat(arr[1])).toString();
       }
 
       if (
@@ -154,20 +155,20 @@ export default class InputKeyBoard extends React.Component {
         money = money.substring(0, money.lastIndexOf(".")); // 截取最后一位.
       }
 
-      money += '-'
+      money += "-";
     } else if (key === "+") {
       // +
       if (money.indexOf("+") > -1) {
         // 存在+
         const arr = money.split("+"); // 先计算
-        money = Number(arr[0]) + Number(arr[1]) + "";
+        money = NP.plus(parseFloat(arr[0]), parseFloat(arr[1])).toString();
       }
 
-      if (money.indexOf('-') > -1) {
+      if (money.indexOf("-") > -1) {
         // 存在 -
-        const arr = money.split('-'); // 先计算
-        money = Number(arr[0]) - Number(arr[1]) + ""
-        if (Number(money) < 0) money = "0"; // 如果 - 完, 小于0, 就等于0
+        const arr = money.split("-"); // 先计算
+        money = NP.minus(parseFloat(arr[0]), parseFloat(arr[1])).toString();
+        if (parseFloat(money) < 0) money = "0"; // 如果 - 完, 小于0, 就等于0
       }
 
       if (
@@ -180,6 +181,7 @@ export default class InputKeyBoard extends React.Component {
       money += "+";
     } else if (key === "再记") {
       // 再记
+      money = "";
       this.props.submitAgain();
       return;
     } else if (key === "保存") {
@@ -214,3 +216,4 @@ InputKeyBoard.propTypes = {
   submitSave: PropTypes.func.isRequired,
   submitAgain: PropTypes.func.isRequired,
 };
+  
