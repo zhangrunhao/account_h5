@@ -21,8 +21,8 @@ export default (props) => {
   const [accountData, setAccountData] = useState([]);
   const [inValue, setInValue] = useState();
   const [outValue, setOutValue] = useState();
-  const [inName, setInName] = useState("");
-  const [outName, setOutName] = useState("");
+  const [inName, setInName] = useState("选择转入账户");
+  const [outName, setOutName] = useState("选择转出账户");
 
   useEffect(() => {
     getAccountList().then((r) => {
