@@ -29,7 +29,7 @@ class Account extends React.Component {
   }
 
   handleAccountClick(account) {
-    const path = `/account-detail/${account.accountId}`;
+    const path = `/account-detail/${account.id}`;
     History.push(this, path);
   }
   render() {
@@ -50,13 +50,13 @@ class Account extends React.Component {
         <List>
           {this.state.accountList.map((v) => (
             <List.Item
-              key={v.accountId}
+              key={v.id}
               onClick={this.handleAccountClick.bind(this, v)}
               prefix={
                 <Image src={v.icon} fit="cover" width={40} height={40}></Image>
               }
               title={v.name}
-              extra={v.count}
+              extra={v.money}
             ></List.Item>
           ))}
         </List>

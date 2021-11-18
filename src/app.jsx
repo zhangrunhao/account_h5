@@ -7,8 +7,8 @@ import Register from "./page/register/register.jsx";
 import Bill from "./page/bill/bill.jsx";
 
 import Record from "./page/record/record.jsx";
-import RecordSortList from "./page/record-sort-list/record-sort-list.jsx";
-import RecordSortEdit from "./page/record-sort-edit/record-sort-edit.jsx";
+import TradeCateList from "./page/trade-cate-list/trade-cate-list.jsx";
+import TradeCateEdit from "./page/trade-cate-edit/ trade-cate-edit.jsx";
 
 import Account from "./page/account/account.jsx";
 import AccountDetail from "./page/account-detail/account-detail.jsx";
@@ -24,12 +24,15 @@ export default function App() {
           <Route path="/login" component={Login}></Route>
           <Route path="/register" component={Register}></Route>
           <Route path="/bill" component={Bill}></Route>
+
           <Route path="/record" component={Record}></Route>
-          <Route path="/record-sort-list" component={RecordSortList}></Route>
-          <Route path="/record-sort-edit/:id" component={RecordSortEdit}></Route>
+          <Route path="/trade-cate-list" component={TradeCateList}></Route>
+          <Route path="/trade-cate-edit/:id" component={TradeCateEdit}></Route>
+
           <Route path="/account" component={Account}></Route>
           <Route path="/account-detail/:id" component={AccountDetail}></Route>
           <Route path="/account-edit/:id" component={AccountEdit}></Route>
+
           <Route path="/home" component={Home}></Route>
           <Route path="/" component={Bill}></Route>
         </Switch>

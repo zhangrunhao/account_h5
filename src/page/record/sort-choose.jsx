@@ -7,7 +7,9 @@ import Icon from "@icon-park/react/es/all";
 
 import Transfer from "./transfer.jsx";
 import History from "../../util/history.js";
-import { getRecordSortList } from "../../api/recordSort";
+import {
+  getTradeCateList
+} from "../../api/trade-cate"
 
 const SortChooseWrapper = styled.div`
   overflow: hidden;
@@ -62,7 +64,7 @@ class SortChoose extends React.Component {
       },
     };
 
-    getRecordSortList().then((r) => {
+    getTradeCateList().then((r) => {
       this.setState({
         sortList: {
           expend: r.data.filter((i) => i.type === "expend"),

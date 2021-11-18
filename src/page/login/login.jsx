@@ -14,8 +14,8 @@ export default () => {
   const history = useHistory();
   const onFinish = (values) => {
     loginUser(values).then((res) => {
-      if (res && res.data && res.data.token) {
-        setToken(res.data.token);
+      if (res && res.data) {
+        setToken(res.data);
         Toast.show({
           icon: "success",
           content: "登录成功",

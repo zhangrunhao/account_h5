@@ -4,7 +4,7 @@ import { withRouter } from "react-router-dom";
 import { List } from "antd-mobile";
 import Icon from "@icon-park/react/es/all";
 import History from "../../util/history.js";
-import { getRecordSortList } from "../../api/recordSort.js";
+import { getTradeCateList } from "../../api/trade-cate.js";
 import NavBar from "../../common/top-back-nav/top-back-nav.jsx";
 
 
@@ -12,7 +12,7 @@ const Wrapper = styled.div`
   padding-top: 0.8rem;
 `;
 
-class RecordSortList extends React.Component {
+class TradeCateList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -21,7 +21,7 @@ class RecordSortList extends React.Component {
   }
 
   componentDidMount() {
-    getRecordSortList().then((r) => {
+    getTradeCateList().then((r) => {
       this.setState({
         sortList: r.data,
       });
@@ -29,12 +29,12 @@ class RecordSortList extends React.Component {
   }
 
   arrowRightClick(id) {
-    const path = `/record-sort-edit/${id}`;
+    const path = `/trade-cate-edit/${id}`;
     History.push(this, path);
   }
 
   addClick() {
-    const path = "/record-sort-edit/new";
+    const path = "/trade-cate-edit/new";
     History.push(this, path);
   }
 
@@ -49,9 +49,9 @@ class RecordSortList extends React.Component {
         <List>
           {this.state.sortList.map((v) => (
             <List.Item
-              key={v.recordSortId}
+              key={v.id}
               prefix={<Icon type={v.icon}></Icon>}
-              onClick={this.arrowRightClick.bind(this, v.recordSortId)}
+              onClick={this.arrowRightClick.bind(this, v.id)}
             >
               {v.name}
             </List.Item>
@@ -62,4 +62,4 @@ class RecordSortList extends React.Component {
   }
 }
 
-export default withRouter(RecordSortList);
+export default withRouter(TradeCateList);

@@ -41,7 +41,7 @@ class AccountDetail extends React.Component {
       id
     })
     getRecordListByAccount({
-      accountId: id,
+      id,
     }).then((r) => {
       this.setState({
         recordList: r.data,

@@ -28,17 +28,17 @@ export const getAccountDetail = (id) => {
     url: "/api/account/getAccount",
     method: "Get",
     params: {
-      accountId: id,
+      id
     },
   });
 };
 
-export const deleteAccount = (accountId) => {
+export const deleteAccount = (id) => {
   return request({
     url: "/api/account/delete",
     method: "Post",
     data: {
-      accountId,
+      id
     },
   });
 };

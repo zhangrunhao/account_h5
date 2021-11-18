@@ -28,7 +28,7 @@ export default (props) => {
       });
     } else {
       updateAccount(Object.assign(values, {
-        accountId: id,
+        id
       })).then(() => {
         Toast.show({
           icon: "success",
@@ -45,9 +45,8 @@ export default (props) => {
       getAccountDetail(id).then((r) => {
         form.setFieldsValue({
           name: r.data.name,
-          type: r.data.type,
+          cate: r.data.cate,
           icon: r.data.icon,
-          color: r.data.color,
         });
       });
     }
@@ -80,20 +79,20 @@ export default (props) => {
           <Input placeholder="请输入名称" clearable></Input>
         </Form.Item>
         <Form.Item
-          name="type"
-          label="类型"
+          name="cate"
+          label="种类"
           required
           rules={[
             {
               required: true,
-              message: "类型不可为空",
+              message: "种类不可为空",
             },
           ]}
         >
           <Radio.Group>
             <Space direction="vertical">
-              <Radio value="1">资产</Radio>
-              <Radio value="2">负债</Radio>
+              <Radio value={1}>资产</Radio>
+              <Radio value={2}>负债</Radio>
             </Space>
           </Radio.Group>
         </Form.Item>
@@ -109,19 +108,6 @@ export default (props) => {
           ]}
         >
           <Input placeholder="图标地址" clearable></Input>
-        </Form.Item>
-        <Form.Item
-          name="color"
-          label="颜色"
-          required
-          rules={[
-            {
-              required: true,
-              message: "颜色不可为空",
-            },
-          ]}
-        >
-          <Input placeholder="输入颜色" clearable></Input>
         </Form.Item>
       </Form>
     </Wrapper>

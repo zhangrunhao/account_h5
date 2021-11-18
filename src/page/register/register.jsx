@@ -17,8 +17,8 @@ export default () => {
         content: "注册成功",
       });
       loginUser(values).then((res) => {
-        if (res && res.data && res.data.token) {
-          setToken(res.data.token);
+        if (res && res.data) {
+          setToken(res.data);
           location.href = `${location.origin}/#/`;
         }
       });

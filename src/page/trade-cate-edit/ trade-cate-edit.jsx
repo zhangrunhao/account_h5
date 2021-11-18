@@ -3,12 +3,14 @@ import styled from "styled-components";
 import { Delete } from "@icon-park/react";
 import { Dialog, Form, Toast, Button, Input, Radio, Space } from "antd-mobile";
 import NavBar from "../../common/top-back-nav/top-back-nav.jsx";
+
 import {
-  getRecordSort,
-  addRecordSort,
-  updateRecordSort,
-  deleteRecordSort,
-} from "../../api/recordSort";
+  addTradeCate,
+  updateTradeCate,
+  deleteTradeCate,
+  getTradeCate
+} from "../../api/trade-cate";
+
 import { useHistory } from "react-router";
 const Wrapper = styled.div`
   padding-top: 1rem;
@@ -21,7 +23,7 @@ export default (props) => {
   const history = useHistory();
   const onFinish = (values) => {
     if (id === "new") {
-      addRecordSort(values).then(() => {
+      addTradeCate(values).then(() => {
         Toast.show({
           icon: "success",
           content: "添加成功",
@@ -29,9 +31,9 @@ export default (props) => {
         history.goBack();
       });
     } else {
-      updateRecordSort(
+      updateTradeCate(
         Object.assign(values, {
-          recordSortId: id,
+          id,
         })
       ).then(() => {
         Toast.show({
@@ -47,7 +49,7 @@ export default (props) => {
       title: "删除",
       content: "确定删除此记录类型吗?",
       onConfirm: () => {
-        deleteRecordSort(id).then((r) => {
+        deleteTradeCate(id).then((r) => {
           Toast.show({
             icon: "success",
             content: "删除成功",
@@ -60,11 +62,11 @@ export default (props) => {
   useEffect(() => {
     if (id !== "new") {
       setTitle("编辑");
-      getRecordSort(id).then((r) => {
+      getTradeCate(id).then((r) => {
         form.setFieldsValue({
           name: r.data.name,
           icon: r.data.icon,
-          type: r.data.type,
+          operate: r.data.operate,
         });
       });
     }
@@ -104,8 +106,8 @@ export default (props) => {
           <Input placeholder="请输入名称" clearable></Input>
         </Form.Item>
         <Form.Item
-          name="type"
-          label="类型"
+          name="operate"
+          label="操作"
           required
           rules={[
             {
@@ -116,8 +118,8 @@ export default (props) => {
         >
           <Radio.Group>
             <Space direction="vertical">
-              <Radio value="income">收入</Radio>
-              <Radio value="expend">支出</Radio>
+              <Radio value={1}>收入</Radio>
+              <Radio value={2}>支出</Radio>
             </Space>
           </Radio.Group>
         </Form.Item>
