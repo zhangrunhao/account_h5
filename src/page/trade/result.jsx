@@ -89,14 +89,14 @@ export default class RecordResult extends React.Component {
     return (
       <Wrapper>
         <SortIcon>
-          {this.props.sort.icon ? (
+          {this.props.cate.icon ? (
             <Icon
               size={34}
               size="28"
               fill="#333"
               strokeLinejoin="miter"
               strokeLinecap="butt"
-              type={this.props.sort.icon}
+              type={this.props.cate.icon}
             ></Icon>
           ) : (
             <></>
@@ -116,7 +116,7 @@ export default class RecordResult extends React.Component {
 }
 
 RecordResult.propTypes = {
-  sort: PropTypes.object,
+  cate: PropTypes.object,
   money: PropTypes.string,
   remarkChange: PropTypes.func.isRequired,
 };

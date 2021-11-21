@@ -28,7 +28,7 @@ export default class ToolList extends React.Component {
       const accountData = r.data.map((i) => {
         return {
           label: i.name,
-          value: i.accountId,
+          value: i.id,
         };
       });
       const accountValue = accountData.length > 0 ? [accountData[0].value] : [];

@@ -26,21 +26,22 @@ const RecordInput = styled.div`
   width: 100%;
 `;
 
-class Record extends React.Component {
+class Trade extends React.Component {
   constructor(props) {
     super(props);
     this.recordResult = React.createRef();
     this.state = {
-      sortType: tabs[1].key,
-      sort: {},
+      cateType: tabs[1].key,
+      cate: {},
       money: "0",
       date: new Date(Date.now()),
       accountId: "",
       remark: "",
     };
   }
-  cateChange(sort) {
-    this.setState({ sort });
+  cateChange(cate) {
+    console.log(cate)
+    this.setState({ cate });
   }
   moneyChange(money) {
     this.setState({ money });
@@ -55,9 +56,9 @@ class Record extends React.Component {
     this.setState({ remark });
   }
   submitSave() {
-    if (this.state.sortType === "transfer") {
+    if (this.state.cateType === "transfer") {
     } else {
-      this.toAddRecord().then(() => {
+      this.toAddTrade().then(() => {
         Toast.show({
           icon: "success",
           content: "添加成功",
@@ -68,7 +69,7 @@ class Record extends React.Component {
     }
   }
   submitAgain() {
-    this.toAddRecord().then(() => {
+    this.toAddTrade().then(() => {
       Toast.show({
         icon: "success",
         content: "添加成功",
@@ -79,21 +80,27 @@ class Record extends React.Component {
       });
     });
   }
-  toAddRecord() {
+  toAddTrade() {
     return addTrade({
-      recordSortId: this.state.sort.recordSortId,
       accountId: this.state.accountId,
+      tradeCateId: this.state.cate.id,
       remark: this.state.remark,
-      spendTimeStamp: new Date(this.state.date).getTime(),
-      count:
-        this.state.sortType === "expend"
-          ? "-" + this.state.money
-          : this.state.money,
+      spendDate: new Date(this.state.date).getTime(),
+      operate: this.getOperateByType(this.state.cateType),
+      money: this.state.money
     });
+  }
+  getOperateByType(type) {
+    switch (type) {
+      case "income": return 1;
+      case "expend": return 2;
+      // TODO: 转账, 分为转入和转出, 这里需要区分
+      case "transfer": return 3;
+    }
   }
   tabChange(key) {
     this.setState({
-      sortType: key,
+      cateType: key,
     });
   }
   render() {
@@ -102,7 +109,7 @@ class Record extends React.Component {
         <NavBar>
           <Tabs
             onChange={this.tabChange.bind(this)}
-            defaultActiveKey={this.state.sortType}
+            defaultActiveKey={this.state.cateType}
           >
             {tabs.map((tab) => (
               <Tabs.TabPane title={tab.title} key={tab.key}></Tabs.TabPane>
@@ -110,13 +117,13 @@ class Record extends React.Component {
           </Tabs>
         </NavBar>
         <CateList
-          type={this.state.sortType}
+          type={this.state.cateType}
           cateChange={this.cateChange.bind(this)}
         ></CateList>
         <RecordInput>
           <Result
             ref={this.recordResult}
-            sort={this.state.sort}
+            cate={this.state.cate}
             money={this.state.money}
             remarkChange={this.remarkChange.bind(this)}
           ></Result>
@@ -135,4 +142,4 @@ class Record extends React.Component {
   }
 }
 
-export default withRouter(Record);
+export default withRouter(Trade);

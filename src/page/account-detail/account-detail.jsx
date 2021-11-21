@@ -30,7 +30,7 @@ class AccountDetail extends React.Component {
       id: "",
       recordList: [],
       name: "",
-      count: 0
+      money: 0
     };
   }
 
@@ -47,7 +47,7 @@ class AccountDetail extends React.Component {
     getAccountDetail(id).then(r => {
       this.setState({
         name: r.data.name,
-        count: r.data.count
+        money: r.data.money
       })
     })
   }
@@ -85,7 +85,7 @@ class AccountDetail extends React.Component {
           {this.state.name}
         </NavBar>
 
-        <Summary>余额: {this.state.count}</Summary>
+        <Summary>余额: {this.state.money}</Summary>
 
         <ul>
           {this.state.recordList.map((i) => (
