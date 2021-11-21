@@ -6,7 +6,7 @@ import Login from "./page/login/login.jsx";
 import Register from "./page/register/register.jsx";
 import Bill from "./page/bill/bill.jsx";
 
-import Record from "./page/record/record.jsx";
+import Trade from "./page/trade/trade.jsx";
 import TradeCateList from "./page/trade-cate-list/trade-cate-list.jsx";
 import TradeCateEdit from "./page/trade-cate-edit/ trade-cate-edit.jsx";
 
@@ -25,7 +25,7 @@ export default function App() {
           <Route path="/register" component={Register}></Route>
           <Route path="/bill" component={Bill}></Route>
 
-          <Route path="/record" component={Record}></Route>
+          <Route path="/trade" component={Trade}></Route>
           <Route path="/trade-cate-list" component={TradeCateList}></Route>
           <Route path="/trade-cate-edit/:id" component={TradeCateEdit}></Route>
 

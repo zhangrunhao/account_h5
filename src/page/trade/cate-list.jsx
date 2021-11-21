@@ -54,11 +54,11 @@ const EditSortButton = styled.div`
   color: purple;
 `;
 
-class SortChoose extends React.Component {
+class CateList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      sortList: {
+      cateList: {
         expend: [],
         income: [],
       },
@@ -66,13 +66,13 @@ class SortChoose extends React.Component {
 
     getTradeCateList().then((r) => {
       this.setState({
-        sortList: {
-          expend: r.data.filter((i) => i.type === "expend"),
-          income: r.data.filter((i) => i.type === "income"),
+        cateList: {
+          expend: r.data.filter((i) => i.operate === 2),
+          income: r.data.filter((i) => i.operate === 1),
         },
       });
-      const sort = this.state.sortList[this.props.type][0];
-      this.props.sortChange(sort || {});
+      const sort = this.state.cateList[this.props.type][0];
+      this.props.cateChange(sort || {});
     });
 
     
@@ -88,7 +88,7 @@ class SortChoose extends React.Component {
   }
 
   editSortButtonClick() {
-    const path = "/record-sort-list";
+    const path = "/trade-cate-list";
     History.push(this, path);
   }
 
@@ -103,12 +103,12 @@ class SortChoose extends React.Component {
           <Transfer></Transfer>
         ) : (
           <ScrollWrapper>
-            {this.state.sortList[this.props.type].map((v) => (
-              <ScrollItem key={v.recordSortId}>
+            {this.state.cateList[this.props.type].map((v) => (
+              <ScrollItem key={v.id}>
                 <IconWrapper>
                   <Icon
                     onClick={(e) => {
-                      this.props.sortChange(v);
+                      this.props.cateChange(v);
                     }}
                     size={34}
                     type={v.icon}
@@ -133,9 +133,9 @@ class SortChoose extends React.Component {
   }
 }
 
-export default withRouter(SortChoose);
+export default withRouter(CateList);
 
-SortChoose.propTypes = {
-  sortChange: PropTypes.func.isRequired,
+CateList.propTypes = {
+  cateChange: PropTypes.func.isRequired,
   type: PropTypes.string.isRequired,
 };

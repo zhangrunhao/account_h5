@@ -1,12 +1,12 @@
 import React from "react";
-import SortChoose from "./sort-choose.jsx";
+import CateList from "./cate-list.jsx";
 import styled from "styled-components";
-import { addRecord } from "../../api/record.js";
+import { addTrade } from "../../api/trade";
 import { Toast, Tabs } from "antd-mobile";
 import NavBar from "../../common/top-back-nav/top-back-nav.jsx";
 import ToolList from "./tool-list.jsx";
 import InputKeyBoard from "./input-key-board.jsx";
-import RecordResult from "./record-result.jsx";
+import Result from "./result.jsx";
 import { withRouter } from "react-router-dom";
 
 const tabs = [
@@ -39,7 +39,7 @@ class Record extends React.Component {
       remark: "",
     };
   }
-  sortChange(sort) {
+  cateChange(sort) {
     this.setState({ sort });
   }
   moneyChange(money) {
@@ -80,7 +80,7 @@ class Record extends React.Component {
     });
   }
   toAddRecord() {
-    return addRecord({
+    return addTrade({
       recordSortId: this.state.sort.recordSortId,
       accountId: this.state.accountId,
       remark: this.state.remark,
@@ -109,17 +109,17 @@ class Record extends React.Component {
             ))}
           </Tabs>
         </NavBar>
-        <SortChoose
+        <CateList
           type={this.state.sortType}
-          sortChange={this.sortChange.bind(this)}
-        ></SortChoose>
+          cateChange={this.cateChange.bind(this)}
+        ></CateList>
         <RecordInput>
-          <RecordResult
+          <Result
             ref={this.recordResult}
             sort={this.state.sort}
             money={this.state.money}
             remarkChange={this.remarkChange.bind(this)}
-          ></RecordResult>
+          ></Result>
           <ToolList
             accountChange={this.accountChange.bind(this)}
             dateChange={this.dateChange.bind(this)}

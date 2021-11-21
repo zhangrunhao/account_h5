@@ -23,9 +23,9 @@ export default class AccountBillDayDetail extends React.Component {
           {this.props.info.date}
         </Title>
         <List>
-          {this.props.info.array.map((i) => (
+          {this.props.info.trades.map((i) => (
             <List.Item
-              key={i.recordId}
+              key={i.id}
               prefix={
                 i.type === "expend" ? (
                   <ExpensesOne size="28" fill="#cc6060"></ExpensesOne>
@@ -34,7 +34,7 @@ export default class AccountBillDayDetail extends React.Component {
                 )
               }
               description={i.remark}
-              extra={i.count}
+              extra={i.money}
             >
               {i.sortName}
             </List.Item>

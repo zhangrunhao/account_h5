@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import AccountBillDayDetail from "../../common/account-bill-day-detail/account-bill-day-detail.jsx";
 import styled from "styled-components";
 import BottomTabBar from "../../common/bottom-tab-bar/bottom-tab-bar.jsx";
-import { getRecordList } from "../../api/record.js";
+import { getTradeList } from '../../api/trade.js'
 import { AllApplication } from "@icon-park/react";
 import { NavBar, Popup } from "antd-mobile";
 import SlidePopup from "./slide-popup.jsx";
@@ -21,12 +21,12 @@ const NavBarWrapper = styled.div`
 `;
 
 export default () => {
-  const [recordList, setRecordList] = useState([]);
+  const [tradeList, setTradeList] = useState([]);
   const [popupVisible, setPopupVisible] = useState(false);
   const id = 1;
   useEffect(() => {
-    getRecordList().then((r) => {
-      setRecordList(r.data);
+    getTradeList().then((r) => {
+      setTradeList(r.data);
     });
   }, [id]);
   return (
@@ -48,7 +48,7 @@ export default () => {
         <SlidePopup></SlidePopup>
       </Popup>
       <ul>
-        {recordList.map((i) => (
+        {tradeList.map((i) => (
           <AccountBillDayDetail key={i.date} info={i}></AccountBillDayDetail>
         ))}
       </ul>

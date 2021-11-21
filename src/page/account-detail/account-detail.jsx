@@ -5,8 +5,7 @@ import { Edit, Delete } from "@icon-park/react";
 import AccountBillDayDetail from "../../common/account-bill-day-detail/account-bill-day-detail.jsx";
 import History from "../../util/history.js";
 import { getAccountDetail, deleteAccount } from "../../api/account.js";
-import { getRecordListByAccount } from "../../api/record.js";
-// import { recordToList } from "../../util/record.js";
+import { getTradeListByAccount } from "../../api/trade.js";
 import { Dialog, Toast } from "antd-mobile";
 import NavBar from "../../common/top-back-nav/top-back-nav.jsx";
 
@@ -40,9 +39,7 @@ class AccountDetail extends React.Component {
     this.setState({
       id
     })
-    getRecordListByAccount({
-      id,
-    }).then((r) => {
+    getTradeListByAccount(id).then((r) => {
       this.setState({
         recordList: r.data,
       });
