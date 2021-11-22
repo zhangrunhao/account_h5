@@ -1,0 +1,42 @@
+{
+  "Income": {
+    "code": 1,
+    "sign": "add",
+    "desc": "收入"
+  },
+  "Expend": {
+    "code": 2,
+    "sign": "subtract",
+    "desc": "支出"
+  },
+  "Transfer_In": {
+    "code": 3,
+    "sign": "add",
+    "desc": "转入"
+  },
+  "Transfer_Out": {
+    "code": 4,
+    "sign": "subtract",
+    "desc": "转出"
+  },
+  "Borrow": {
+    "code": 5,
+    "sign": "add",
+    "desc": "借入"
+  },
+  "Lend": {
+    "code": 6,
+    "sign": "subtract",
+    "desc": "借出"
+  },
+  "Receive": {
+    "code": 7,
+    "sign": "add",
+    "desc": "收款"
+  },
+  "Repayment": {
+    "code": 8,
+    "sign": "subtract",
+    "desc": "还款"
+  }
+}

@@ -1,5 +1,16 @@
 import request from "../util/request.js";
 
+export const getDetail = (id) => {
+  return request({
+    url: "/api/trade/getDetail",
+    method: "Get",
+    params: {
+      id
+    }
+  });
+};
+
+
 export const addTrade = (data) => {
   return request({
     url: "/api/trade/add",

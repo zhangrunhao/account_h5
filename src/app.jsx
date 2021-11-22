@@ -7,6 +7,8 @@ import Register from "./page/register/register.jsx";
 import Bill from "./page/bill/bill.jsx";
 
 import Trade from "./page/trade/trade.jsx";
+import TradeDetail from "./page/trade-detail/trade-detail.jsx";
+
 import TradeCateList from "./page/trade-cate-list/trade-cate-list.jsx";
 import TradeCateEdit from "./page/trade-cate-edit/ trade-cate-edit.jsx";
 
@@ -26,6 +28,8 @@ export default function App() {
           <Route path="/bill" component={Bill}></Route>
 
           <Route path="/trade" component={Trade}></Route>
+          <Route path="/trade-detail/:id" component={TradeDetail}></Route>
+
           <Route path="/trade-cate-list" component={TradeCateList}></Route>
           <Route path="/trade-cate-edit/:id" component={TradeCateEdit}></Route>
 

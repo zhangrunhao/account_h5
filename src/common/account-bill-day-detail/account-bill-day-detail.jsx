@@ -3,6 +3,8 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 import { List } from "antd-mobile";
 import Icon from "@icon-park/react/es/all";
+import { withRouter } from "react-router";
+import { getOperateSignByCode } from '../../util/trade-operate'
 
 const Wrapper = styled.div``;
 
@@ -15,28 +17,10 @@ const Title = styled.div`
   font-weight: 700;
 `;
 
-const getTypeByOperate = function (type) {
-  switch (type) {
-    case 1:
-      return "add";
-    case 2:
-      return "subtract";
-    case 3:
-      return "add";
-    case 4:
-      return "subtract";
-    case 5:
-      return "add";
-    case 6:
-      return "subtract";
-    case 7:
-      return "add";
-    case 8:
-      return "subtract";
+class AccountBillDayDetail extends React.Component {
+  goRouter(id) {
+    this.props.history.push(`trade-detail/${id}`)
   }
-};
-
-export default class AccountBillDayDetail extends React.Component {
   render() {
     return (
       <Wrapper>
@@ -44,14 +28,15 @@ export default class AccountBillDayDetail extends React.Component {
         <List>
           {this.props.info.trades.map((i) => (
             <List.Item
+              onClick={this.goRouter.bind(this, i.id)}
               key={i.id}
               prefix={
                 <Icon
                   type={i.tradeCateIcon}
                   size="24"
-                  fill={getTypeByOperate(i.operate) == "add" ? "#41AC34": "#EB6234"}
-                  // strokeLinejoin="miter"
-                  // strokeLinecap="butt"
+                  fill={
+                    getOperateSignByCode(i.operate) == "add" ? "#41AC34" : "#EB6234"
+                  }
                 ></Icon>
               }
               description={i.remark}
@@ -69,3 +54,6 @@ export default class AccountBillDayDetail extends React.Component {
 AccountBillDayDetail.prototypes = {
   info: PropTypes.object.isRequired,
 };
+
+
+export default withRouter(AccountBillDayDetail)
