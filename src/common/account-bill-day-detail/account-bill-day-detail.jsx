@@ -19,7 +19,7 @@ const Title = styled.div`
 
 class AccountBillDayDetail extends React.Component {
   goRouter(id) {
-    this.props.history.push(`trade-detail/${id}`)
+    this.props.history.push(`/trade-detail/${id}`)
   }
   render() {
     return (
@@ -28,8 +28,8 @@ class AccountBillDayDetail extends React.Component {
         <List>
           {this.props.info.trades.map((i) => (
             <List.Item
-              onClick={this.goRouter.bind(this, i.id)}
-              key={i.id}
+              onClick={this.goRouter.bind(this, i.tradeId)}
+              key={i.tradeId}
               prefix={
                 <Icon
                   type={i.tradeCateIcon}

@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { List, Image } from "antd-mobile";
+import { List, Image, Toast, Dialog } from "antd-mobile";
 import { Edit, Delete } from "@icon-park/react";
 import styled from "styled-components";
 import NavBar from "../../common/top-back-nav/top-back-nav.jsx";
-import { getDetail } from "../../api/trade";
+import { getDetail, deleteTrade } from "../../api/trade";
 import Icon from "@icon-park/react/es/all";
 import {
   getOperateSignByCode,
   getOperateDescByCode,
 } from "../../util/trade-operate";
+import { useHistory } from "react-router";
 
 const Wrapper = styled.div`
   padding-top: 1rem;
@@ -16,6 +17,7 @@ const Wrapper = styled.div`
 
 export default (props) => {
   const id = props.match.params["id"];
+  const history = useHistory();
   const [data, setData] = useState({});
   useEffect(() => {
     getDetail(id).then((r) => {
@@ -23,7 +25,21 @@ export default (props) => {
     });
   }, []);
   const editClick = function () {};
-  const deleteClick = function () {};
+  const deleteClick = function () {
+    Dialog.confirm({
+      title: "删除",
+      content: "确定删除此账户吗?",
+      onConfirm: () => {
+        deleteTrade(id).then(() => {
+          Toast.show({
+            icon: "success",
+            content: "删除成功",
+          });
+          history.goBack();
+        });
+      },
+    });
+  };
   return (
     <Wrapper>
       <NavBar

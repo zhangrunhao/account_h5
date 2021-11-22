@@ -9,6 +9,7 @@ import SlidePopup from "./slide-popup.jsx";
 
 const Wrapper = styled.div`
   padding-top: 1rem;
+  padding-bottom: 1.5rem;
 `;
 
 const NavBarWrapper = styled.div`

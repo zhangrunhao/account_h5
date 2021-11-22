@@ -10,7 +10,8 @@ import BottomTabBar from "../../common/bottom-tab-bar/bottom-tab-bar.jsx";
 import { getAccountList } from "../../api/account.js";
 
 const Wrapper = styled.div`
-  padding: 1rem 0;
+  padding-top: 1rem;
+  padding-bottom: 1.5rem;
 `;
 
 class Account extends React.Component {

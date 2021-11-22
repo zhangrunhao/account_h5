@@ -60,7 +60,6 @@ class Trade extends React.Component {
     this.setState({ remark });
   }
   transferAccountChange(outAccountId, inAccountId) {
-    console.log("trade transferAccountChange");
     transferAccount.outId = outAccountId;
     transferAccount.inId = inAccountId;
   }
