@@ -8,6 +8,14 @@ export const addTrade = (data) => {
   });
 };
 
+export const addTransfer = (data) => {
+  return request({
+    url: "/api/trade/transfer",
+    method: "Post",
+    data,
+  });
+};
+
 export const getTradeList = () => {
   return request({
     url: "/api/trade/list",

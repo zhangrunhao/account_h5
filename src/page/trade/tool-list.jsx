@@ -57,7 +57,7 @@ export default class ToolList extends React.Component {
               });
             }}
           >
-            账户: {this.state.accountName}
+            {this.state.accountName}
           </Button>
           <Button
             size="small"
@@ -103,7 +103,6 @@ export default class ToolList extends React.Component {
           defaultValue={this.state.dateValue}
           max={now}
           onConfirm={(value) => {
-            console.log(value)
             this.setState({
               dateValue: value,
             });

@@ -77,6 +77,10 @@ class CateList extends React.Component {
 
     
   }
+
+  transferAccountChange(outAccountId, inAccountId) {
+    this.props.transferAccountChange(outAccountId, inAccountId);
+  }
   
   componentDidUpdate() {}
   
@@ -100,7 +104,9 @@ class CateList extends React.Component {
         }}
       >
         {this.props.type === "transfer" ? (
-          <Transfer></Transfer>
+          <Transfer
+          transferAccountChange={this.transferAccountChange.bind(this)}
+          ></Transfer>
         ) : (
           <ScrollWrapper>
             {this.state.cateList[this.props.type].map((v) => (
@@ -136,6 +142,7 @@ class CateList extends React.Component {
 export default withRouter(CateList);
 
 CateList.propTypes = {
+  transferAccountChange: PropTypes.func.isRequired,
   cateChange: PropTypes.func.isRequired,
   type: PropTypes.string.isRequired,
 };

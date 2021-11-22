@@ -3,6 +3,8 @@ import { Button, Picker } from "antd-mobile";
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { getAccountList } from "../../api/account.js";
+import _ from 'loadsh';
+import { invalid } from "moment";
 
 const Wrapper = styled.div`
   margin-top: 1rem;
@@ -25,11 +27,19 @@ export default (props) => {
   const [outName, setOutName] = useState("选择转出账户");
 
   useEffect(() => {
+    if (_.isArray(outValue) && _.isArray(inValue)) {
+      const outAccountId = outValue[0];
+      const inAccountId = inValue[0];
+      props.transferAccountChange(outAccountId, inAccountId);
+    }
+  }, [inValue, outValue]);
+
+  useEffect(() => {
     getAccountList().then((r) => {
       const accountData = r.data.map((i) => {
         return {
           label: i.name,
-          value: i.accountId,
+          value: i.id,
         };
       });
       setAccountData([accountData]);

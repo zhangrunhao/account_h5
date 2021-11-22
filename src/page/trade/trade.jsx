@@ -1,7 +1,7 @@
 import React from "react";
 import CateList from "./cate-list.jsx";
 import styled from "styled-components";
-import { addTrade } from "../../api/trade";
+import { addTrade, addTransfer } from "../../api/trade";
 import { Toast, Tabs } from "antd-mobile";
 import NavBar from "../../common/top-back-nav/top-back-nav.jsx";
 import ToolList from "./tool-list.jsx";
@@ -26,6 +26,11 @@ const RecordInput = styled.div`
   width: 100%;
 `;
 
+let transferAccount = {
+  outId: undefined,
+  inId: undefined
+};
+
 class Trade extends React.Component {
   constructor(props) {
     super(props);
@@ -40,7 +45,6 @@ class Trade extends React.Component {
     };
   }
   cateChange(cate) {
-    console.log(cate)
     this.setState({ cate });
   }
   moneyChange(money) {
@@ -55,8 +59,27 @@ class Trade extends React.Component {
   remarkChange(remark) {
     this.setState({ remark });
   }
+  transferAccountChange(outAccountId, inAccountId) {
+    console.log("trade transferAccountChange");
+    transferAccount.outId = outAccountId;
+    transferAccount.inId = inAccountId;
+  }
   submitSave() {
     if (this.state.cateType === "transfer") {
+      if (transferAccount.outId && transferAccount.inId) {
+        addTransfer({
+          inAccountId: transferAccount.inId,
+          outAccountId: transferAccount.outId,
+          money: this.state.money,
+          spendDate: new Date(this.state.date).getTime(),
+        }).then(() => {
+          Toast.show({
+            icon: "success",
+            content: "转账成功",
+          });
+          this.props.history.push("bill");
+        })
+      }
     } else {
       this.toAddTrade().then(() => {
         Toast.show({
@@ -69,16 +92,20 @@ class Trade extends React.Component {
     }
   }
   submitAgain() {
-    this.toAddTrade().then(() => {
-      Toast.show({
-        icon: "success",
-        content: "添加成功",
+    if (this.state.cateType === "transfer") {
+      console.warn("转账不提供再记功能");
+    } else {
+      this.toAddTrade().then(() => {
+        Toast.show({
+          icon: "success",
+          content: "添加成功",
+        });
+        this.recordResult.current.clearRemarkInput();
+        this.setState({
+          money: "0",
+        });
       });
-      this.recordResult.current.clearRemarkInput();
-      this.setState({
-        money: "0",
-      });
-    });
+    }
   }
   toAddTrade() {
     return addTrade({
@@ -87,15 +114,18 @@ class Trade extends React.Component {
       remark: this.state.remark,
       spendDate: new Date(this.state.date).getTime(),
       operate: this.getOperateByType(this.state.cateType),
-      money: this.state.money
+      money: this.state.money,
     });
   }
   getOperateByType(type) {
     switch (type) {
-      case "income": return 1;
-      case "expend": return 2;
+      case "income":
+        return 1;
+      case "expend":
+        return 2;
       // TODO: 转账, 分为转入和转出, 这里需要区分
-      case "transfer": return 3;
+      case "transfer":
+        return 3;
     }
   }
   tabChange(key) {
@@ -119,6 +149,7 @@ class Trade extends React.Component {
         <CateList
           type={this.state.cateType}
           cateChange={this.cateChange.bind(this)}
+          transferAccountChange={this.transferAccountChange.bind(this)}
         ></CateList>
         <RecordInput>
           <Result
