@@ -1,120 +1,55 @@
 import styled from "styled-components";
-import React from "react";
-import PropTypes from "prop-types";
+import React, { useState, useEffect } from "react";
 import { Picker, Button, DatePicker, Space } from "antd-mobile";
-import moment from 'moment'
-import { getAccountList } from "../../api/account.js";
+import moment from "moment";
 
 const Wrapper = styled.div`
   background: #fff;
 `;
 
-let now = new Date();
-
-export default class ToolList extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      datePickerVisible: false,
-      accountPickerVisible: false,
-      dateValue: now,
-      accountName: "",
-      accountValue: [],
-      accountData: [],
-    };
-  }
-  componentDidMount() {
-    getAccountList().then((r) => {
-      const accountData = r.data.map((i) => {
-        return {
-          label: i.name,
-          value: i.id,
-        };
-      });
-      const accountValue = accountData.length > 0 ? [accountData[0].value] : [];
-      const accountName = accountData.find((i) => {
-        return i.value === accountValue[0]
-      }).label
-      this.setState({
-        accountData: [accountData],
-        accountValue,
-        accountName,
-      });
-      this.props.accountChange(accountValue);
-    });
-  }
-  render() {
-    return (
-      <Wrapper>
-        <Space style={{ "--gap": "18px" }}>
-          <Button
-            size="small"
-            color='primary'
-            fill='outline'
-            onClick={() => {
-              this.setState({
-                accountPickerVisible: true,
-              });
-            }}
-          >
-            {this.state.accountName}
-          </Button>
-          <Button
-            size="small"
-            color='primary'
-            fill='outline'
-            onClick={() => {
-              this.setState({
-                datePickerVisible: true,
-              });
-            }}
-          >
-            {moment(this.state.dateValue).format('YYYY年MM月DD日')}
-          </Button>
-        </Space>
-        <Picker
-          visible={this.state.accountPickerVisible}
-          cols={1}
-          columns={this.state.accountData}
-          defaultValue={this.state.accountValue}
-          onClose={() => {
-            this.setState({
-              accountPickerVisible: false,
-            });
-          }}
-          onConfirm={(v) => {
-            const accountName = this.state.accountData[0].find((i) => {
-              return i.value === v[0]
-            }).label
-            this.setState({ 
-              accountValue: v,
-              accountName
-            });
-            this.props.accountChange(v);
-          }}
-        ></Picker>
-        <DatePicker
-          visible={this.state.datePickerVisible}
-          onClose={() => {
-            this.setState({
-              datePickerVisible: false,
-            });
-          }}
-          defaultValue={this.state.dateValue}
-          max={now}
-          onConfirm={(value) => {
-            this.setState({
-              dateValue: value,
-            });
-            this.props.dateChange(value);
-          }}
-        ></DatePicker>
-      </Wrapper>
-    );
-  }
-}
-
-ToolList.propTypes = {
-  accountChange: PropTypes.func.isRequired,
-  dateChange: PropTypes.func.isRequired,
+export default (props) => {
+  const [accountVisible, setAccountVisible] = useState(false);
+  const [dateVisible, setDateVisible] = useState(false);
+  return (
+    <Wrapper>
+      <Space style={{ "--gap": "18px" }}>
+        <Button
+          size="small"
+          color="primary"
+          fill="outline"
+          onClick={(e) => setAccountVisible(true)}
+        >
+          {props.accountLabel}
+        </Button>
+        <Button
+          size="small"
+          color="primary"
+          fill="outline"
+          onClick={(e) => setDateVisible(true)}
+        >
+          {moment(props.date).format('YYYY年MM月DD日')}
+        </Button>
+      </Space>
+      <Picker
+        visible={accountVisible}
+        cols={1}
+        columns={props.accountData}
+        onClose={(e) => setAccountVisible(false)}
+        onConfirm={(e) => {
+          props.accountChange(e);
+        }}
+      ></Picker>
+      <DatePicker
+        visible={dateVisible}
+        onClose={() => {
+          setDateVisible(false)
+        }}
+        max={new Date()}
+        defaultValue={props.date}
+        onConfirm={(value) => {
+          props.dateChange(value);
+        }}
+      ></DatePicker>
+    </Wrapper>
+  );
 };

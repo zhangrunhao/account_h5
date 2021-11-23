@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import _ from "loadsh";
-import NP from 'number-precision'
+import NP from "number-precision";
 import { colorTextBase, fillBase, fillTap } from "../../style/Styles.js";
 import PropTypes from "prop-types";
 
@@ -44,13 +44,10 @@ const keyBoardKeys = [
   "保存",
 ];
 
-let money = "0";
-
-export default class InputKeyBoard extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-  handleKeyBoardClick(key) {
+export default (props) => {
+  
+  let money = props.money
+  const handleKeyBoardClick = function (key) {
     if (_.isNumber(key)) {
       // 数字 非0
       if (
@@ -182,38 +179,31 @@ export default class InputKeyBoard extends React.Component {
     } else if (key === "再记") {
       // 再记
       money = "";
-      this.props.submitAgain();
+      props.submitAgain();
       return;
     } else if (key === "保存") {
       // 保存
       money = "";
-      this.props.submitSave();
+      props.submitSave();
       return;
     }
-    this.props.moneyChange(money);
-  }
+    props.moneyChange(money);
+  };
 
-  render() {
-    return (
-      <Wrapper>
-        <KeyBoard>
-          {keyBoardKeys.map((v) => (
-            <InputButton
-              key={v}
-              onClick={this.handleKeyBoardClick.bind(this, v)}
-            >
-              {v}
-            </InputButton>
-          ))}
-        </KeyBoard>
-      </Wrapper>
-    );
-  }
-}
-
-InputKeyBoard.propTypes = {
-  moneyChange: PropTypes.func.isRequired,
-  submitSave: PropTypes.func.isRequired,
-  submitAgain: PropTypes.func.isRequired,
+  return (
+    <Wrapper>
+      <KeyBoard>
+        {keyBoardKeys.map((v) => (
+          <InputButton
+            key={v}
+            onClick={(e) => {
+              handleKeyBoardClick(v);
+            }}
+          >
+            {v}
+          </InputButton>
+        ))}
+      </KeyBoard>
+    </Wrapper>
+  );
 };
-  

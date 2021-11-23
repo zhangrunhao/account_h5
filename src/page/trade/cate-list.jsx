@@ -1,19 +1,53 @@
-import React from "react";
+import { Tabs } from "antd-mobile";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import BScroll from "@better-scroll/core";
-import PropTypes from "prop-types";
-import { withRouter } from "react-router-dom";
+import { getTradeCateList } from "../../api/trade-cate";
 import Icon from "@icon-park/react/es/all";
-
 import Transfer from "./transfer.jsx";
-import History from "../../util/history.js";
-import {
-  getTradeCateList
-} from "../../api/trade-cate"
+import { useHistory } from "react-router";
 
-const SortChooseWrapper = styled.div`
-  overflow: hidden;
-`;
+const Wrapper = styled.div``;
+
+export default (props) => {
+  const [incomeList, setIncomeList] = useState([]);
+  const [expendList, setExpendList] = useState([]);
+
+  useEffect(() => {
+    getTradeCateList().then((r) => {
+      setExpendList(r.data.filter((i) => i.operate === 2));
+      setIncomeList(r.data.filter((i) => i.operate === 1));
+    });
+  }, []);
+
+  return (
+    <Wrapper>
+      <Tabs defaultActiveKey="expend" onChange={(key) => props.tabChange(key)}>
+        <Tabs.TabPane title="收入" key="income">
+          <CateChildList
+            active={props.activeCate}
+            cateChange={props.cateChange}
+            array={incomeList}
+          ></CateChildList>
+        </Tabs.TabPane>
+        <Tabs.TabPane title="支出" key="expend">
+          <CateChildList
+            active={props.activeCate}
+            cateChange={props.cateChange}
+            array={expendList}
+          ></CateChildList>
+        </Tabs.TabPane>
+        <Tabs.TabPane title="转账" key="transfer">
+          <Transfer
+            outAccount={props.outAccount}
+            inAccount={props.inAccount}
+            accountData={props.accountData}
+            transferAccountChange={props.transferAccountChange}
+          ></Transfer>
+        </Tabs.TabPane>
+      </Tabs>
+    </Wrapper>
+  );
+};
 
 const ScrollWrapper = styled.div`
   width: 100%;
@@ -21,12 +55,10 @@ const ScrollWrapper = styled.div`
   flex-wrap: wrap;
   align-content: flex-start;
 `;
-
 const ScrollItem = styled.div`
   flex: 0 0 25%;
   height: 1.2rem;
 `;
-
 const IconWrapper = styled.div`
   background-color: #fff;
   width: 0.8rem;
@@ -38,111 +70,61 @@ const IconWrapper = styled.div`
   align-items: center;
 `;
 
+const EditIconWrapper = styled(IconWrapper)`
+  background-color: #100808;
+`;
+
 const IconName = styled.div`
   text-align: center;
   height: 0.4rem;
   line-height: 0.4rem;
 `;
 
-const EditSortButton = styled.div`
-  background-color: skyblue;
-  border-radius: 50%;
-  width: 0.8rem;
-  height: 0.8rem;
-  line-height: 0.8rem;
-  text-align: center;
-  color: purple;
-`;
-
-class CateList extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      cateList: {
-        expend: [],
-        income: [],
-      },
-    };
-
-    getTradeCateList().then((r) => {
-      this.setState({
-        cateList: {
-          expend: r.data.filter((i) => i.operate === 2),
-          income: r.data.filter((i) => i.operate === 1),
-        },
-      });
-      const sort = this.state.cateList[this.props.type][0];
-      this.props.cateChange(sort || {});
-    });
-
-    
-  }
-
-  transferAccountChange(outAccountId, inAccountId) {
-    this.props.transferAccountChange(outAccountId, inAccountId);
-  }
-  
-  componentDidUpdate() {}
-  
-  componentDidMount() {
-    // eslint-disable-next-line no-new
-    new BScroll(this.node, {
-      click: true,
-    });
-  }
-
-  editSortButtonClick() {
-    const path = "/trade-cate-list";
-    History.push(this, path);
-  }
-
-  render() {
-    return (
-      <SortChooseWrapper
-        ref={(node) => {
-          this.node = node;
-        }}
-      >
-        {this.props.type === "transfer" ? (
-          <Transfer
-          transferAccountChange={this.transferAccountChange.bind(this)}
-          ></Transfer>
-        ) : (
-          <ScrollWrapper>
-            {this.state.cateList[this.props.type].map((v) => (
-              <ScrollItem key={v.id}>
-                <IconWrapper>
-                  <Icon
-                    onClick={(e) => {
-                      this.props.cateChange(v);
-                    }}
-                    size={34}
-                    type={v.icon}
-                    size="28"
-                    fill="#333"
-                    strokeLinejoin="miter"
-                    strokeLinecap="butt"
-                  ></Icon>
-                </IconWrapper>
-                <IconName>{v.name}</IconName>
-              </ScrollItem>
-            ))}
-            <ScrollItem>
-              <EditSortButton onClick={this.editSortButtonClick.bind(this)}>
-                编辑
-              </EditSortButton>
-            </ScrollItem>
-          </ScrollWrapper>
-        )}
-      </SortChooseWrapper>
-    );
-  }
-}
-
-export default withRouter(CateList);
-
-CateList.propTypes = {
-  transferAccountChange: PropTypes.func.isRequired,
-  cateChange: PropTypes.func.isRequired,
-  type: PropTypes.string.isRequired,
+const CateChildList = function (props) {
+  const history = useHistory();
+  useEffect(() => {
+    props.cateChange(props.array[0]);
+  }, [props.array]);
+  return (
+    <ScrollWrapper>
+      {props.array.map((i) => {
+        return (
+          <ScrollItem key={i.id}>
+            <IconWrapper>
+              <Icon
+                onClick={(e) => {
+                  props.cateChange(i);
+                }}
+                size={34}
+                type={i.icon}
+                size="28"
+                fill={
+                  props.active && props.active.id && props.active.id === i.id
+                    ? `${i.operate === 1 ? "green" : "red"}`
+                    : "#333"
+                }
+                strokeLinejoin="miter"
+                strokeLinecap="butt"
+              ></Icon>
+            </IconWrapper>
+            <IconName>{i.name}</IconName>
+          </ScrollItem>
+        );
+      })}
+      <ScrollItem>
+        <EditIconWrapper>
+          <Icon
+            onClick={(e) => history.push("/trade-cate-list")}
+            size={34}
+            type="Setting"
+            size="28"
+            fill="#d43f3f"
+            strokeLinejoin="miter"
+            strokeLinecap="butt"
+          ></Icon>
+        </EditIconWrapper>
+        <IconName>编辑分类</IconName>
+      </ScrollItem>
+    </ScrollWrapper>
+  );
 };
