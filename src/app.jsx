@@ -27,7 +27,7 @@ export default function App() {
           <Route path="/register" component={Register}></Route>
           <Route path="/bill" component={Bill}></Route>
 
-          <Route path="/trade" component={Trade}></Route>
+          <Route path="/trade/:id" component={Trade}></Route>
           <Route path="/trade-detail/:id" component={TradeDetail}></Route>
 
           <Route path="/trade-cate-list" component={TradeCateList}></Route>

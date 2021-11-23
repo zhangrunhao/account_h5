@@ -24,11 +24,23 @@ export default (props) => {
       setData(r.data);
     });
   }, []);
-  const editClick = function () {};
+  const editClick = function () {
+    if (data.operate === 1 || data.operate === 2) {
+      history.push(`/trade/${id}`)
+    } else {
+      
+      Dialog.alert({
+        title: "十分抱歉",
+        content: '此类型,暂时并不支持编辑. 请删除后添加',
+        closeOnMaskClick: true,
+      })
+      
+    }
+  };
   const deleteClick = function () {
     Dialog.confirm({
       title: "删除",
-      content: "确定删除此账户吗?",
+      content: "确定删除此交易记录吗?",
       onConfirm: () => {
         deleteTrade(id).then(() => {
           Toast.show({

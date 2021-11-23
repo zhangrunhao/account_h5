@@ -21,7 +21,7 @@ export default (props) => {
 
   return (
     <Wrapper>
-      <Tabs defaultActiveKey="expend" onChange={(key) => props.tabChange(key)}>
+      <Tabs defaultActiveKey="expend" activeKey={props.tab}  onChange={(key) => props.tabChange(key)}>
         <Tabs.TabPane title="收入" key="income">
           <CateChildList
             active={props.activeCate}

@@ -6,7 +6,12 @@ import KeyBoard from "./key-board.jsx";
 import ToolList from "./tool-list.jsx";
 import ResultShow from "./result-show.jsx";
 import { getAccountList } from "../../api/account.js";
-import { addTrade, addTransfer } from "../../api/trade.js";
+import {
+  addTrade,
+  addTransfer,
+  updateTrade,
+  getDetail,
+} from "../../api/trade.js";
 import { Toast } from "antd-mobile";
 import { useHistory } from "react-router";
 
@@ -21,9 +26,9 @@ const BottomFix = styled.div`
   width: 100%;
 `;
 
-
-let tab = "expend";
-export default () => {
+export default (props) => {
+  const id = props.match.params["id"];
+  const [tab, setTab] = useState("expend");
   const [activeCate, setActiveCate] = useState({});
   const [money, setMoney] = useState("0");
   const [accountData, setAccountData] = useState([]);
@@ -39,18 +44,28 @@ export default () => {
   const [date, setDate] = useState(new Date());
   const [remark, setRemark] = useState("");
   const history = useHistory();
-  useEffect(() => {
-    getAccountList().then((r) => {
-      const data = r.data.map((i) => {
-        return {
-          label: i.name,
-          value: i.id,
-        };
+  const initDefault = function () {
+    getDetail(id).then((r) => {
+      const data = r.data;
+      // 设置tab
+      data.operate === 1 ? setTab("income") : setTab("expend");
+      // 设置数据
+      setActiveCate({
+        id: data.tradeCateId,
+        icon: data.tradeCateIcon,
+        operate: data.operate,
       });
-      setAccount(data[0]);
-      setAccountData([data]);
+      // 去掉尾随0, 尾随.
+      setMoney(data.money.replace(/0+$/,'').replace(/\.+$/,''));
+      setRemark(data.remark);
+      setAccount({
+        value: data.accountId,
+        label: data.accountName,
+      });
+      setDate(Date.parse(data.spendDate.replace(/-/g, "/")));
     });
-  }, []);
+  };
+
   const cateChange = function (cate) {
     setActiveCate(cate);
   };
@@ -83,14 +98,26 @@ export default () => {
     setRemark(value);
   };
   const toAddTrade = function () {
-    return addTrade({
-      accountId: account.value,
-      tradeCateId: activeCate.id,
-      remark,
-      spendDate: new Date(date).getTime(),
-      operate: activeCate.operate,
-      money,
-    });
+    if (id === "new") {
+      return addTrade({
+        accountId: account.value,
+        tradeCateId: activeCate.id,
+        remark,
+        spendDate: new Date(date).getTime(),
+        operate: activeCate.operate,
+        money,
+      });
+    } else {
+      return updateTrade({
+        id,
+        accountId: account.value,
+        tradeCateId: activeCate.id,
+        remark,
+        spendDate: new Date(date).getTime(),
+        operate: activeCate.operate,
+        money,
+      })
+    }
   };
   const toAddTransfer = function () {
     if (outAccount.value && inAccount.value) {
@@ -124,30 +151,37 @@ export default () => {
       toAddTrade().then((r) => {
         Toast.show({
           icon: "success",
-          content: "添加成功",
+          content: (id === "new") ? "添加成功" : "更新成功",
         });
         history.push("/bill");
       });
     }
   };
   const submitAgain = function () {
+    if (id !== "new") {
+      Toast.show({
+        icon: "fail",
+        content: "编辑模式下, 不可再记",
+      });
+      return;
+    }
     if (tab === "transfer") {
       toAddTransfer()
-      .then((r) => {
-        Toast.show({
-          icon: "success",
-          content: "转账成功",
+        .then((r) => {
+          Toast.show({
+            icon: "success",
+            content: "转账成功",
+          });
+          setMoney("0");
+        })
+        .catch((e) => {
+          Toast.show({
+            icon: "fail",
+            content: e,
+          });
         });
-        setMoney("0")
-      })
-      .catch((e) => {
-        Toast.show({
-          icon: "fail",
-          content: e,
-        });
-      });
     } else {
-      return
+      return;
       toAddTrade().then((r) => {
         Toast.show({
           icon: "success",
@@ -159,12 +193,32 @@ export default () => {
     }
   };
   const tabChange = function (key) {
-    tab = key;
+    setTab(key);
   };
+
+  // 获取账户数组
+  useEffect(() => {
+    getAccountList().then((r) => {
+      const data = r.data.map((i) => {
+        return {
+          label: i.name,
+          value: i.id,
+        };
+      });
+      setAccount(data[0]);
+      setAccountData([data]);
+      // 获取需要编辑的数据
+      if (id !== "new") {
+        initDefault();
+      }
+    });
+  }, []);
+
   return (
     <Wrapper>
       <TopBackNav>记账</TopBackNav>
       <CateList
+        tab={tab}
         tabChange={tabChange}
         activeCate={activeCate}
         cateChange={cateChange}

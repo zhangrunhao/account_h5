@@ -22,7 +22,7 @@ const tabs = [
     icon: <Home size="20"></Home>,
   },
   {
-    key: "trade",
+    key: "trade/new",
     title: "记一笔",
     icon: <Add size="20"></Add>,
   },

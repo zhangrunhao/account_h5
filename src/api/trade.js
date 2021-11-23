@@ -19,6 +19,14 @@ export const addTrade = (data) => {
   });
 };
 
+export const updateTrade = (data) => {
+  return request({
+    url: "/api/trade/update",
+    method: "Post",
+    data,
+  });
+};
+
 export const deleteTrade = (id) => {
   return request({
     url: "/api/trade/delete",
@@ -31,7 +39,7 @@ export const deleteTrade = (id) => {
 
 export const addTransfer = (data) => {
   return request({
-    url: "/api/trade/transfer",
+    url: "/api/trade/addTransfer",
     method: "Post",
     data,
   });
