@@ -8,7 +8,7 @@ const Wrapper = styled.div`
   background: #fff;
 `;
 
-const SortIcon = styled.div`
+const CateIcon = styled.div`
   float: left;
   margin: 0.1rem 0;
   width: 10vw;
@@ -67,25 +67,33 @@ const getResultMoneyStyleByLength = function (length) {
 export default (props) => {
   return (
     <Wrapper>
-      <SortIcon>
-        {props.cate && props.cate.icon ? (
-          <Icon
-            size={34}
-            size="28"
-            fill="#333"
-            strokeLinejoin="miter"
-            strokeLinecap="butt"
-            type={props.cate.icon}
-          ></Icon>
-        ) : (
-          <>你真好看!</>
-        )}
-      </SortIcon>
-      <Remark
-        value={props.remark}
-        onChange={v => props.remarkChange(v.target.value)}
-        placeholder="请输入备注"
-      ></Remark>
+      {props.hideCate ? (
+        <></>
+      ) : (
+        <CateIcon>
+          {props.cate && props.cate.icon ? (
+            <Icon
+              size={34}
+              size="28"
+              fill="#333"
+              strokeLinejoin="miter"
+              strokeLinecap="butt"
+              type={props.cate.icon}
+            ></Icon>
+          ) : (
+            <>你真好看!</>
+          )}
+        </CateIcon>
+      )}
+      {props.hideInput ? (
+        <></>
+      ) : (
+        <Remark
+          value={props.remark}
+          onChange={(v) => props.remarkChange(v.target.value)}
+          placeholder="请输入备注"
+        ></Remark>
+      )}
       <ResultMoney style={getResultMoneyStyleByLength(props.money.length)}>
         {props.money}
       </ResultMoney>

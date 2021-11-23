@@ -14,6 +14,7 @@ import {
 } from "../../api/trade.js";
 import { Toast } from "antd-mobile";
 import { useHistory } from "react-router";
+import transfer from "./transfer.jsx";
 
 const Wrapper = styled.div`
   padding-top: 1rem;
@@ -56,7 +57,7 @@ export default (props) => {
         operate: data.operate,
       });
       // 去掉尾随0, 尾随.
-      setMoney(data.money.replace(/0+$/,'').replace(/\.+$/,''));
+      setMoney(data.money.replace(/0+$/, "").replace(/\.+$/, ""));
       setRemark(data.remark);
       setAccount({
         value: data.accountId,
@@ -116,7 +117,7 @@ export default (props) => {
         spendDate: new Date(date).getTime(),
         operate: activeCate.operate,
         money,
-      })
+      });
     }
   };
   const toAddTransfer = function () {
@@ -151,7 +152,7 @@ export default (props) => {
       toAddTrade().then((r) => {
         Toast.show({
           icon: "success",
-          content: (id === "new") ? "添加成功" : "更新成功",
+          content: id === "new" ? "添加成功" : "更新成功",
         });
         history.push("/bill");
       });
@@ -229,12 +230,15 @@ export default (props) => {
       ></CateList>
       <BottomFix>
         <ResultShow
+          hideCate={tab === "transfer"}
+          hideInput={tab === "transfer"}
           remark={remark}
           money={money}
           cate={activeCate}
           remarkChange={remarkChange}
         ></ResultShow>
         <ToolList
+          hideAccount={tab === "transfer"}
           accountLabel={account.label}
           accountData={accountData}
           accountChange={accountChange}

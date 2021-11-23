@@ -12,22 +12,26 @@ export default (props) => {
   const [dateVisible, setDateVisible] = useState(false);
   return (
     <Wrapper>
-      <Space style={{ "--gap": "18px" }}>
-        <Button
-          size="small"
-          color="primary"
-          fill="outline"
-          onClick={(e) => setAccountVisible(true)}
-        >
-          {props.accountLabel}
-        </Button>
+      <Space style={props.hideAccount ? {"--gap": "0px"} : { "--gap": "18px" }}>
+        {props.hideAccount ? (
+          <></>
+        ) : (
+          <Button
+            size="small"
+            color="primary"
+            fill="outline"
+            onClick={(e) => setAccountVisible(true)}
+          >
+            {props.accountLabel}
+          </Button>
+        )}
         <Button
           size="small"
           color="primary"
           fill="outline"
           onClick={(e) => setDateVisible(true)}
         >
-          {moment(props.date).format('YYYY年MM月DD日')}
+          {moment(props.date).format("YYYY年MM月DD日")}
         </Button>
       </Space>
       <Picker
@@ -42,7 +46,7 @@ export default (props) => {
       <DatePicker
         visible={dateVisible}
         onClose={() => {
-          setDateVisible(false)
+          setDateVisible(false);
         }}
         max={new Date()}
         defaultValue={props.date}
