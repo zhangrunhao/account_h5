@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { List } from "antd-mobile";
 import Icon from "@icon-park/react/es/all";
 import { withRouter } from "react-router";
-import { getOperateSignByCode } from '../../util/trade-operate'
+import { getOperateColorByCode } from "../../util/trade-operate";
 
 const Wrapper = styled.div``;
 
@@ -19,7 +19,7 @@ const Title = styled.div`
 
 class AccountBillDayDetail extends React.Component {
   goRouter(id) {
-    this.props.history.push(`/trade-detail/${id}`)
+    this.props.history.push(`/trade-detail/${id}`);
   }
   render() {
     return (
@@ -34,9 +34,7 @@ class AccountBillDayDetail extends React.Component {
                 <Icon
                   type={i.tradeCateIcon}
                   size="24"
-                  fill={
-                    getOperateSignByCode(i.operate) == "add" ? "#41AC34" : "#EB6234"
-                  }
+                  fill={getOperateColorByCode(i.operate)}
                 ></Icon>
               }
               description={i.remark}
@@ -55,5 +53,4 @@ AccountBillDayDetail.prototypes = {
   info: PropTypes.object.isRequired,
 };
 
-
-export default withRouter(AccountBillDayDetail)
+export default withRouter(AccountBillDayDetail);

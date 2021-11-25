@@ -26,6 +26,7 @@ export default (props) => {
           <CateChildList
             active={props.activeCate}
             cateChange={props.cateChange}
+            type="income"
             array={incomeList}
           ></CateChildList>
         </Tabs.TabPane>
@@ -33,6 +34,7 @@ export default (props) => {
           <CateChildList
             active={props.activeCate}
             cateChange={props.cateChange}
+            type="expend"
             array={expendList}
           ></CateChildList>
         </Tabs.TabPane>
@@ -114,7 +116,7 @@ const CateChildList = function (props) {
       <ScrollItem>
         <EditIconWrapper>
           <Icon
-            onClick={(e) => history.push("/trade-cate-list")}
+            onClick={(e) => history.push(`/trade-cate-list/${props.type}`)}
             size={34}
             type="Setting"
             size="28"

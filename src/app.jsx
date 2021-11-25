@@ -30,7 +30,7 @@ export default function App() {
           <Route path="/trade/:id" component={Trade}></Route>
           <Route path="/trade-detail/:id" component={TradeDetail}></Route>
 
-          <Route path="/trade-cate-list" component={TradeCateList}></Route>
+          <Route path="/trade-cate-list/:type" component={TradeCateList}></Route>
           <Route path="/trade-cate-edit/:id" component={TradeCateEdit}></Route>
 
           <Route path="/account" component={Account}></Route>

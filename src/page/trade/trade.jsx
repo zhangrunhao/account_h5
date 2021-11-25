@@ -14,7 +14,6 @@ import {
 } from "../../api/trade.js";
 import { Toast } from "antd-mobile";
 import { useHistory } from "react-router";
-import transfer from "./transfer.jsx";
 
 const Wrapper = styled.div`
   padding-top: 1rem;
@@ -66,10 +65,6 @@ export default (props) => {
       setDate(Date.parse(data.spendDate.replace(/-/g, "/")));
     });
   };
-
-  const cateChange = function (cate) {
-    setActiveCate(cate);
-  };
   const transferAccountChange = function (value) {
     if (value.outAccountId) {
       const account = accountData[0].find((i) => {
@@ -83,20 +78,11 @@ export default (props) => {
       setInAccount(account);
     }
   };
-  const moneyChange = function (money) {
-    setMoney(money);
-  };
   const accountChange = function (value) {
     const account = accountData[0].find((i) => {
       return i.value === value[0];
     });
     setAccount(account);
-  };
-  const dateChange = function (date) {
-    setDate(date);
-  };
-  const remarkChange = function (value) {
-    setRemark(value);
   };
   const toAddTrade = function () {
     if (id === "new") {
@@ -193,9 +179,6 @@ export default (props) => {
       });
     }
   };
-  const tabChange = function (key) {
-    setTab(key);
-  };
 
   // 获取账户数组
   useEffect(() => {
@@ -220,9 +203,9 @@ export default (props) => {
       <TopBackNav>记账</TopBackNav>
       <CateList
         tab={tab}
-        tabChange={tabChange}
+        tabChange={(key) => setTab(key)}
         activeCate={activeCate}
-        cateChange={cateChange}
+        cateChange={(cate) => setActiveCate(cate)}
         accountData={accountData}
         outAccount={outAccount}
         inAccount={inAccount}
@@ -233,9 +216,9 @@ export default (props) => {
           hideCate={tab === "transfer"}
           hideInput={tab === "transfer"}
           remark={remark}
+          remarkChange={(value) => setRemark(value)}
           money={money}
           cate={activeCate}
-          remarkChange={remarkChange}
         ></ResultShow>
         <ToolList
           hideAccount={tab === "transfer"}
@@ -243,11 +226,11 @@ export default (props) => {
           accountData={accountData}
           accountChange={accountChange}
           date={date}
-          dateChange={dateChange}
+          dateChange={(date) => setDate(date)}
         ></ToolList>
         <KeyBoard
           money={money}
-          moneyChange={moneyChange}
+          moneyChange={(money) => setMoney(money)}
           submitSave={submitSave}
           submitAgain={submitAgain}
         ></KeyBoard>

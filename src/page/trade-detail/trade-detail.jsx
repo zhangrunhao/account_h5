@@ -6,7 +6,7 @@ import NavBar from "../../common/top-back-nav/top-back-nav.jsx";
 import { getDetail, deleteTrade } from "../../api/trade";
 import Icon from "@icon-park/react/es/all";
 import {
-  getOperateSignByCode,
+  getOperateColorByCode,
   getOperateDescByCode,
 } from "../../util/trade-operate";
 import { useHistory } from "react-router";
@@ -81,11 +81,7 @@ export default (props) => {
           extra={
             data.tradeCateIcon ? (
               <Icon
-                fill={
-                  getOperateSignByCode(data.operate) == "add"
-                    ? "#41AC34"
-                    : "#EB6234"
-                }
+                fill={getOperateColorByCode(data.operate)}
                 size="30"
                 type={data.tradeCateIcon}
               ></Icon>

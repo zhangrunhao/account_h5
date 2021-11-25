@@ -1,65 +1,51 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { withRouter } from "react-router-dom";
 import { List } from "antd-mobile";
 import Icon from "@icon-park/react/es/all";
-import History from "../../util/history.js";
 import { getTradeCateList } from "../../api/trade-cate.js";
 import NavBar from "../../common/top-back-nav/top-back-nav.jsx";
-
+import { useHistory } from "react-router";
 
 const Wrapper = styled.div`
   padding-top: 0.8rem;
 `;
 
-class TradeCateList extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      sortList: [],
-    };
-  }
-
-  componentDidMount() {
+export default (props) => {
+  const [cateList, setCateList] = useState([]);
+  const history = useHistory();
+  const type = props.match.params["type"];
+  const operate = type === "expend" ? 2 : 1;
+  const title = type === "expend" ? "支出种类" : "收入种类";
+  useEffect(() => {
     getTradeCateList().then((r) => {
-      this.setState({
-        sortList: r.data,
-      });
+      setCateList(r.data.filter((i) => i.operate === operate));
     });
-  }
-
-  arrowRightClick(id) {
-    const path = `/trade-cate-edit/${id}`;
-    History.push(this, path);
-  }
-
-  addClick() {
-    const path = "/trade-cate-edit/new";
-    History.push(this, path);
-  }
-
-  render() {
-    return (
-      <Wrapper>
-        <NavBar
-          right={[<Icon key="0" type="AddOne" size="26" onClick={() => this.addClick()} />]}
-        >
-          收支记录类型列表
-        </NavBar>
-        <List>
-          {this.state.sortList.map((v) => (
-            <List.Item
-              key={v.id}
-              prefix={<Icon type={v.icon}></Icon>}
-              onClick={this.arrowRightClick.bind(this, v.id)}
-            >
-              {v.name}
-            </List.Item>
-          ))}
-        </List>
-      </Wrapper>
-    );
-  }
-}
-
-export default withRouter(TradeCateList);
+  }, []);
+  return (
+    <Wrapper>
+      <NavBar
+        right={[
+          <Icon
+            key="0"
+            type="AddOne"
+            size="26"
+            onClick={(e) => history.push(`/trade-cate-edit/${type}`)}
+          />,
+        ]}
+      >
+        {title}
+      </NavBar>
+      <List>
+        {cateList.map((v) => (
+          <List.Item
+            key={v.id}
+            prefix={<Icon type={v.icon}></Icon>}
+            onClick={(e) => history.push(`/trade-cate-edit/${v.id}`)}
+          >
+            {v.name}
+          </List.Item>
+        ))}
+      </List>
+    </Wrapper>
+  );
+};

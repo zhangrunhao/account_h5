@@ -2,41 +2,61 @@
   "Income": {
     "code": 1,
     "sign": "add",
-    "desc": "收入"
+    "desc": "收入",
+    "color": "#41AC34"
   },
   "Expend": {
     "code": 2,
     "sign": "subtract",
-    "desc": "支出"
+    "desc": "支出",
+    "color": "#EB6234"
   },
   "Transfer_In": {
     "code": 3,
     "sign": "add",
-    "desc": "转入"
+    "desc": "转入",
+    "color": "#333"
   },
   "Transfer_Out": {
     "code": 4,
     "sign": "subtract",
-    "desc": "转出"
+    "desc": "转出",
+    "color": "#333"
   },
   "Borrow": {
     "code": 5,
     "sign": "add",
-    "desc": "借入"
+    "desc": "借入",
+    "color": "#333"
   },
   "Lend": {
     "code": 6,
     "sign": "subtract",
-    "desc": "借出"
+    "desc": "借出",
+    "color": "#333"
   },
   "Receive": {
     "code": 7,
     "sign": "add",
-    "desc": "收款"
+    "desc": "收款",
+    "color": "#333"
   },
   "Repayment": {
     "code": 8,
     "sign": "subtract",
-    "desc": "还款"
+    "desc": "还款",
+    "color": "#333"
+  },
+  "Init": {
+    "code": 9,
+    "sign": "add",
+    "desc": "还款",
+    "color": "#333"
+  },
+  "Flat": {
+    "code": 10,
+    "sign": "subtract",
+    "desc": "平帐",
+    "color": "#333"
   }
 }

@@ -17,3 +17,12 @@ export const getOperateDescByCode = function (code) {
   })
   return desc
 }
+
+export const getOperateColorByCode = function (code) {
+  let color = ""
+  Object.keys(operateConfig).forEach(key => {
+    const value = operateConfig[key];
+    if (code == value.code) color = value.color
+  })
+  return color
+}

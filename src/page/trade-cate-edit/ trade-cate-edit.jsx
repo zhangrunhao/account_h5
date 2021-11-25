@@ -22,7 +22,7 @@ export default (props) => {
   const [form] = Form.useForm();
   const history = useHistory();
   const onFinish = (values) => {
-    if (id === "new") {
+    if (id === "expend" && id === "income") {
       addTradeCate(values).then(() => {
         Toast.show({
           icon: "success",
@@ -60,7 +60,7 @@ export default (props) => {
     });
   };
   useEffect(() => {
-    if (id !== "new") {
+    if (id !== "expend" && id !== "income") {
       setTitle("编辑");
       getTradeCate(id).then((r) => {
         form.setFieldsValue({
@@ -68,6 +68,16 @@ export default (props) => {
           icon: r.data.icon,
           operate: r.data.operate,
         });
+      });
+    } else if (id === "expend"){
+      setTitle("新建支出种类");
+      form.setFieldsValue({
+        operate: 2,
+      });
+    } else if (id === "income") {
+      setTitle("新建收入种类");
+      form.setFieldsValue({
+        operate: 1,
       });
     }
   }, [id]);
@@ -80,7 +90,7 @@ export default (props) => {
             : [<Delete key="0" size="26" onClick={() => deleteClick()} />]
         }
       >
-        {title}收支种类
+        {title}
       </NavBar>
       <Form
         form={form}
@@ -109,6 +119,7 @@ export default (props) => {
           name="operate"
           label="操作"
           required
+          disabled
           rules={[
             {
               required: true,

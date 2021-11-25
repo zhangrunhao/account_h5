@@ -27,9 +27,11 @@ export default (props) => {
         history.goBack();
       });
     } else {
-      updateAccount(Object.assign(values, {
-        id
-      })).then(() => {
+      updateAccount(
+        Object.assign(values, {
+          id,
+        })
+      ).then(() => {
         Toast.show({
           icon: "success",
           content: "编辑成功",
@@ -47,6 +49,7 @@ export default (props) => {
           name: r.data.name,
           cate: r.data.cate,
           icon: r.data.icon,
+          money: r.data.money,
         });
       });
     }
@@ -108,6 +111,19 @@ export default (props) => {
           ]}
         >
           <Input placeholder="图标地址" clearable></Input>
+        </Form.Item>
+        <Form.Item
+          name="money"
+          label="金额"
+          required
+          rules={[
+            {
+              required: true,
+              message: "金额不可为空",
+            },
+          ]}
+        >
+          <Input placeholder="当前余额" clearable></Input>
         </Form.Item>
       </Form>
     </Wrapper>
