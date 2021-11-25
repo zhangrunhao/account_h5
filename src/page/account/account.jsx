@@ -1,10 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { withRouter } from "react-router-dom";
-import { List, Image } from "antd-mobile";
+import { useHistory } from "react-router-dom";
+import { List } from "antd-mobile";
 import { AddOne } from "@icon-park/react";
-
-import History from "../../util/history.js";
+import Icon from "@icon-park/react/es/all";
 import NavBar from "../../common/top-back-nav/top-back-nav.jsx";
 import BottomTabBar from "../../common/bottom-tab-bar/bottom-tab-bar.jsx";
 import { getAccountList } from "../../api/account.js";
@@ -14,57 +13,63 @@ const Wrapper = styled.div`
   padding-bottom: 1.5rem;
 `;
 
-class Account extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      accountList: [],
-    };
-  }
-  componentDidMount() {
+export default (prop) => {
+  const [propertyList, setPropertyList] = useState([]);
+  const [debtList, setDebtList] = useState([]);
+  const history = useHistory();
+  useEffect(() => {
     getAccountList().then((data) => {
-      this.setState({
-        accountList: data.data,
-      });
+      setPropertyList(data.data.filter((i) => i.cate === 1));
+      setDebtList(data.data.filter((i) => i.cate === 2));
     });
-  }
+  }, []);
 
-  handleAccountClick(account) {
-    const path = `/account-detail/${account.id}`;
-    History.push(this, path);
-  }
-  render() {
-    return (
-      <Wrapper>
-        <NavBar
-          right={[
-            <AddOne
-              key="0"
-              size="26"
-              onClick={() => History.push(this, "/account-edit/new")}
-            />,
-          ]}
-        >
-          账户
-        </NavBar>
+  return (
+    <Wrapper>
+      <NavBar
+        right={[
+          <AddOne
+            key="0"
+            size="26"
+            onClick={() => history.push("/account-edit/new")}
+          />,
+        ]}
+      >
+        资产
+      </NavBar>
+      <ChildList title="资产" array={propertyList}></ChildList>
+      <ChildList title="负债" array={debtList}></ChildList>
+      <BottomTabBar active="account"></BottomTabBar>
+    </Wrapper>
+  );
+};
 
-        <List>
-          {this.state.accountList.map((v) => (
-            <List.Item
-              key={v.id}
-              onClick={this.handleAccountClick.bind(this, v)}
-              prefix={
-                <Image src={v.icon} fit="cover" width={40} height={40}></Image>
-              }
-              title={v.name}
-              extra={v.money}
-            ></List.Item>
-          ))}
-        </List>
-        <BottomTabBar active="account"></BottomTabBar>
-      </Wrapper>
-    );
-  }
-}
+const Header = styled.h1`
+  font-size: 0.4rem;
+  padding-left: 0.3rem;
+  height: 0.7rem;
+  line-height: 0.7rem;
+`;
 
-export default withRouter(Account);
+const ChildList = (props) => {
+  const history = useHistory();
+  return (
+    <>
+      <Header>{props.title}</Header>
+      <List>
+        {props.array.map((v) => (
+          <List.Item
+            key={v.id}
+            onClick={() => {
+              history.push(`/account-detail/${v.id}`);
+            }}
+            prefix={<Icon type={v.icon} size={30} />}
+            extra={v.money}
+          >
+            {v.name}
+          </List.Item>
+        ))}
+      </List>
+    </>
+  );
+};

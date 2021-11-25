@@ -28,7 +28,7 @@ const tabs = [
   },
   {
     key: "account",
-    title: "账户",
+    title: "资产",
     icon: <BankCard size="20"></BankCard>,
   },
 ];

@@ -57,7 +57,7 @@ const ScrollWrapper = styled.div`
 `;
 const ScrollItem = styled.div`
   flex: 0 0 25%;
-  height: 1.2rem;
+  height: 1.4rem;
 `;
 const IconWrapper = styled.div`
   background-color: #fff;

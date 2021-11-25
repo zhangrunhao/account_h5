@@ -26,15 +26,13 @@ export default (props) => {
   }, []);
   const editClick = function () {
     if (data.operate === 1 || data.operate === 2) {
-      history.push(`/trade/${id}`)
+      history.push(`/trade/${id}`);
     } else {
-      
       Dialog.alert({
         title: "十分抱歉",
-        content: '此类型,暂时并不支持编辑. 请删除后添加',
+        content: "此类型,暂时并不支持编辑. 请删除后添加",
         closeOnMaskClick: true,
-      })
-      
+      });
     }
   };
   const deleteClick = function () {
@@ -65,12 +63,11 @@ export default (props) => {
       <List>
         <List.Item
           extra={
-            <Image
-              width={40}
-              height={40}
-              fit="contain"
-              src={data.accountIcon}
-            ></Image>
+            data.accountIcon ? (
+              <Icon size="30" type={data.accountIcon}></Icon>
+            ) : (
+              <></>
+            )
           }
         >
           账户图标
