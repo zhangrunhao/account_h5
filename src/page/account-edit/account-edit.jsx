@@ -7,19 +7,46 @@ import {
 } from "../../api/account.js";
 import NavBar from "../../common/top-back-nav/top-back-nav.jsx";
 import React, { useEffect, useState } from "react";
-import { Form, Input, Button, Space, Radio, Toast } from "antd-mobile";
+import { Check } from "@icon-park/react";
+import { Input, Button, Space, Radio, List, Toast } from "antd-mobile";
+import Icon from "@icon-park/react/es/all";
+import ChooseIconList from "../../common/choose-icon-list/choose-icon-list.jsx";
+import accountIconList from "./account-icon-list.json";
+
 const Wrapper = styled.div`
   padding-top: 1rem;
 `;
 
+const Header = styled.h1`
+  font-size: 0.4rem;
+  padding-left: 0.2rem;
+  height: 1.3rem;
+  line-height: 1.8rem;
+`;
+
 export default (props) => {
   const history = useHistory();
-  const [form] = Form.useForm();
   const [title, setTitle] = useState("新建");
+  const [name, setName] = useState("");
+  const [cate, setCate] = useState(1);
+  const [money, setMoney] = useState(0);
+  const [icon, setIcon] = useState("");
   const id = props.match.params["id"];
-  const onFinish = (values) => {
+  const checkClick = function () {
+    if (!name || !icon) {
+      Toast.show({
+        icon: "fail",
+        content: "表单不完整",
+      });
+      return;
+    }
     if (id === "new") {
-      addAccount(values).then(() => {
+      addAccount({
+        name,
+        cate,
+        money,
+        icon,
+      }).then(() => {
         Toast.show({
           icon: "success",
           content: "添加成功",
@@ -28,8 +55,12 @@ export default (props) => {
       });
     } else {
       updateAccount(
-        Object.assign(values, {
+        Object.assign({
           id,
+          name,
+          cate,
+          money,
+          icon,
         })
       ).then(() => {
         Toast.show({
@@ -45,87 +76,77 @@ export default (props) => {
     if (id !== "new") {
       setTitle("编辑");
       getAccountDetail(id).then((r) => {
-        form.setFieldsValue({
-          name: r.data.name,
-          cate: r.data.cate,
-          icon: r.data.icon,
-          money: r.data.money,
-        });
+        setName(r.data.name);
+        setCate(r.data.cate);
+        setMoney(r.data.money);
+        setIcon(r.data.icon);
       });
     }
   }, [id]);
 
   return (
     <Wrapper>
-      <NavBar>{title}账户</NavBar>
-      <Form
-        form={form}
-        layout="horizontal"
-        onFinish={onFinish}
-        footer={
-          <Button block type="submit" color="primary">
-            提交
-          </Button>
-        }
+      <NavBar
+        right={[<Check key="0" size="26" onClick={() => checkClick()} />]}
       >
-        <Form.Item
-          name="name"
-          label="名称"
-          required
-          rules={[
-            {
-              required: true,
-              message: "名称不可为空",
-            },
-          ]}
-        >
-          <Input placeholder="请输入名称" clearable></Input>
-        </Form.Item>
-        <Form.Item
-          name="cate"
-          label="种类"
-          required
-          rules={[
-            {
-              required: true,
-              message: "种类不可为空",
-            },
-          ]}
-        >
-          <Radio.Group>
-            <Space direction="vertical">
-              <Radio value={1}>资产</Radio>
-              <Radio value={2}>负债</Radio>
-            </Space>
-          </Radio.Group>
-        </Form.Item>
-        <Form.Item
-          name="icon"
-          label="图标"
-          required
-          rules={[
-            {
-              required: true,
-              message: "图标不可为空",
-            },
-          ]}
-        >
-          <Input placeholder="图标地址" clearable></Input>
-        </Form.Item>
-        <Form.Item
-          name="money"
-          label="金额"
-          required
-          rules={[
-            {
-              required: true,
-              message: "金额不可为空",
-            },
-          ]}
-        >
-          <Input placeholder="当前余额" clearable></Input>
-        </Form.Item>
-      </Form>
+        {title}账户
+      </NavBar>
+      <Form
+        name={name}
+        nameChange={(value) => setName(value)}
+        cate={cate}
+        cateChange={(value) => setCate(value)}
+        money={money}
+        moneyChange={(value) => setMoney(value)}
+        icon={icon}
+      ></Form>
+      <Header>选择图标</Header>
+      <ChooseIconList
+        iconList={accountIconList}
+        iconClick={(icon) => setIcon(icon)}
+      ></ChooseIconList>
     </Wrapper>
+  );
+};
+
+const Form = (props) => {
+  return (
+    <List
+      style={{
+        "--prefix-width": "6em",
+      }}
+    >
+      <List.Item prefix="名称">
+        <Input
+          placeholder="请输入账户名称"
+          clearable
+          value={props.name}
+          onChange={(value) => props.nameChange(value)}
+        />
+      </List.Item>
+      <List.Item prefix="类型">
+        <Radio.Group
+          value={props.cate}
+          onChange={(value) => props.cateChange(value)}
+        >
+          <Space direction="vertical">
+            <Radio value={1}>资产</Radio>
+            <Radio value={2}>负债</Radio>
+          </Space>
+        </Radio.Group>
+      </List.Item>
+      <List.Item prefix="余额">
+        <Input
+          placeholder="请输入账户余额"
+          clearable
+          type="number"
+          value={props.money}
+          onChange={(value) => props.moneyChange(value)}
+        />
+      </List.Item>
+      <List.Item prefix="图标">
+        {props.icon ? <Icon size={30} type={props.icon}></Icon> : <></>}
+      </List.Item>
+    </List>
   );
 };

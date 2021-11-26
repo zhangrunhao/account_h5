@@ -16,7 +16,6 @@ import Account from "./page/account/account.jsx";
 import AccountDetail from "./page/account-detail/account-detail.jsx";
 import AccountEdit from "./page/account-edit/account-edit.jsx";
 
-import "./animation/animation.js";
 
 export default function App() {
   return (

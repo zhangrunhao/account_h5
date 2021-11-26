@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Delete, Check } from "@icon-park/react";
 import Icon from "@icon-park/react/es/all";
-import { Dialog, Toast, Input, List, Collapse, Space } from "antd-mobile";
+import { Dialog, Toast, Input, List } from "antd-mobile";
 import NavBar from "../../common/top-back-nav/top-back-nav.jsx";
 import {
   addTradeCate,
@@ -11,8 +11,9 @@ import {
   getTradeCate,
 } from "../../api/trade-cate";
 import { useHistory } from "react-router";
-import expendCateList from "./expend-cate-list.json";
-import IncomeCateList from './income-cate-list.json'
+import expendIconList from "./expend-icon-list.json";
+import incomeIconList from "./income-icon-list.json";
+import ChooseIconList from "../../common/choose-icon-list/choose-icon-list.jsx";
 
 const Wrapper = styled.div`
   padding-top: 1rem;
@@ -31,7 +32,7 @@ export default (props) => {
   const [operate, setOperate] = useState("");
   const [name, setName] = useState("");
   const [icon, setIcon] = useState("");
-  const [cateList, setCateList] = useState([])
+  const [iconList, setIconList] = useState([]);
   const history = useHistory();
   useEffect(() => {
     if (id !== "expend" && id !== "income") {
@@ -40,16 +41,18 @@ export default (props) => {
         setName(r.data.name);
         setIcon(r.data.icon);
         setOperate(r.data.operate);
-        (r.data.operate === 1) ? setCateList(IncomeCateList) : setCateList(expendCateList)
+        r.data.operate === 1
+          ? setIconList(incomeIconList)
+          : setIconList(expendIconList);
       });
     } else if (id === "expend") {
       setTitle("新建支出种类");
       setOperate(2);
-      setCateList(expendCateList)
+      setIconList(expendIconList);
     } else if (id === "income") {
       setTitle("新建收入种类");
       setOperate(1);
-      setCateList(IncomeCateList)
+      setIconList(incomeIconList);
     }
   }, [id]);
   const checkClick = () => {
@@ -58,7 +61,7 @@ export default (props) => {
         icon: "fail",
         content: "请填写完整",
       });
-      return
+      return;
     }
     if (id === "expend" || id === "income") {
       addTradeCate({
@@ -77,7 +80,7 @@ export default (props) => {
         id,
         name,
         icon,
-        operate
+        operate,
       }).then(() => {
         Toast.show({
           icon: "success",
@@ -119,12 +122,12 @@ export default (props) => {
         inputChange={(v) => setName(v)}
       ></ChildResult>
       <Header>请选择图标: </Header>
-      <ChildCateList
-        cateList={cateList}
-        cateClick={(cate) => {
-          setIcon(cate);
+      <ChooseIconList
+        iconList={iconList}
+        iconClick={(icon) => {
+          setIcon(icon);
         }}
-      ></ChildCateList>
+      ></ChooseIconList>
     </Wrapper>
   );
 };
@@ -148,46 +151,5 @@ const ChildResult = (props) => {
         {props.icon ? <Icon size="30" type={props.icon}></Icon> : <></>}
       </List.Item>
     </List>
-  );
-};
-
-const IconParentWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  align-content: flex-start;
-`;
-
-const IconWrapper = styled.div`
-  flex: 0 0 20%;
-  height: 1rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const ChildCateList = (props) => {
-  return (
-    <Collapse defaultActiveKey={[props.cateList[0] ? props.cateList[0].key : ""]}>
-      {props.cateList.map((i) => {
-        return (
-          <Collapse.Panel key={i.key} title={i.title}>
-            <IconParentWrapper>
-              {i.array.map((ii) => {
-                return (
-                  <IconWrapper key={ii}>
-                    <Icon
-                      size={30}
-                      type={ii}
-                      onClick={() => props.cateClick(ii)}
-                    ></Icon>
-                  </IconWrapper>
-                );
-              })}
-            </IconParentWrapper>
-          </Collapse.Panel>
-        );
-      })}
-    </Collapse>
   );
 };

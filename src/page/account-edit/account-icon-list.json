@@ -1,0 +1,9 @@
+[{
+  "key": "income",
+  "title": "资产",
+  "array": ["Alipay", "Wechat", "TencentQq", "BankCard"]
+}, {
+  "key": "debt",
+  "title": "负债",
+  "array": ["BankCard", "Alipay", "Credit"]
+}]
