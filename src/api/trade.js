@@ -79,3 +79,13 @@ export const getTradeListByAccount = (id) => {
     }
   });
 };
+
+export const getTradeListByOperate = (operate) => {
+  return request({
+    url: "/api/trade/listByOperate",
+    method: "Get",
+    params: {
+      operate
+    }
+  });
+};

@@ -4,7 +4,7 @@ import NavBar from "../../common/top-back-nav/top-back-nav.jsx";
 import TradeOperation from "../../config/trade-operate.json";
 import { addBorrowLend, getDetail, updateBorrowLend } from "../../api/trade.js";
 
-const getOperation = function (id) {
+const getCodeByOperation = function (id) {
   if (id === "lend") {
     return TradeOperation.Lend.code;
   } else if (id === "borrow") {
@@ -66,7 +66,7 @@ export default (props) => {
         });
       });
     } else {
-      setOperate(getOperation(id));
+      setOperate(getCodeByOperation(id));
     }
   }, []);
   return (
