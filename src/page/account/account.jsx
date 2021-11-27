@@ -17,6 +17,20 @@ export default (prop) => {
   const [propertyList, setPropertyList] = useState([]);
   const [debtList, setDebtList] = useState([]);
   const history = useHistory();
+  const BorrowLendList = [
+    {
+      id: "borrow",
+      icon: "Download",
+      name: "借入",
+      money: "0",
+    },
+    {
+      id: "lend",
+      icon: "Upload",
+      name: "借出",
+      money: "0",
+    },
+  ];
   useEffect(() => {
     getAccountList().then((data) => {
       setPropertyList(data.data.filter((i) => i.cate === 1));
@@ -37,8 +51,9 @@ export default (prop) => {
       >
         资产
       </NavBar>
-      <ChildList title="资产" array={propertyList}></ChildList>
-      <ChildList title="负债" array={debtList}></ChildList>
+      <ChildList title="借入借出" path="/borrow-lend"  array={BorrowLendList}></ChildList>
+      <ChildList title="资产" path="/account-detail" array={propertyList}></ChildList>
+      <ChildList title="负债" path="/account-detail" array={debtList}></ChildList>
       <BottomTabBar active="account"></BottomTabBar>
     </Wrapper>
   );
@@ -61,7 +76,7 @@ const ChildList = (props) => {
           <List.Item
             key={v.id}
             onClick={() => {
-              history.push(`/account-detail/${v.id}`);
+              history.push(`${props.path}/${v.id}`);
             }}
             prefix={<Icon type={v.icon} size={30} />}
             extra={v.money}

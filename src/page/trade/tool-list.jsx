@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Picker, Button, DatePicker, Space } from "antd-mobile";
 import moment from "moment";
 

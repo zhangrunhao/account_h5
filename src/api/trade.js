@@ -19,6 +19,24 @@ export const addTrade = (data) => {
   });
 };
 
+
+export const addBorrowLend = (data) => {
+  return request({
+    url: "/api/trade/addBorrowLend",
+    method: "Post",
+    data,
+  });
+};
+
+export const updateBorrowLend = (data) => {
+  return request({
+    url: "/api/trade/updateBorrowLend",
+    method: "Post",
+    data,
+  });
+};
+
+
 export const updateTrade = (data) => {
   return request({
     url: "/api/trade/update",

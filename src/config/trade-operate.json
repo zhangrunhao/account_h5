@@ -55,7 +55,7 @@
   },
   "Flat": {
     "code": 10,
-    "sign": "subtract",
+    "sign": "add",
     "desc": "平帐",
     "color": "#333"
   }

@@ -10,6 +10,7 @@ import {
   getOperateDescByCode,
 } from "../../util/trade-operate";
 import { useHistory } from "react-router";
+import TradeOperation from '../../config/trade-operate.json'
 
 const Wrapper = styled.div`
   padding-top: 1rem;
@@ -25,8 +26,10 @@ export default (props) => {
     });
   }, []);
   const editClick = function () {
-    if (data.operate === 1 || data.operate === 2) {
+    if (data.operate === TradeOperation.Income.code || data.operate === TradeOperation.Expend.code) {
       history.push(`/trade/${id}`);
+    } else if (data.operate === TradeOperation.Borrow.code || data.operate === TradeOperation.Expend.code) {
+      history.push(`/borrow-lend-edit/${id}`);
     } else {
       Dialog.alert({
         title: "十分抱歉",

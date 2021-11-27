@@ -16,6 +16,9 @@ import Account from "./page/account/account.jsx";
 import AccountDetail from "./page/account-detail/account-detail.jsx";
 import AccountEdit from "./page/account-edit/account-edit.jsx";
 
+import BorrowLend from "./page/borrow-lend/borrow-lend.jsx";
+import BorrowLendEdit from "./page/borrow-lend-edit/borrow-lend-edit.jsx";
+
 
 export default function App() {
   return (
@@ -35,6 +38,9 @@ export default function App() {
           <Route path="/account" component={Account}></Route>
           <Route path="/account-detail/:id" component={AccountDetail}></Route>
           <Route path="/account-edit/:id" component={AccountEdit}></Route>
+
+          <Route path="/borrow-lend/:type" component={BorrowLend}></Route>
+          <Route path="/borrow-lend-edit/:id" component={BorrowLendEdit}></Route>
 
           <Route path="/home" component={Home}></Route>
           <Route path="/" component={Bill}></Route>

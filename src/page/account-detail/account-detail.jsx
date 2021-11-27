@@ -1,13 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { withRouter } from "react-router-dom";
 import { Edit, Delete } from "@icon-park/react";
 import AccountBillDayDetail from "../../common/account-bill-day-detail/account-bill-day-detail.jsx";
-import History from "../../util/history.js";
 import { getAccountDetail, deleteAccount } from "../../api/account.js";
 import { getTradeListByAccount } from "../../api/trade.js";
 import { Dialog, Toast } from "antd-mobile";
 import NavBar from "../../common/top-back-nav/top-back-nav.jsx";
+import { useHistory } from "react-router";
 
 const Summary = styled.div`
   background-color: #fff;
@@ -23,78 +22,57 @@ const Wrapper = styled.div`
   padding-top: 1rem;
 `;
 
-class AccountDetail extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      id: "",
-      recordList: [],
-      name: "",
-      money: 0
-    };
-  }
+export default (props) => {
+  const id = props.match.params["id"];
+  const [tradeList, setTradeList] = useState([]);
+  const [name, setName] = useState("");
+  const [money, setMoney] = useState("0");
+  const history = useHistory();
 
-  componentDidMount() {
-    const id = History.getParam(this, "id");
-    this.setState({
-      id
-    })
+  useEffect(() => {
     getTradeListByAccount(id).then((r) => {
-      this.setState({
-        recordList: r.data,
-      });
+      setTradeList(r.data);
     });
-    getAccountDetail(id).then(r => {
-      this.setState({
-        name: r.data.name,
-        money: r.data.money
-      })
-    })
-  }
-
-  deleteClick() {
+    getAccountDetail(id).then((r) => {
+      setName(r.data.name);
+      setMoney(r.data.money);
+    });
+  }, []);
+  const deleteClick = () => {
     Dialog.confirm({
       title: "删除",
       content: "确定删除此账户吗?",
       onConfirm: () => {
-        deleteAccount(this.state.id).then((r) => {
+        deleteAccount(id).then((r) => {
           Toast.show({
             icon: "success",
             content: "删除成功",
           });
-          History.back(this);
+          history.goBack();
         });
       },
     });
-  }
+  };
 
-  editClick() {
-    const path = `/account-edit/${this.state.id}`;
-    History.push(this, path);
-  }
+  return (
+    <Wrapper>
+      <NavBar
+        right={[
+          <Edit
+            key="0"
+            size="26"
+            onClick={() => history.push(`/account-edit/${id}`)}
+          />,
+          <Delete key="1" size="26" onClick={() => deleteClick()} />,
+        ]}
+      >
+        {name}
+      </NavBar>
 
-  render() {
-    return (
-      <Wrapper>
-        <NavBar
-          right={[
-            <Edit key="0" size="26" onClick={() => this.editClick()} />,
-            <Delete key="1" size="26" onClick={() => this.deleteClick()} />,
-          ]}
-        >
-          {this.state.name}
-        </NavBar>
-
-        <Summary>余额: {this.state.money}</Summary>
-
-        <ul>
-          {this.state.recordList.map((i) => (
-            <AccountBillDayDetail key={i.date} info={i}></AccountBillDayDetail>
-          ))}
-        </ul>
-      </Wrapper>
-    );
-  }
-}
-
-export default withRouter(AccountDetail);
+      <Summary>余额: {money}</Summary>
+      {tradeList.map((i) => (
+        <AccountBillDayDetail key={i.date} info={i}></AccountBillDayDetail>
+      ))}
+    </Wrapper>
+  );
+};
