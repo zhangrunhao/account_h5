@@ -44,6 +44,13 @@ export const updateBorrowLend = (data) => {
   });
 };
 
+export const updateRepaymentReceive = (data) => {
+  return request({
+    url: "/api/trade/updateBorrowLend",
+    method: "Post",
+    data,
+  });
+};
 
 export const updateTrade = (data) => {
   return request({

@@ -10,7 +10,7 @@ import {
   getOperateDescByCode,
 } from "../../util/trade-operate";
 import { useHistory } from "react-router";
-import TradeOperation from '../../config/trade-operate.json'
+import TradeOperation from "../../config/trade-operate.json";
 
 const Wrapper = styled.div`
   padding-top: 1rem;
@@ -23,14 +23,25 @@ export default (props) => {
   useEffect(() => {
     getDetail(id).then((r) => {
       setData(r.data);
-      _.isFunction(props.reject) && props.reject(r.data)
+      _.isFunction(props.reject) && props.reject(r.data);
     });
   }, []);
   const editClick = function () {
-    if (data.operate === TradeOperation.Income.code || data.operate === TradeOperation.Expend.code) {
+    if (
+      data.operate === TradeOperation.Income.code ||
+      data.operate === TradeOperation.Expend.code
+    ) {
       history.push(`/trade/${id}`);
-    } else if (data.operate === TradeOperation.Borrow.code || data.operate === TradeOperation.Expend.code) {
+    } else if (
+      data.operate === TradeOperation.Borrow.code ||
+      data.operate === TradeOperation.Expend.code
+    ) {
       history.push(`/borrow-lend-edit/${id}`);
+    } else if (
+      data.operate === TradeOperation.Repayment.code ||
+      data.operate === TradeOperation.Receive.code
+    ) {
+      history.push(`/repayment-receive-edit/${id}/edit`);
     } else {
       Dialog.alert({
         title: "十分抱歉",
@@ -64,6 +75,7 @@ export default (props) => {
       >
         {props.title}交易详情
       </NavBar>
+      {props.children}
       <List>
         <List.Item
           extra={

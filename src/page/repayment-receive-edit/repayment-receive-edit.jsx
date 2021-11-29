@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import TradeEdit from "../../common/trade-edit/trade-edit.jsx";
 import NavBar from "../../common/top-back-nav/top-back-nav.jsx";
 import TradeOperation from "../../config/trade-operate.json";
-import { addRepaymentReceive, getDetail, updateBorrowLend } from "../../api/trade.js";
+import { addRepaymentReceive, getDetail, updateRepaymentReceive } from "../../api/trade.js";
 import { useHistory } from "react-router";
 import { Toast } from "antd-mobile";
 
@@ -33,8 +33,6 @@ export default (props) => {
   const history = useHistory();
   const onFinish = function (values) {
     if (operationTarget === "add") {
-      console.log("add repayment and receive", values)
-      // TODO: 添加收款还款
       addRepaymentReceive({
         targetTradeId: targetId,
         accountId: values.account[0],
@@ -50,21 +48,20 @@ export default (props) => {
         history.goBack();
       });
     } else if (operationTarget === "update") {
-      // TODO: 更新收款还款
-      // updateBorrowLend({
-      //   id,
-      //   accountId: values.account[0],
-      //   remark: values.remark,
-      //   spendDate: new Date(values.spendDate).getTime(),
-      //   operate,
-      //   money: values.money,
-      // }).then((r) => {
-      //   Toast.show({
-      //     icon: "success",
-      //     content: "修改成功",
-      //   });
-      //   history.goBack();
-      // });
+      updateRepaymentReceive({
+        id,
+        accountId: values.account[0],
+        remark: values.remark,
+        spendDate: new Date(values.spendDate).getTime(),
+        operate,
+        money: values.money,
+      }).then((r) => {
+        Toast.show({
+          icon: "success",
+          content: "修改成功",
+        });
+        history.goBack();
+      });
     }
   };
 
@@ -76,7 +73,7 @@ export default (props) => {
           account: [r.data.accountId],
           spendDate: new Date(Date.parse(r.data.spendDate.replace(/-/g, "/"))),
           money: r.data.money,
-          remark: r.data.remark,
+          remark: r.data.remark || "",
         });
       });
     } else {

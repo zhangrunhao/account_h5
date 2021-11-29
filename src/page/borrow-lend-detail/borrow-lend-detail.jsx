@@ -10,14 +10,13 @@ import AccountBillDayDetail from "../../common/account-bill-day-detail/account-b
 
 const Wrapper = styled.div`
   padding-bottom: 1rem;
-`
+`;
 const BottomWrapper = styled.div`
   position: fixed;
   left: 0;
   bottom: 0;
   width: 100%;
 `;
-
 
 const targetRoute = function (operate) {
   if (operate === TradeOperation.Borrow.code) {
@@ -49,18 +48,18 @@ export default (props) => {
   }, []);
   return (
     <Wrapper>
-      <TradeDetail
-        match={props.match}
-        reject={reject}
-        title={title}
-      ></TradeDetail>
-      <Collapse>
-        <Collapse.Panel key="1" title="收款还款列表">
-          {trades.map((i) => (
-            <AccountBillDayDetail key={i.date} info={i}></AccountBillDayDetail>
-          ))}
-        </Collapse.Panel>
-      </Collapse>
+      <TradeDetail match={props.match} reject={reject} title={title}>
+        <Collapse>
+          <Collapse.Panel key="1" title={buttonTitle + "列表"}>
+            {trades.map((i) => (
+              <AccountBillDayDetail
+                key={i.date}
+                info={i}
+              ></AccountBillDayDetail>
+            ))}
+          </Collapse.Panel>
+        </Collapse>
+      </TradeDetail>
       <BottomWrapper>
         <Button
           block
