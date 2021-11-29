@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { List, Image, Toast, Dialog } from "antd-mobile";
+import { List, Toast, Dialog } from "antd-mobile";
 import { Edit, Delete } from "@icon-park/react";
 import styled from "styled-components";
 import NavBar from "../../common/top-back-nav/top-back-nav.jsx";
@@ -23,6 +23,7 @@ export default (props) => {
   useEffect(() => {
     getDetail(id).then((r) => {
       setData(r.data);
+      _.isFunction(props.reject) && props.reject(r.data)
     });
   }, []);
   const editClick = function () {
@@ -61,7 +62,7 @@ export default (props) => {
           <Delete key="1" size="26" onClick={() => deleteClick()} />,
         ]}
       >
-        交易详情
+        {props.title}交易详情
       </NavBar>
       <List>
         <List.Item

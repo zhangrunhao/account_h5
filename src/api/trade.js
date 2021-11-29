@@ -28,6 +28,14 @@ export const addBorrowLend = (data) => {
   });
 };
 
+export const addRepaymentReceive = (data) => {
+  return request({
+    url: "/api/trade/addRepaymentReceive",
+    method: "Post",
+    data,
+  });
+};
+
 export const updateBorrowLend = (data) => {
   return request({
     url: "/api/trade/updateBorrowLend",
@@ -73,6 +81,16 @@ export const getTradeList = () => {
 export const getTradeListByAccount = (id) => {
   return request({
     url: "/api/trade/listByAccount",
+    method: "Get",
+    params: {
+      id
+    }
+  });
+};
+
+export const getTradeListByBorrowLendId = (id) => {
+  return request({
+    url: "/api/trade/listByBorrowLendId",
     method: "Get",
     params: {
       id

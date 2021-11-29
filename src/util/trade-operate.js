@@ -26,3 +26,12 @@ export const getOperateColorByCode = function (code) {
   })
   return color
 }
+
+export const getOperateConstByCode = function (code) {
+  let res = ""
+  Object.keys(operateConfig).forEach(key => {
+    const value = operateConfig[key];
+    if (code == value.code) res = value.const
+  })
+  return res
+}

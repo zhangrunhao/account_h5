@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-import PropTypes from "prop-types";
 import { List } from "antd-mobile";
 import Icon from "@icon-park/react/es/all";
-import { withRouter } from "react-router";
+import { useHistory } from "react-router";
 import { getOperateColorByCode } from "../../util/trade-operate";
+import TradeOperation from "../../config/trade-operate.json"
 
 const Wrapper = styled.div``;
 
@@ -17,40 +17,37 @@ const Title = styled.div`
   font-weight: 700;
 `;
 
-class AccountBillDayDetail extends React.Component {
-  goRouter(id) {
-    this.props.history.push(`/trade-detail/${id}`);
+export default (props) => {
+  const history = useHistory();
+  const getPathByOperate = function (operate) {
+    if (operate === TradeOperation.Borrow.code || operate == TradeOperation.Lend.code) {
+      return `/borrow-lend-detail`
+    } else {
+      return `/trade-detail`
+    }
   }
-  render() {
-    return (
-      <Wrapper>
-        <Title>{this.props.info.date}</Title>
-        <List>
-          {this.props.info.trades.map((i) => (
-            <List.Item
-              onClick={this.goRouter.bind(this, i.tradeId)}
-              key={i.tradeId}
-              prefix={
-                <Icon
-                  type={i.tradeCateIcon}
-                  size="24"
-                  fill={getOperateColorByCode(i.operate)}
-                ></Icon>
-              }
-              description={i.remark}
-              extra={i.money}
-            >
-              {i.tradeCateName}
-            </List.Item>
-          ))}
-        </List>
-      </Wrapper>
-    );
-  }
-}
-
-AccountBillDayDetail.prototypes = {
-  info: PropTypes.object.isRequired,
+  return (
+    <Wrapper>
+      <Title>{props.info.date}</Title>
+      <List>
+        {props.info.trades.map((i) => (
+          <List.Item
+            onClick={() => history.push(`${getPathByOperate(i.operate)}/${i.tradeId}`)}
+            key={i.tradeId}
+            prefix={
+              <Icon
+                type={i.tradeCateIcon}
+                size="24"
+                fill={getOperateColorByCode(i.operate)}
+              ></Icon>
+            }
+            description={i.remark}
+            extra={i.money}
+          >
+            {i.tradeCateName}
+          </List.Item>
+        ))}
+      </List>
+    </Wrapper>
+  );
 };
-
-export default withRouter(AccountBillDayDetail);

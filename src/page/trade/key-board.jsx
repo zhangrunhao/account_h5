@@ -1,9 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import _ from "loadsh";
 import NP from "number-precision";
 import { colorTextBase, fillBase, fillTap } from "../../style/Styles.js";
-import PropTypes from "prop-types";
 
 const Wrapper = styled.div``;
 

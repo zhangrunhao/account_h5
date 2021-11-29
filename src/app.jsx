@@ -18,7 +18,9 @@ import AccountEdit from "./page/account-edit/account-edit.jsx";
 
 import BorrowLend from "./page/borrow-lend/borrow-lend.jsx";
 import BorrowLendEdit from "./page/borrow-lend-edit/borrow-lend-edit.jsx";
+import BorrowLendDetail from "./page/borrow-lend-detail/borrow-lend-detail.jsx";
 
+import RepaymentReceiveEdit from "./page/repayment-receive-edit/repayment-receive-edit.jsx";
 
 export default function App() {
   return (
@@ -32,7 +34,10 @@ export default function App() {
           <Route path="/trade/:id" component={Trade}></Route>
           <Route path="/trade-detail/:id" component={TradeDetail}></Route>
 
-          <Route path="/trade-cate-list/:type" component={TradeCateList}></Route>
+          <Route
+            path="/trade-cate-list/:type"
+            component={TradeCateList}
+          ></Route>
           <Route path="/trade-cate-edit/:id" component={TradeCateEdit}></Route>
 
           <Route path="/account" component={Account}></Route>
@@ -40,7 +45,19 @@ export default function App() {
           <Route path="/account-edit/:id" component={AccountEdit}></Route>
 
           <Route path="/borrow-lend/:type" component={BorrowLend}></Route>
-          <Route path="/borrow-lend-edit/:id" component={BorrowLendEdit}></Route>
+          <Route
+            path="/borrow-lend-edit/:id"
+            component={BorrowLendEdit}
+          ></Route>
+          <Route
+            path="/borrow-lend-detail/:id"
+            component={BorrowLendDetail}
+          ></Route>
+
+          <Route
+            path="/repayment-receive-edit/:id/:targetId"
+            component={RepaymentReceiveEdit}
+          ></Route>
 
           <Route path="/home" component={Home}></Route>
           <Route path="/" component={Bill}></Route>

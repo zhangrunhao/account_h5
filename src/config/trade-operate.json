@@ -1,59 +1,69 @@
 {
   "Income": {
+    "const": "income",
     "code": 1,
     "sign": "add",
     "desc": "收入",
     "color": "#41AC34"
   },
   "Expend": {
+    "const": "expend",
     "code": 2,
     "sign": "subtract",
     "desc": "支出",
     "color": "#EB6234"
   },
   "Transfer_In": {
+    "const": "transfer-in",
     "code": 3,
     "sign": "add",
     "desc": "转入",
     "color": "#333"
   },
   "Transfer_Out": {
+    "const": "transfer-out",
     "code": 4,
     "sign": "subtract",
     "desc": "转出",
     "color": "#333"
   },
   "Borrow": {
+    "const": "borrow",
     "code": 5,
     "sign": "add",
     "desc": "借入",
     "color": "#333"
   },
   "Lend": {
+    "const": "lend",
     "code": 6,
     "sign": "subtract",
     "desc": "借出",
     "color": "#333"
   },
   "Receive": {
+    "const": "receive",
     "code": 7,
     "sign": "add",
     "desc": "收款",
     "color": "#333"
   },
   "Repayment": {
+    "const": "repayment",
     "code": 8,
     "sign": "subtract",
     "desc": "还款",
     "color": "#333"
   },
   "Init": {
+    "const": "init",
     "code": 9,
     "sign": "add",
     "desc": "还款",
     "color": "#333"
   },
   "Flat": {
+    "const": "flat",
     "code": 10,
     "sign": "add",
     "desc": "平帐",
