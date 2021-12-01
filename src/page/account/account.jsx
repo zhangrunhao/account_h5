@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
-import { List } from "antd-mobile";
+import { List, Image } from "antd-mobile";
 import { AddOne } from "@icon-park/react";
-import Icon from "@icon-park/react/es/all";
 import NavBar from "../../common/top-back-nav/top-back-nav.jsx";
 import BottomTabBar from "../../common/bottom-tab-bar/bottom-tab-bar.jsx";
 import { getAccountList } from "../../api/account.js";
+import { getSvgSrc } from "../../util/svg.js";
 
 const Wrapper = styled.div`
   padding-top: 1rem;
@@ -78,7 +78,7 @@ const ChildList = (props) => {
             onClick={() => {
               history.push(`${props.path}/${v.id}`);
             }}
-            prefix={<Icon type={v.icon} size={30} />}
+            prefix={<Image src={getSvgSrc(v.icon)}/>}
             extra={v.money}
           >
             {v.name}

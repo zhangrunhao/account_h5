@@ -8,10 +8,10 @@ import {
 import NavBar from "../../common/top-back-nav/top-back-nav.jsx";
 import React, { useEffect, useState } from "react";
 import { Check } from "@icon-park/react";
-import { Input, Button, Space, Radio, List, Toast } from "antd-mobile";
-import Icon from "@icon-park/react/es/all";
+import { Input, Image, Space, Radio, List, Toast } from "antd-mobile";
 import ChooseIconList from "../../common/choose-icon-list/choose-icon-list.jsx";
 import accountIconList from "./account-icon-list.json";
+import { getSvgSrc } from "../../util/svg.js";
 
 const Wrapper = styled.div`
   padding-top: 1rem;
@@ -145,7 +145,7 @@ const Form = (props) => {
         />
       </List.Item>
       <List.Item prefix="图标">
-        {props.icon ? <Icon size={30} type={props.icon}></Icon> : <></>}
+        {props.icon ? <Image src={getSvgSrc(props.icon)}></Image> : <></>}
       </List.Item>
     </List>
   );

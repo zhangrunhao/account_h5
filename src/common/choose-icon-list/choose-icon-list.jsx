@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { Collapse } from "antd-mobile";
-import Icon from "@icon-park/react/es/all";
+import { Collapse, Image } from "antd-mobile";
+import { getSvgSrc } from "../../util/svg";
 
 const IconParentWrapper = styled.div`
   width: 100%;
@@ -30,11 +30,7 @@ export default (props) => {
               {i.array.map((ii) => {
                 return (
                   <IconWrapper key={ii}>
-                    <Icon
-                      size={30}
-                      type={ii}
-                      onClick={() => props.iconClick(ii)}
-                    ></Icon>
+                    <Image src={getSvgSrc(ii)} onClick={() => props.iconClick(ii)}></Image>
                   </IconWrapper>
                 );
               })}

@@ -1,5 +1,4 @@
 import { AddOne } from "@icon-park/react";
-import { List } from "antd-mobile";
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router";
 import styled from "styled-components";

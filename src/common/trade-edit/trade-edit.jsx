@@ -1,7 +1,7 @@
-import { Form, Button, DatePicker, Input, Dialog, Picker } from "antd-mobile";
-import moment from "moment";
+import { Form, Button, DatePicker, Input, Picker } from "antd-mobile";
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { dateFormat } from "../../util/date.js";
 import { getAccountList } from "../../api/account.js";
 
 const Wrapper = styled.div`
@@ -80,7 +80,8 @@ export default (props) => {
             }}
           >
             {(value) =>
-              value ? moment(value).format("YYYY年MM月DD日") : "请选择日期"
+              // TODO: 格式化日期
+              value ? dateFormat(value, "yyyy-MM-dd") : "请选择日期"
             }
           </DatePicker>
         </Form.Item>

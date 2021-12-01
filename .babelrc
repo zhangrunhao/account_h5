@@ -10,6 +10,14 @@
         "displayName": true,
         "fileName": true
       }
+    ],
+    [
+      "import",
+      {
+        "libraryName": "@icon-park/react",
+        "libraryDirectory": "es/icons",
+        "camel2DashComponentName": false
+      }
     ]
   ]
 }

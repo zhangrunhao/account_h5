@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Delete, Check } from "@icon-park/react";
-import Icon from "@icon-park/react/es/all";
-import { Dialog, Toast, Input, List } from "antd-mobile";
+import { Dialog, Toast, Input, List, Image } from "antd-mobile";
 import NavBar from "../../common/top-back-nav/top-back-nav.jsx";
 import {
   addTradeCate,
@@ -14,6 +13,7 @@ import { useHistory } from "react-router";
 import expendIconList from "./expend-icon-list.json";
 import incomeIconList from "./income-icon-list.json";
 import ChooseIconList from "../../common/choose-icon-list/choose-icon-list.jsx";
+import { getSvgSrc } from "../../util/svg.js";
 
 const Wrapper = styled.div`
   padding-top: 1rem;
@@ -148,7 +148,7 @@ const ChildResult = (props) => {
         />
       </List.Item>
       <List.Item prefix="图标">
-        {props.icon ? <Icon size="30" type={props.icon}></Icon> : <></>}
+        {props.icon ? <Image src={getSvgSrc(props.icon)}></Image> : <></>}
       </List.Item>
     </List>
   );

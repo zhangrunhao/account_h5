@@ -1,9 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import { List } from "antd-mobile";
-import Icon from "@icon-park/react/es/all";
+import { List, Image } from "antd-mobile";
 import { useHistory } from "react-router";
-import { getOperateColorByCode } from "../../util/trade-operate";
+import { getSvgSrc} from "../../util/svg.js"
 import TradeOperation from "../../config/trade-operate.json"
 
 const Wrapper = styled.div``;
@@ -35,11 +34,12 @@ export default (props) => {
             onClick={() => history.push(`${getPathByOperate(i.operate)}/${i.tradeId}`)}
             key={i.tradeId}
             prefix={
-              <Icon
-                type={i.tradeCateIcon}
-                size="24"
-                fill={getOperateColorByCode(i.operate)}
-              ></Icon>
+              <Image
+                src={getSvgSrc(i.tradeCateIcon)}
+                // size="24"
+                // fill={getOperateColorByCode(i.operate)}
+              />
+              // import (`@icon-park/react/lib/icons/${i.tradeCateIcon}`)
             }
             description={i.remark}
             extra={i.money}

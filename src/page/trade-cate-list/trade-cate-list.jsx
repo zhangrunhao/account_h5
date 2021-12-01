@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { List } from "antd-mobile";
-import Icon from "@icon-park/react/es/all";
+import { List, Image } from "antd-mobile";
 import { getTradeCateList } from "../../api/trade-cate.js";
 import NavBar from "../../common/top-back-nav/top-back-nav.jsx";
 import { useHistory } from "react-router";
+import { AddOne } from "@icon-park/react";
+import { getSvgSrc } from "../../util/svg";
 
 const Wrapper = styled.div`
   padding-top: 0.8rem;
@@ -25,9 +26,8 @@ export default (props) => {
     <Wrapper>
       <NavBar
         right={[
-          <Icon
+          <AddOne
             key="0"
-            type="AddOne"
             size="26"
             onClick={(e) => history.push(`/trade-cate-edit/${type}`)}
           />,
@@ -39,7 +39,7 @@ export default (props) => {
         {cateList.map((v) => (
           <List.Item
             key={v.id}
-            prefix={<Icon type={v.icon}></Icon>}
+            prefix={<Image src={getSvgSrc(v.icon)}></Image>}
             onClick={(e) => history.push(`/trade-cate-edit/${v.id}`)}
           >
             {v.name}

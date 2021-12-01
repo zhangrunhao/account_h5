@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import React, { useState } from "react";
 import { Picker, Button, DatePicker, Space } from "antd-mobile";
-import moment from "moment";
+import { dateFormat } from "../../util/date"
 
 const Wrapper = styled.div`
   background: #fff;
@@ -12,7 +12,9 @@ export default (props) => {
   const [dateVisible, setDateVisible] = useState(false);
   return (
     <Wrapper>
-      <Space style={props.hideAccount ? {"--gap": "0px"} : { "--gap": "18px" }}>
+      <Space
+        style={props.hideAccount ? { "--gap": "0px" } : { "--gap": "18px" }}
+      >
         {props.hideAccount ? (
           <></>
         ) : (
@@ -31,7 +33,9 @@ export default (props) => {
           fill="outline"
           onClick={(e) => setDateVisible(true)}
         >
-          {moment(props.date).format("YYYY年MM月DD日")}
+          {
+            dateFormat(props.date, "yyyy-MM-dd")
+          }
         </Button>
       </Space>
       <Picker

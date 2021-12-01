@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import Icon from "@icon-park/react/es/all";
+import { Image } from "antd-mobile";
+import { getSvgSrc } from "../../util/svg";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -72,14 +73,9 @@ export default (props) => {
       ) : (
         <CateIcon>
           {props.cate && props.cate.icon ? (
-            <Icon
-              size={34}
-              size="28"
-              fill="#333"
-              strokeLinejoin="miter"
-              strokeLinecap="butt"
-              type={props.cate.icon}
-            ></Icon>
+            <Image
+              src={getSvgSrc(props.cate.icon)}
+            ></Image>
           ) : (
             <>你真好看!</>
           )}

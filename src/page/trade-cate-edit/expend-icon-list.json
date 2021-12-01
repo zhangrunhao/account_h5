@@ -1,7 +1,7 @@
 [{
   "key": "children",
   "title": "儿童",
-  "array": ["BabyMobile", "BabyOne", "RockingHorse", "Rattle-One"]
+  "array": ["BabyMobile", "BabyOne", "RockingHorse", "RattleOne"]
 }, {
   "key": "health",
   "title": "健康",

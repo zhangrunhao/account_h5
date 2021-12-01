@@ -1,10 +1,11 @@
-import { Tabs } from "antd-mobile";
+import { Tabs, Image } from "antd-mobile";
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { getTradeCateList } from "../../api/trade-cate";
-import Icon from "@icon-park/react/es/all";
 import Transfer from "./transfer.jsx";
 import { useHistory } from "react-router";
+import { Setting } from "@icon-park/react";
+import { getSvgSrc } from "../../util/svg";
 
 const Wrapper = styled.div``;
 
@@ -21,7 +22,11 @@ export default (props) => {
 
   return (
     <Wrapper>
-      <Tabs defaultActiveKey="expend" activeKey={props.tab}  onChange={(key) => props.tabChange(key)}>
+      <Tabs
+        defaultActiveKey="expend"
+        activeKey={props.tab}
+        onChange={(key) => props.tabChange(key)}
+      >
         <Tabs.TabPane title="收入" key="income">
           <CateChildList
             active={props.activeCate}
@@ -93,21 +98,12 @@ const CateChildList = function (props) {
         return (
           <ScrollItem key={i.id}>
             <IconWrapper>
-              <Icon
+              <Image
                 onClick={(e) => {
                   props.cateChange(i);
                 }}
-                size={34}
-                type={i.icon}
-                size="28"
-                fill={
-                  props.active && props.active.id && props.active.id === i.id
-                    ? `${i.operate === 1 ? "green" : "red"}`
-                    : "#333"
-                }
-                strokeLinejoin="miter"
-                strokeLinecap="butt"
-              ></Icon>
+                src={getSvgSrc(i.icon)}
+              ></Image>
             </IconWrapper>
             <IconName>{i.name}</IconName>
           </ScrollItem>
@@ -115,15 +111,14 @@ const CateChildList = function (props) {
       })}
       <ScrollItem>
         <EditIconWrapper>
-          <Icon
+          <Setting
             onClick={(e) => history.push(`/trade-cate-list/${props.type}`)}
             size={34}
-            type="Setting"
             size="28"
             fill="#d43f3f"
             strokeLinejoin="miter"
             strokeLinecap="butt"
-          ></Icon>
+          ></Setting>
         </EditIconWrapper>
         <IconName>编辑分类</IconName>
       </ScrollItem>

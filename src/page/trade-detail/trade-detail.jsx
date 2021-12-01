@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { List, Toast, Dialog } from "antd-mobile";
+import { List, Toast, Dialog, Image } from "antd-mobile";
 import { Edit, Delete } from "@icon-park/react";
 import styled from "styled-components";
 import NavBar from "../../common/top-back-nav/top-back-nav.jsx";
 import { getDetail, deleteTrade } from "../../api/trade";
-import Icon from "@icon-park/react/es/all";
 import {
   getOperateColorByCode,
   getOperateDescByCode,
 } from "../../util/trade-operate";
 import { useHistory } from "react-router";
 import TradeOperation from "../../config/trade-operate.json";
+import { getSvgSrc } from "../../util/svg.js";
 
 const Wrapper = styled.div`
   padding-top: 1rem;
@@ -80,7 +80,7 @@ export default (props) => {
         <List.Item
           extra={
             data.accountIcon ? (
-              <Icon size="30" type={data.accountIcon}></Icon>
+              <Image src={getSvgSrc(data.accountIcon)}></Image>
             ) : (
               <></>
             )
@@ -96,11 +96,7 @@ export default (props) => {
         <List.Item
           extra={
             data.tradeCateIcon ? (
-              <Icon
-                fill={getOperateColorByCode(data.operate)}
-                size="30"
-                type={data.tradeCateIcon}
-              ></Icon>
+              <Image src={getSvgSrc(data.tradeCateIcon)}></Image>
             ) : (
               ""
             )
