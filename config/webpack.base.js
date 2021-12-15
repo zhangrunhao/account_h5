@@ -4,15 +4,13 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 module.exports = {
   entry: path.join(__dirname, "../src/index.js"),
   output: {
-    filename: "js/index.js",
+    filename: "js/[name].[hash:6].js",
     path: path.join(__dirname, "../dist"),
   },
   module: {
     rules: [
       {
         test: /.(js|jsx)$/,
-        // test: /\.js$|jsx/,
-        // test: /\.js|\.ts|\.tsx|\.jsx$/,
         use: "babel-loader",
         exclude: /node_modules/,
       },
