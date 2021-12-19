@@ -1,68 +1,25 @@
-import React from "react";
-import { HashRouter, Route, Switch } from "react-router-dom";
-
-import Home from "./page/home/home.jsx";
-import Login from "./page/login/login.jsx";
-import Register from "./page/register/register.jsx";
-import Bill from "./page/bill/bill.jsx";
-
-import Trade from "./page/trade/trade.jsx";
-import TradeDetail from "./page/trade-detail/trade-detail.jsx";
-
-import TradeCateList from "./page/trade-cate-list/trade-cate-list.jsx";
-import TradeCateEdit from "./page/trade-cate-edit/ trade-cate-edit.jsx";
-
-import Account from "./page/account/account.jsx";
-import AccountDetail from "./page/account-detail/account-detail.jsx";
-import AccountEdit from "./page/account-edit/account-edit.jsx";
-
-import BorrowLend from "./page/borrow-lend/borrow-lend.jsx";
-import BorrowLendEdit from "./page/borrow-lend-edit/borrow-lend-edit.jsx";
-import BorrowLendDetail from "./page/borrow-lend-detail/borrow-lend-detail.jsx";
-
-import RepaymentReceiveEdit from "./page/repayment-receive-edit/repayment-receive-edit.jsx";
-
+import React, {Suspense} from "react";
+import { Router, Switch, Route } from "react-router-dom";
+import history from './history.js'
+import routes from './routes.js'
 export default function App() {
   return (
-    <HashRouter>
-      <div className="app">
+    <Router history={history} >
+      <Suspense fallback={<div>loading...</div>}>
         <Switch>
-          <Route path="/login" component={Login}></Route>
-          <Route path="/register" component={Register}></Route>
-          <Route path="/bill" component={Bill}></Route>
-
-          <Route path="/trade/:id" component={Trade}></Route>
-          <Route path="/trade-detail/:id" component={TradeDetail}></Route>
-
-          <Route
-            path="/trade-cate-list/:type"
-            component={TradeCateList}
-          ></Route>
-          <Route path="/trade-cate-edit/:id" component={TradeCateEdit}></Route>
-
-          <Route path="/account" component={Account}></Route>
-          <Route path="/account-detail/:id" component={AccountDetail}></Route>
-          <Route path="/account-edit/:id" component={AccountEdit}></Route>
-
-          <Route path="/borrow-lend/:type" component={BorrowLend}></Route>
-          <Route
-            path="/borrow-lend-edit/:id"
-            component={BorrowLendEdit}
-          ></Route>
-          <Route
-            path="/borrow-lend-detail/:id"
-            component={BorrowLendDetail}
-          ></Route>
-
-          <Route
-            path="/repayment-receive-edit/:id/:targetId"
-            component={RepaymentReceiveEdit}
-          ></Route>
-
-          <Route path="/home" component={Home}></Route>
-          <Route path="/" component={Bill}></Route>
+          {
+            routes.map((item) => {
+              return (
+                <Route exact={item.exact} path={item.path} key={item.path} render={
+                  props => (
+                    <item.component {...props} routes={item.children}></item.component>
+                  )
+                }></Route>
+              )
+            })
+          }
         </Switch>
-      </div>
-    </HashRouter>
+      </Suspense>
+    </Router>
   );
 }

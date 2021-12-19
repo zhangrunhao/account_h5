@@ -4,14 +4,13 @@ import NavBar from "../../common/top-back-nav/top-back-nav.jsx";
 import styled from "styled-components";
 import { loginUser } from "../../api/user.js";
 import { setToken } from "../../util/token.js";
-import { useHistory } from "react-router-dom";
+import history from "../../history.js";
 
 const Wrapper = styled.div`
   padding-top: 1rem;
 `;
 
 export default () => {
-  const history = useHistory();
   const onFinish = (values) => {
     loginUser(values).then((res) => {
       if (res && res.data) {
@@ -68,7 +67,9 @@ export default () => {
         </Form.Item>
       </Form>
       <Button block onClick={() => {
-        location.href = `${location.origin}/#/register`;
+        //  context.router.history.push("/");
+        history.push('/home');
+        // window.history.pushState(null, null, `#/home`);
       }}>没有帐号, 点击去注册</Button>
     </Wrapper>
   );

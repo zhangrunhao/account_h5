@@ -1,9 +1,8 @@
 import React from "react";
-import { withRouter } from "react-router-dom";
-import History from "../../util/history.js";
 import styled from "styled-components";
 import { NavBar } from "antd-mobile";
 import PropTypes from 'prop-types'
+import history from '../../history.js'
 
 const Wrapper = styled.div`
   position: fixed;
@@ -14,13 +13,13 @@ const Wrapper = styled.div`
   z-index: 100;
 `;
 
-class TopBackNav extends React.Component {
+export default class TopBackNav extends React.Component {
   render() {
     return (
       <Wrapper>
         <NavBar
           back="返回"
-          onBack={() => History.back(this)}
+          onBack={() => history.back()}
           right={this.props.right}
         >
           {this.props.children}
@@ -33,5 +32,3 @@ class TopBackNav extends React.Component {
 TopBackNav.prototypes = {
   right: PropTypes.elementType
 }
-
-export default withRouter(TopBackNav);
