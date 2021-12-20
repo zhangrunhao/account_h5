@@ -1,5 +1,7 @@
+import {isNumber} from 'lodash-es'
+
 export const dateFormat = function (date, fmt) {
-  if (_.isNumber(date)) {
+  if (isNumber(date)) {
     date = new Date(date)
   }
   var o = {

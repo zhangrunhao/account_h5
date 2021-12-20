@@ -4,12 +4,14 @@ import NavBar from "../../common/top-back-nav/top-back-nav.jsx";
 import styled from "styled-components";
 import { registerUser, loginUser } from "../../api/user.js";
 import { setToken } from "../../util/token.js";
+import { useHistory } from "react-router-dom";
 
 const Wrapper = styled.div`
   padding-top: 1rem;
 `;
 
 export default () => {
+  const history = useHistory();
   const onFinish = (values) => {
     registerUser(values).then(() => {
       Toast.show({
@@ -19,7 +21,7 @@ export default () => {
       loginUser(values).then((res) => {
         if (res && res.data) {
           setToken(res.data);
-          location.href = `${location.origin}/#/`;
+          history.push("/bill")
         }
       });
     });

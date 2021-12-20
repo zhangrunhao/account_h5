@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import NP from "number-precision";
 import { colorTextBase, fillBase, fillTap } from "../../style/Styles.js";
+import {isNumber} from 'lodash-es'
 
 const Wrapper = styled.div``;
 
@@ -46,7 +47,7 @@ export default (props) => {
   
   let money = props.money
   const handleKeyBoardClick = function (key) {
-    if (_.isNumber(key)) {
+    if (isNumber(key)) {
       // 数字 非0
       if (
         money.indexOf(".") > -1 && //  存在.

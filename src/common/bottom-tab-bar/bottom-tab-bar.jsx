@@ -1,10 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { Home, Add, BankCard } from "@icon-park/react";
-import history from "../../util/history";
-import { withRouter } from "react-router";
 import { TabBar } from "antd-mobile";
-import PropTypes from "prop-types";
+import { useHistory } from "react-router-dom";
 
 const Wrapper = styled.div`
   position: fixed;
@@ -32,32 +30,24 @@ const tabs = [
     icon: <BankCard size="20"></BankCard>,
   },
 ];
-
-class BottomTabBar extends React.Component {
-  render() {
-    return (
-      <Wrapper>
-        <TabBar
-          defaultActiveKey={this.props.active}
-          onChange={(key) => {
-            history.push(this, key);
-          }}
-        >
-          {tabs.map((tab) => (
-            <TabBar.Item
-              title={tab.title}
-              key={tab.key}
-              icon={tab.icon}
-            ></TabBar.Item>
-          ))}
-        </TabBar>
-      </Wrapper>
-    );
-  }
-}
-
-BottomTabBar.propTypes = {
-  active: PropTypes.string.isRequired,
+export default (props) => {
+  const history = useHistory();
+  return (
+    <Wrapper>
+      <TabBar
+        defaultActiveKey={props.active}
+        onChange={(key) => {
+          history.push(key);
+        }}
+      >
+        {tabs.map((tab) => (
+          <TabBar.Item
+            title={tab.title}
+            key={tab.key}
+            icon={tab.icon}
+          ></TabBar.Item>
+        ))}
+      </TabBar>
+    </Wrapper>
+  );
 };
-
-export default withRouter(BottomTabBar);

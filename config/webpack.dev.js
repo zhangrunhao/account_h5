@@ -8,7 +8,6 @@ module.exports = smp.wrap(
     mode: "development",
     devtool: "source-map",
     devServer: {
-      historyApiFallback: true,
       contentBase: "./",
       port: 9000,
       host: "0.0.0.0",

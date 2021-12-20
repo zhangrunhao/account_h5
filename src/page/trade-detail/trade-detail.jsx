@@ -11,6 +11,7 @@ import {
 import { useHistory } from "react-router";
 import TradeOperation from "../../config/trade-operate.json";
 import { getSvgSrc } from "../../util/svg.js";
+import {isFunction} from 'lodash-es'
 
 const Wrapper = styled.div`
   padding-top: 1rem;
@@ -23,7 +24,7 @@ export default (props) => {
   useEffect(() => {
     getDetail(id).then((r) => {
       setData(r.data);
-      _.isFunction(props.reject) && props.reject(r.data);
+      isFunction(props.reject) && props.reject(r.data);
     });
   }, []);
   const editClick = function () {

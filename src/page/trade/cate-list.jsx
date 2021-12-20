@@ -27,30 +27,30 @@ export default (props) => {
         activeKey={props.tab}
         onChange={(key) => props.tabChange(key)}
       >
-        <Tabs.TabPane title="收入" key="income">
+        <Tabs.Tab title="收入" key="income">
           <CateChildList
             active={props.activeCate}
             cateChange={props.cateChange}
             type="income"
             array={incomeList}
           ></CateChildList>
-        </Tabs.TabPane>
-        <Tabs.TabPane title="支出" key="expend">
+        </Tabs.Tab>
+        <Tabs.Tab title="支出" key="expend">
           <CateChildList
             active={props.activeCate}
             cateChange={props.cateChange}
             type="expend"
             array={expendList}
           ></CateChildList>
-        </Tabs.TabPane>
-        <Tabs.TabPane title="转账" key="transfer">
+        </Tabs.Tab>
+        <Tabs.Tab title="转账" key="transfer">
           <Transfer
             outAccount={props.outAccount}
             inAccount={props.inAccount}
             accountData={props.accountData}
             transferAccountChange={props.transferAccountChange}
           ></Transfer>
-        </Tabs.TabPane>
+        </Tabs.Tab>
       </Tabs>
     </Wrapper>
   );
@@ -87,7 +87,7 @@ const IconName = styled.div`
   line-height: 0.4rem;
 `;
 
-const CateChildList = function (props) {
+const CateChildList = (props) => {
   const history = useHistory();
   useEffect(() => {
     props.cateChange(props.array[0]);

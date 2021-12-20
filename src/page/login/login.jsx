@@ -4,13 +4,14 @@ import NavBar from "../../common/top-back-nav/top-back-nav.jsx";
 import styled from "styled-components";
 import { loginUser } from "../../api/user.js";
 import { setToken } from "../../util/token.js";
-import history from "../../history.js";
+import { useHistory } from "react-router-dom";
 
 const Wrapper = styled.div`
   padding-top: 1rem;
 `;
 
 export default () => {
+  const history = useHistory();
   const onFinish = (values) => {
     loginUser(values).then((res) => {
       if (res && res.data) {
@@ -22,7 +23,7 @@ export default () => {
         if (history.length > 2) {
           history.goBack();
         } else {
-          location.href = `${location.origin}/#/home`;
+          history.push('/bill')
         }
       }
     });
@@ -67,9 +68,7 @@ export default () => {
         </Form.Item>
       </Form>
       <Button block onClick={() => {
-        //  context.router.history.push("/");
-        history.push('/home');
-        // window.history.pushState(null, null, `#/home`);
+        history.push('/register');
       }}>没有帐号, 点击去注册</Button>
     </Wrapper>
   );
