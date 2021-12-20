@@ -45,4 +45,7 @@ export default [{
 }, {
   path: "/home",
   component: lazy(() => import('./page/home/home.jsx'))
+}, {
+  path: "/",
+  component: lazy(() => import('./page/bill/bill.jsx'))
 }]
