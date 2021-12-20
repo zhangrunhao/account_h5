@@ -1,13 +1,25 @@
+import { isFunction } from "lodash-es";
+import {setCookie, getCookie} from './cookie.js'
 const tokenKey = "loginToken";
 
+
 export const getToken = () => {
-  return localStorage.getItem(tokenKey);
+  if (localStorage && isFunction(localStorage.getItem)) {
+    return localStorage.getItem(tokenKey);
+  } else {
+    return getCookie(tokenKey)
+  }
 };
 
 export const setToken = (token) => {
-  return localStorage.setItem(tokenKey, token);
+  if (localStorage && isFunction(localStorage.setItem)) {
+    return localStorage.setItem(tokenKey, token);
+  } else {
+    return setCookie(tokenKey, token, 365)
+  }
 };
 
 export const removeToken = () => {
+  // TODO: 未兼容cookie
   return localStorage.removeItem(tokenKey);
 };
