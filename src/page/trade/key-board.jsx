@@ -1,8 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import NP from "number-precision";
-import { colorTextBase, fillBase, fillTap } from "../../style/Styles.js";
-import {isNumber} from 'lodash-es'
+import { isNumber } from "lodash-es";
 
 const Wrapper = styled.div``;
 
@@ -17,10 +16,10 @@ const InputButton = styled.div`
   line-height: 1.16rem;
   font-size: 0.4rem;
   text-align: center;
-  color: ${colorTextBase};
-  background-color: ${fillBase};
+  color: #000;
+  background-color: #fff;
   :active {
-    background-color: ${fillTap};
+    background-color: #ddd;
   }
 `;
 
@@ -44,8 +43,7 @@ const keyBoardKeys = [
 ];
 
 export default (props) => {
-  
-  let money = props.money
+  let money = props.money;
   const handleKeyBoardClick = function (key) {
     if (isNumber(key)) {
       // 数字 非0

@@ -1,6 +1,8 @@
-import React, { Suspense, lazy} from "react";
-import {HashRouter as Router, Switch, Route } from "react-router-dom";
+import React, { Suspense, lazy } from "react";
+import { HashRouter as Router, Switch, Route } from "react-router-dom";
 import routes from "./routes.js";
+// TODO: 未登录, 直接跳转登录页面
+import { isLogin } from "./util/token.js";
 
 export default function App() {
   return (

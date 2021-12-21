@@ -23,3 +23,13 @@ export const removeToken = () => {
   // TODO: 未兼容cookie
   return localStorage.removeItem(tokenKey);
 };
+
+export const isLogin = () => {
+  let token
+  if (localStorage && isFunction(localStorage.getItem)) {
+    token = localStorage.getItem(tokenKey);
+  } else {
+    token = getCookie(tokenKey)
+  }
+  return !!token
+}
